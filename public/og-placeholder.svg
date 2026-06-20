@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0d0d0d"/>
+      <stop offset="100%" style="stop-color:#1a1614"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="50%" cy="30%" r="60%">
+      <stop offset="0%" style="stop-color:#8fce78;stop-opacity:0.2"/>
+      <stop offset="100%" style="stop-color:#8fce78;stop-opacity:0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <rect width="1200" height="630" fill="url(#glow)"/>
+  <text x="600" y="280" text-anchor="middle" font-family="Georgia, serif" font-size="72" font-weight="600" fill="#e8e0d8">Kyle Holiday</text>
+  <text x="600" y="350" text-anchor="middle" font-family="system-ui, sans-serif" font-size="28" letter-spacing="8" fill="#b5e8a4">LEATHER · PLAY · ART</text>
+  <text x="600" y="420" text-anchor="middle" font-family="system-ui, sans-serif" font-size="22" fill="#9a8f85">Mx. Cruise LA Leather 2026</text>
+</svg>

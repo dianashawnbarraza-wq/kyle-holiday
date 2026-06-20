@@ -1,0 +1,66 @@
+.cta-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 24px;
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  border-radius: var(--radius-sm);
+  border: 1px solid transparent;
+  cursor: pointer;
+  text-decoration: none;
+  transition:
+    background var(--transition),
+    border-color var(--transition),
+    color var(--transition),
+    box-shadow var(--transition),
+    transform var(--transition);
+}
+
+.cta-btn:hover {
+  transform: translateY(-1px);
+}
+
+.cta-btn--primary {
+  background: var(--accent);
+  color: var(--bg-deep);
+  border-color: var(--accent);
+  box-shadow: var(--shadow-glow);
+}
+
+.cta-btn--primary:hover {
+  background: var(--accent-hover);
+  color: var(--bg-deep);
+  box-shadow: 0 0 48px var(--accent-glow);
+}
+
+.cta-btn--secondary {
+  background: transparent;
+  color: var(--text-primary);
+  border-color: var(--accent-border);
+}
+
+.cta-btn--secondary:hover {
+  background: var(--accent-subtle);
+  color: var(--text-primary);
+  border-color: var(--accent);
+}
+
+.cta-btn--ghost {
+  background: transparent;
+  color: var(--text-muted);
+  border-color: var(--border-subtle);
+}
+
+.cta-btn--ghost:hover {
+  color: var(--text-primary);
+  border-color: var(--border-hover);
+}
+
+.cta-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}

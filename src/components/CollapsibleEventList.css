@@ -1,0 +1,13 @@
+.collapsible-event-list__actions {
+  margin-top: var(--space-3);
+}
+
+.collapsible-event-list__btn {
+  width: 100%;
+}
+
+@media (min-width: 540px) {
+  .collapsible-event-list__btn {
+    width: auto;
+  }
+}
