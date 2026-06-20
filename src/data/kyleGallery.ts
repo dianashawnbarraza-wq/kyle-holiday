@@ -4,16 +4,16 @@ export type KyleGalleryImage = GalleryImage;
 
 export const kyleGallery: KyleGalleryImage[] = [
   {
+    id: "a-klass-entrance",
+    src: "/images/kyle-gallery/a-klass-entrance.png",
+    alt: "Kyle Holiday in leather at a bar entrance",
+    caption: "Photo by A Klass",
+  },
+  {
     id: "title-vest",
     src: "/images/kyle-gallery/title-vest.png",
     alt: "Kyle Holiday wearing Mx. Cruise LA Leather 2026 title vest and cap",
     caption: "Photo by A Klass",
-  },
-  {
-    id: "mx-cruise-back",
-    src: "/images/kyle-gallery/mx-cruise-back.png",
-    alt: "Kyle Holiday from behind in title vest with disco ball",
-    caption: "Self portrait",
   },
   {
     id: "cruise-la-cheer",
