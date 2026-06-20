@@ -5,6 +5,8 @@
 
 .home-gallery {
   width: 100%;
+  max-width: 100%;
+  min-width: 0;
 }
 
 @media (min-width: 1200px) {

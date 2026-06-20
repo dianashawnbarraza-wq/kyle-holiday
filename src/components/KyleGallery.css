@@ -83,6 +83,13 @@
   gap: var(--space-3);
 }
 
+@media (max-width: 640px) {
+  .kyle-gallery,
+  .kyle-gallery--large {
+    grid-template-columns: 1fr;
+  }
+}
+
 @media (min-width: 720px) {
   .kyle-gallery--large {
     grid-template-columns: repeat(2, 1fr);

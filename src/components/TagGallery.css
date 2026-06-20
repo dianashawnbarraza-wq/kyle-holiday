@@ -56,3 +56,9 @@
 .tag-gallery__shop-link {
   margin-top: auto;
 }
+
+@media (max-width: 640px) {
+  .tag-gallery {
+    grid-template-columns: 1fr;
+  }
+}

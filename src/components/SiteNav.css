@@ -6,6 +6,9 @@
   background: rgba(13, 13, 13, 0.85);
   backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--border-subtle);
+  width: 100%;
+  max-width: 100%;
+  overflow-x: clip;
 }
 
 .site-nav__inner {
@@ -17,6 +20,8 @@
   align-items: center;
   justify-content: space-between;
   gap: var(--space-3);
+  min-width: 0;
+  width: 100%;
 }
 
 .site-nav__brand {
@@ -94,6 +99,8 @@
 
   .site-nav__links {
     gap: 4px;
+    justify-content: center;
+    max-width: 100%;
   }
 
   .site-nav__link {

@@ -76,7 +76,7 @@
   object-fit: cover;
 }
 
-@media (max-width: 540px) {
+@media (max-width: 720px) {
   .event-list__item {
     grid-template-columns: 1fr;
     gap: var(--space-1);
