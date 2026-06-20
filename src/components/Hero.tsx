@@ -14,7 +14,7 @@ export function Hero({ compact = false }: HeroProps) {
       <div className="hero__bg">
         <img
           src={heroImage}
-          alt="Kyle Holiday in cross body harness outdoors"
+          alt="Kyle Holiday self portrait in leather at a bar entrance"
           className="hero__image"
         />
       </div>

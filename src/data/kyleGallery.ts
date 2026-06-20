@@ -4,10 +4,10 @@ export type KyleGalleryImage = GalleryImage;
 
 export const kyleGallery: KyleGalleryImage[] = [
   {
-    id: "a-klass-entrance",
-    src: "/images/kyle-gallery/a-klass-entrance.png",
-    alt: "Kyle Holiday in leather at a bar entrance",
-    caption: "Photo by A Klass",
+    id: "self-portrait",
+    src: "/images/kyle-gallery/self-portrait.png",
+    alt: "Kyle Holiday self portrait in leather at a bar entrance",
+    caption: "Self portrait",
   },
   {
     id: "title-vest",
