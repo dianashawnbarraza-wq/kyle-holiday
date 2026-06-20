@@ -6,7 +6,7 @@ export const kyleGallery: KyleGalleryImage[] = [
   {
     id: "self-portrait",
     src: "/images/kyle-gallery/self-portrait.png",
-    alt: "Kyle Holiday self portrait in leather at a bar entrance",
+    alt: "Kyle Holiday self portrait outdoors in leather cross-body harness",
     caption: "Self portrait",
   },
   {
