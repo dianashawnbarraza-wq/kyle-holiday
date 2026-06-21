@@ -27,7 +27,7 @@ const allEvents: EventItem[] = [
   {
     sortDate: "2026-06-18",
     date: "6/18/26",
-    title: "Leather Beast",
+    title: "Leathear Beast",
     location: "Bullet Bar",
     role: "Vending",
   },
