@@ -1,5 +1,4 @@
 import { CTAButton } from "./CTAButton";
-import { upcomingEvents } from "../data/events";
 import { site } from "../data/site";
 import "./Hero.css";
 
@@ -10,8 +9,6 @@ type HeroProps = {
 };
 
 export function Hero({ compact = false }: HeroProps) {
-  const nextEvent = upcomingEvents[0];
-
   return (
     <section className={`hero${compact ? " hero--compact" : ""}`}>
       <div className="hero__bg">
@@ -29,12 +26,8 @@ export function Hero({ compact = false }: HeroProps) {
             <h2 className="hero__subtitle">{site.heroIntro}</h2>
             <div className="hero__ctas cta-group">
               <CTAButton to="/pet-play-tags">Pet Play Tags</CTAButton>
-              <CTAButton
-                to="/#events"
-                variant="secondary"
-                badge={nextEvent?.title}
-              >
-                Upcoming Events
+              <CTAButton to="/#events" variant="secondary">
+                Events
               </CTAButton>
             </div>
           </>

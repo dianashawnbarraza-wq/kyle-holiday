@@ -2,7 +2,6 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 10px;
   padding: 12px 24px;
   font-family: var(--font-body);
   font-size: 0.9rem;
@@ -58,23 +57,6 @@
 .cta-btn--ghost:hover {
   color: var(--text-primary);
   border-color: var(--border-hover);
-}
-
-.cta-btn__badge {
-  padding: 3px 10px;
-  font-size: 0.72rem;
-  font-weight: 600;
-  letter-spacing: 0.02em;
-  line-height: 1.2;
-  color: var(--bg-deep);
-  background: var(--accent-light);
-  border-radius: 999px;
-  white-space: nowrap;
-}
-
-.cta-btn--primary .cta-btn__badge {
-  color: var(--accent);
-  background: rgba(13, 13, 13, 0.85);
 }
 
 .cta-group {

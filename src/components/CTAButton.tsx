@@ -9,7 +9,6 @@ type CTAButtonProps = {
   variant?: "primary" | "secondary" | "ghost";
   external?: boolean;
   className?: string;
-  badge?: string;
 };
 
 export function CTAButton({
@@ -19,15 +18,8 @@ export function CTAButton({
   variant = "primary",
   external = false,
   className = "",
-  badge,
 }: CTAButtonProps) {
   const classes = `cta-btn cta-btn--${variant} ${className}`.trim();
-  const content = (
-    <>
-      {children}
-      {badge ? <span className="cta-btn__badge">{badge}</span> : null}
-    </>
-  );
 
   const opensInNewTab =
     external ||
@@ -37,7 +29,7 @@ export function CTAButton({
   if (to) {
     return (
       <Link to={to} className={classes}>
-        {content}
+        {children}
       </Link>
     );
   }
@@ -50,10 +42,10 @@ export function CTAButton({
         target={opensInNewTab ? "_blank" : undefined}
         rel={opensInNewTab ? "noopener noreferrer" : undefined}
       >
-        {content}
+        {children}
       </a>
     );
   }
 
-  return <span className={classes}>{content}</span>;
+  return <span className={classes}>{children}</span>;
 }
