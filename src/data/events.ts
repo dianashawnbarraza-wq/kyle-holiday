@@ -10,11 +10,13 @@ export type EventItem = {
 
 const allEvents: EventItem[] = [
   {
-    sortDate: "2026-06-26",
-    date: "6/26/26, 8 PM",
-    title: "De Noche in Space",
-    location: "Paramount Theater, Boyle Heights",
-    role: "Vending",
+    sortDate: "2026-06-24",
+    date: "6/24/26, 7 PM",
+    title: "Strap Social",
+    location: "Eagle LA, 4219 Santa Monica Blvd",
+    role: "Host with Patricia Nyx (Chains of Love) — for leather queers, freaks, pups & pets",
+    flyer: "/images/events/strap-social-june-2026.png",
+    flyerAlt: "Strap Social at the Eagle flyer, June 24, 2026",
   },
   {
     sortDate: "2026-06-20",
@@ -201,3 +203,9 @@ const allEvents: EventItem[] = [
 export const events = [...allEvents].sort((a, b) =>
   b.sortDate.localeCompare(a.sortDate),
 );
+
+const today = new Date().toISOString().slice(0, 10);
+
+export const upcomingEvents = [...allEvents]
+  .filter((event) => event.sortDate >= today)
+  .sort((a, b) => a.sortDate.localeCompare(b.sortDate));

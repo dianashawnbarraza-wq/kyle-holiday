@@ -3,7 +3,8 @@ import { HomeSpotlightBanner } from "../components/HomeSpotlightBanner";
 import { SectionHeader } from "../components/SectionHeader";
 import { CollapsibleEventList } from "../components/CollapsibleEventList";
 import { KyleGallery } from "../components/KyleGallery";
-import { events } from "../data/events";
+import { UpcomingEventsBanner } from "../components/UpcomingEventsBanner";
+import { events, upcomingEvents } from "../data/events";
 import { homeSpotlightSlides } from "../data/homeSpotlight";
 import { kyleGallery } from "../data/kyleGallery";
 import { site } from "../data/site";
@@ -13,6 +14,7 @@ export function HomePage() {
   return (
     <>
       <Hero />
+      <UpcomingEventsBanner events={upcomingEvents} />
 
       <div className="page">
         <div className="page-inner">

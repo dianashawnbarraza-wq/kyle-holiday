@@ -27,7 +27,7 @@ export function Hero({ compact = false }: HeroProps) {
             <div className="hero__ctas cta-group">
               <CTAButton to="/pet-play-tags">Pet Play Tags</CTAButton>
               <CTAButton to="/#events" variant="secondary">
-                Events
+                Upcoming Events
               </CTAButton>
             </div>
           </>
