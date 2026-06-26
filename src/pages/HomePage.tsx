@@ -17,14 +17,27 @@ export function HomePage() {
       <div className="page">
         <div className="page-inner">
           <section className="section home-intro">
-            <p className="home-intro__text">
-              Hi, I&apos;m Kyle (Mx. Cruise LA Leather 2026, they/he). I&apos;m a
-              Latine artist, leatherworker, pet play accessory maker and kinkster.
-            </p>
-            <p className="home-intro__text">
-              Glad you&apos;re here and you can{" "}
-              <Link to="/about">read more about me here</Link>.
-            </p>
+            <div className="home-intro__layout">
+              <div className="home-intro__photo-wrap">
+                <img
+                  src="/images/home-intro-kyle.png"
+                  alt="Kyle Holiday in a black leather vest with silver chain necklace"
+                  className="home-intro__photo"
+                  loading="lazy"
+                />
+              </div>
+              <div className="home-intro__copy">
+                <p className="home-intro__text">
+                  Hi, I&apos;m Kyle (Mx. Cruise LA Leather 2026, they/he).
+                  I&apos;m a Latine artist, leatherworker, pet play accessory
+                  maker and kinkster.
+                </p>
+                <p className="home-intro__text">
+                  Glad you&apos;re here and you can{" "}
+                  <Link to="/about">read more about me here</Link>.
+                </p>
+              </div>
+            </div>
           </section>
 
           <section className="section">
