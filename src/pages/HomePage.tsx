@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { Hero } from "../components/Hero";
 import { HomeSpotlightBanner } from "../components/HomeSpotlightBanner";
 import { SectionHeader } from "../components/SectionHeader";
@@ -15,6 +16,17 @@ export function HomePage() {
 
       <div className="page">
         <div className="page-inner">
+          <section className="section home-intro">
+            <p className="home-intro__text">
+              Hi, I&apos;m Kyle (Mx. Cruise LA Leather 2026, they/he). I&apos;m a
+              Latine artist, leatherworker, pet play accessory maker and kinkster.
+            </p>
+            <p className="home-intro__text">
+              Glad you&apos;re here and you can{" "}
+              <Link to="/about">read more about me here</Link>.
+            </p>
+          </section>
+
           <section className="section">
             <HomeSpotlightBanner slides={homeSpotlightSlides} />
           </section>
