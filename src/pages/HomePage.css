@@ -1,3 +1,27 @@
+.home-intro {
+  max-width: 65ch;
+}
+
+.home-intro__text {
+  color: #ffffff;
+  font-size: 1.05rem;
+  line-height: 1.65;
+}
+
+.home-intro__text + .home-intro__text {
+  margin-top: var(--space-2);
+}
+
+.home-intro__text a {
+  color: var(--accent-light);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.home-intro__text a:hover {
+  color: var(--text-primary);
+}
+
 .home-gallery {
   width: 100%;
   max-width: 100%;
