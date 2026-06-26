@@ -1,4 +1,5 @@
 import type { EventItem } from "../data/events";
+import { CTAButton } from "./CTAButton";
 import "./EventList.css";
 
 type EventListProps = {
@@ -22,6 +23,20 @@ export function EventList({ events, compact = false }: EventListProps) {
             <span className="event-list__location">{event.location}</span>
             {event.role && (
               <span className="event-list__role">{event.role}</span>
+            )}
+            {event.links && event.links.length > 0 && (
+              <div className="event-list__links cta-group">
+                {event.links.map((link) => (
+                  <CTAButton
+                    key={link.href}
+                    href={link.href}
+                    external
+                    variant="secondary"
+                  >
+                    {link.label}
+                  </CTAButton>
+                ))}
+              </div>
             )}
           </div>
           {event.flyer && (

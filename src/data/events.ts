@@ -4,11 +4,31 @@ export type EventItem = {
   title: string;
   location: string;
   role?: string;
+  links?: { label: string; href: string }[];
   flyer?: string;
   flyerAlt?: string;
 };
 
 const allEvents: EventItem[] = [
+  {
+    sortDate: "2026-07-22",
+    date: "7/22/26, 6–10 PM",
+    title: "RIVET: Collars + Mosh Party",
+    location: "Devil Mask Studio",
+    role: "Co-host with Shayn (International Trainer 2026) — make a collar, supplies and snacks provided, mosh starts at 8 PM",
+    links: [
+      {
+        label: "Craft + Mosh RSVP",
+        href: "https://momence.com/Devil-Mask-Studio/RIVET-Collars-%2B-Mosh-Party/138905931",
+      },
+      {
+        label: "Mosh only RSVP",
+        href: "https://momence.com/l/9khKa2Ql",
+      },
+    ],
+    flyer: "/images/events/rivet-collars-mosh-july-2026.png",
+    flyerAlt: "RIVET Collars and Mosh Party flyer, July 22, 2026",
+  },
   {
     sortDate: "2026-06-24",
     date: "6/24/26, 7 PM",

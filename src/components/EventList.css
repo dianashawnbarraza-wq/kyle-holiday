@@ -52,6 +52,15 @@
   font-style: italic;
 }
 
+.event-list__links {
+  margin-top: var(--space-1);
+}
+
+.event-list__links .cta-btn {
+  padding: 8px 14px;
+  font-size: 0.78rem;
+}
+
 .event-list--compact .event-list__item {
   padding: var(--space-2);
 }
