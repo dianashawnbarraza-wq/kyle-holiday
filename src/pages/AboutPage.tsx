@@ -1,6 +1,6 @@
 import { SectionHeader } from "../components/SectionHeader";
 import { KyleGallery } from "../components/KyleGallery";
-import { kyleGallery } from "../data/kyleGallery";
+import { kyleGallery, kyleGallerySection } from "../data/kyleGallery";
 import { site } from "../data/site";
 import "./AboutPage.css";
 
@@ -19,8 +19,8 @@ export function AboutPage() {
 
         <section className="section">
           <SectionHeader
-            title="Gallery"
-            subtitle="Leather, title, and community — click any photo to view larger"
+            title={kyleGallerySection.title}
+            subtitle={kyleGallerySection.subtitle}
           />
           <div className="about-page__gallery">
             <KyleGallery images={kyleGallery} size="large" />

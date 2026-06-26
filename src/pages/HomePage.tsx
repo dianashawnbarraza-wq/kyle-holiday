@@ -5,7 +5,7 @@ import { CollapsibleEventList } from "../components/CollapsibleEventList";
 import { KyleGallery } from "../components/KyleGallery";
 import { events } from "../data/events";
 import { homeSpotlightSlides } from "../data/homeSpotlight";
-import { kyleGallery } from "../data/kyleGallery";
+import { kyleGallery, kyleGallerySection } from "../data/kyleGallery";
 import "./HomePage.css";
 
 export function HomePage() {
@@ -29,8 +29,8 @@ export function HomePage() {
 
           <section className="section">
             <SectionHeader
-              title="Gallery"
-              subtitle="Leather, title, and community — click any photo to view larger"
+              title={kyleGallerySection.title}
+              subtitle={kyleGallerySection.subtitle}
             />
             <div className="home-gallery">
               <KyleGallery images={kyleGallery} size="large" />

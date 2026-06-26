@@ -2,6 +2,11 @@ import type { GalleryImage } from "./gallery";
 
 export type KyleGalleryImage = GalleryImage;
 
+export const kyleGallerySection = {
+  title: "Title Year Flex",
+  subtitle: "Some pics from my title year.",
+} as const;
+
 export const kyleGallery: KyleGalleryImage[] = [
   {
     id: "self-portrait",
