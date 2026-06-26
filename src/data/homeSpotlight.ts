@@ -32,6 +32,17 @@ export const homeSpotlightSlides: HomeSpotlightSlide[] = [
     ctaLabel: "Order on Etsy",
   },
   {
+    id: "chain-bone",
+    headline: "Chain Bone Dog Tag",
+    description:
+      "Personalized puppy/pet play collar tags in bone shape with a chain link border. Pick your color, text, and font — laser cut and hand finished in LA.",
+    image: "/images/tags/etsy/chain-bone.png",
+    imageAlt: "Personalized chain bone puppy pet play collar tag with paw cutout",
+    shopUrl:
+      "https://www.etsy.com/listing/4528276792/personalized-chain-puppypet-play-collar",
+    ctaLabel: "Order on Etsy",
+  },
+  {
     id: "praise-coming-sticker",
     headline: "Keep the Praise Coming",
     description:
