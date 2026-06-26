@@ -1,0 +1,33 @@
+.about-page__bio {
+  columns: 1;
+  color: #ffffff;
+}
+
+.about-page__bio p {
+  color: #ffffff;
+}
+
+.about-page__gallery {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+}
+
+@media (min-width: 720px) {
+  .about-page__bio {
+    columns: 2;
+    column-gap: var(--space-5);
+  }
+
+  .about-page__bio p {
+    break-inside: avoid;
+  }
+}
+
+@media (min-width: 1200px) {
+  .about-page__gallery {
+    --about-gallery-width: min(1280px, calc(100vw - var(--space-5) * 2));
+    width: var(--about-gallery-width);
+    margin-inline: calc((100% - var(--about-gallery-width)) / 2);
+  }
+}

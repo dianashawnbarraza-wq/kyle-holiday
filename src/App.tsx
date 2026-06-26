@@ -3,6 +3,7 @@ import { SiteNav } from "./components/SiteNav";
 import { SiteFooter } from "./components/SiteFooter";
 import { ScrollToHash } from "./components/ScrollToHash";
 import { HomePage } from "./pages/HomePage";
+import { AboutPage } from "./pages/AboutPage";
 import { PetPlayTagsPage } from "./pages/PetPlayTagsPage";
 import { ArtPage } from "./pages/ArtPage";
 import { LeatherworkPage } from "./pages/LeatherworkPage";
@@ -16,6 +17,7 @@ export default function App() {
       <main>
         <Routes>
           <Route path="/" element={<HomePage />} />
+          <Route path="/about" element={<AboutPage />} />
           <Route path="/pet-play-tags" element={<PetPlayTagsPage />} />
           <Route path="/art" element={<ArtPage />} />
           <Route path="/leatherwork" element={<LeatherworkPage />} />

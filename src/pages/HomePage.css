@@ -1,8 +1,3 @@
-.home-about {
-  columns: 1;
-  color: #ffffff;
-}
-
 .home-gallery {
   width: 100%;
   max-width: 100%;
@@ -14,20 +9,5 @@
     --home-gallery-width: min(1280px, calc(100vw - var(--space-5) * 2));
     width: var(--home-gallery-width);
     margin-inline: calc((100% - var(--home-gallery-width)) / 2);
-  }
-}
-
-.home-about p {
-  color: #ffffff;
-}
-
-@media (min-width: 720px) {
-  .home-about {
-    columns: 2;
-    column-gap: var(--space-5);
-  }
-
-  .home-about p {
-    break-inside: avoid;
   }
 }
