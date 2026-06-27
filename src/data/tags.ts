@@ -14,7 +14,30 @@ export const tagIntroImage = {
   alt: "Assorted Kyle Holiday pet play tags on branded backing cards — bone, heart, and drop shapes in multiple colors",
 };
 
-export const tagIntro = `Since 2023, I've been helping make play more fun making custom tags for pups, handlers, and creatures worldwide. I've vended at leather and fetish events across Southern California, including the Eagle, Precinct, Bullet Bar, and the International Puppy & Trainer Contest in Chicago. Choose from multiple shapes, 16 colors, black light reactive, and glow in the dark options. Thank you for the trust!`;
+export const tagIntro = `Since 2023, I've been helping make play more fun with custom pet play tags, puppy play collar tags, and personalized pet ID tags for pups, handlers, furries, and creatures worldwide. Choose from bone, heart, and drop shapes in 16 colors — including blacklight reactive and glow in the dark options. Each tag is laser-cut, engraved, and handmade in Los Angeles. I've vended at leather and fetish events across Southern California, including the Eagle, Precinct, Bullet Bar, and the International Puppy & Trainer Contest in Chicago. Thank you for the trust!`;
+
+export const tagFaq = [
+  {
+    question: "What are pet play tags?",
+    answer:
+      "Pet play tags are custom engraved collar tags for puppy play, pet play, and handler dynamics — like a personalized pet ID tag for your collar, harness, or gear.",
+  },
+  {
+    question: "Do you make puppy play tags and custom pet ID tags?",
+    answer:
+      "Yes. Kyle Holiday makes personalized puppy play collar tags and custom pet ID tags in bone, heart, and drop shapes with your name, pronouns, honorifics, or scene name.",
+  },
+  {
+    question: "Can furries order custom tags?",
+    answer:
+      "Absolutely. Custom tags are popular with pups, furries, handlers, and creatures of all kinds — with toony fonts, Old English lettering, barbed wire borders, and more.",
+  },
+  {
+    question: "Where can I buy Kyle Holiday pet play tags?",
+    answer:
+      "Shop the full collection on Etsy, catch me vending at leather events around Los Angeles, or visit The Stockroom in LA for select styles in person.",
+  },
+] as const;
 
 export const tagGallery: TagPiece[] = [
   {

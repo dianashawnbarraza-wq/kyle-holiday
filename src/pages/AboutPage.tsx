@@ -9,7 +9,7 @@ export function AboutPage() {
     <div className="page">
       <div className="page-inner">
         <section className="section">
-          <SectionHeader title="About me" subtitle={site.title} />
+          <SectionHeader title="About me" subtitle={site.title} level={1} />
           <div className="prose about-page__bio">
             {site.about.map((paragraph) => (
               <p key={paragraph.slice(0, 32)}>{paragraph}</p>

@@ -19,6 +19,7 @@ export function ArtPage() {
         <SectionHeader
           title="Art"
           subtitle="Prints, Risograph, Stickers, and T-shirts"
+          level={1}
         />
 
         <ArtSubNav />

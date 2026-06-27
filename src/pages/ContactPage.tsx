@@ -9,7 +9,7 @@ export function ContactPage() {
   return (
     <div className="page">
       <div className="page-inner">
-        <SectionHeader title="Contact" subtitle="Get in touch with me" />
+        <SectionHeader title="Contact" subtitle="Get in touch with me" level={1} />
 
         <section className="section contact-panel">
           <div className="contact-panel__photo-wrap">

@@ -23,6 +23,7 @@ export function Hero({ compact = false }: HeroProps) {
         <h1 className="hero__title">{site.name}</h1>
         {!compact && (
           <>
+            <p className="hero__role">{site.title}</p>
             <h2 className="hero__subtitle">{site.heroIntro}</h2>
             <div className="hero__ctas cta-group">
               <CTAButton to="/pet-play-tags">Pet Play Tags</CTAButton>

@@ -24,3 +24,28 @@
     grid-template-columns: 1fr;
   }
 }
+
+.tags-faq__list {
+  display: grid;
+  gap: var(--space-3);
+  margin: 0;
+}
+
+.tags-faq__item {
+  padding: var(--space-3);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.tags-faq__question {
+  margin: 0 0 var(--space-1);
+  font-size: 1.05rem;
+  color: var(--text-primary);
+}
+
+.tags-faq__answer {
+  margin: 0;
+  color: var(--text-muted);
+  line-height: 1.6;
+}

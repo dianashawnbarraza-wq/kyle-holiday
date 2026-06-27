@@ -16,6 +16,7 @@ export function LeatherworkPage() {
         <SectionHeader
           title="Leatherwork"
           subtitle="Custom gear for all bodies"
+          level={1}
         />
 
         <section className="section prose leather-intro">

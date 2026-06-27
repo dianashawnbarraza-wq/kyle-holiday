@@ -15,9 +15,9 @@ export const site = {
     name: "The Stockroom",
   },
   about: [
-    `Kyle Holiday (he/they, Mx. Cruise LA Leather 2026) is a Mexican-American artist, leather worker, trans titleholder, and kinkster residing and born in Los Angeles. His work celebrates trans identity, kink, and play through art and custom gear.`,
+    `Kyle Holiday (he/they, Mx. Cruise LA Leather 2026) is a Mexican-American artist, leather worker, trans leather titleholder, and kinkster residing and born in Los Angeles. His work celebrates trans identity, kink, and play through art, custom pet play tags, and handmade leather gear.`,
     `Passionate about art, education, and accessibility in leather, they are eager to share their craft and to help others embrace their own leather journey. Kyle currently co-hosts an educational series called RIVET, helping the queer community grow their skills and knowledge of leather.`,
-    `Find them at Cruise LA (a queer leather party) every 3rd Saturday of the month, 4-9pm at Eagle LA.`,
+    `Find them at Cruise LA — a queer leather party — every 3rd Saturday of the month, 4-9pm at Eagle LA.`,
   ],
   cruiseLA: {
     name: "Cruise LA",

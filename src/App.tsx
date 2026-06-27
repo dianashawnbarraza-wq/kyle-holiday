@@ -1,4 +1,5 @@
 import { Routes, Route } from "react-router-dom";
+import { PageSEO } from "./components/PageSEO";
 import { SiteNav } from "./components/SiteNav";
 import { SiteFooter } from "./components/SiteFooter";
 import { ScrollToHash } from "./components/ScrollToHash";
@@ -12,6 +13,7 @@ import { ContactPage } from "./pages/ContactPage";
 export default function App() {
   return (
     <>
+      <PageSEO />
       <ScrollToHash />
       <SiteNav />
       <main>

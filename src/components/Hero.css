@@ -69,6 +69,14 @@
   overflow-wrap: break-word;
 }
 
+.hero__role {
+  margin-top: var(--space-1);
+  font-size: clamp(0.95rem, 2.5vw, 1.15rem);
+  color: var(--accent-light);
+  letter-spacing: 0.04em;
+  text-shadow: 0 2px 24px rgba(0, 0, 0, 0.5);
+}
+
 .hero__subtitle {
   margin-top: var(--space-2);
   max-width: 50ch;

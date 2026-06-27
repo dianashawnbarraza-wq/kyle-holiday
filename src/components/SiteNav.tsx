@@ -91,11 +91,21 @@ export function SiteNav() {
           aria-label="Close menu"
           onClick={closeMenu}
         />
-        <NavLinks
-          suppressActive={suppressActive}
-          onNavigate={closeMenu}
-          className="site-nav__links site-nav__links--mobile"
-        />
+        <div className="site-nav__mobile-panel">
+          <button
+            type="button"
+            className="site-nav__close"
+            aria-label="Close menu"
+            onClick={closeMenu}
+          >
+            <span className="site-nav__close-icon" aria-hidden="true" />
+          </button>
+          <NavLinks
+            suppressActive={suppressActive}
+            onNavigate={closeMenu}
+            className="site-nav__links site-nav__links--mobile"
+          />
+        </div>
       </div>,
       document.body,
     );
