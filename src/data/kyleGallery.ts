@@ -3,7 +3,7 @@ import type { GalleryImage } from "./gallery";
 export type KyleGalleryImage = GalleryImage;
 
 export const kyleGallerySection = {
-  title: "Title Year Flex",
+  title: "My Title Year",
   subtitle: "Some pics from my title year.",
 } as const;
 
