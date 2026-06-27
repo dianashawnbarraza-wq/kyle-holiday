@@ -29,12 +29,13 @@ export function HomePage() {
               <div className="home-intro__copy">
                 <p className="home-intro__text">
                   Hi, I&apos;m Kyle (Mx. Cruise LA Leather 2026, they/he).
-                  I&apos;m a Latine artist, leatherworker, custom pet play tag
-                  maker, and kinkster based in Los Angeles.
+                  I&apos;m a Latine artist, leatherworker, pet play accessory
+                  maker and kinkster.
                 </p>
                 <p className="home-intro__text">
-                  Glad you&apos;re here and you can{" "}
-                  <Link to="/about">read more about me here</Link>.
+                  Glad you found me and come see me at my events or every 3rd
+                  Saturday at Cruise LA (Eagle LA). Read more about me{" "}
+                  <Link to="/about">here</Link>.
                 </p>
               </div>
             </div>
