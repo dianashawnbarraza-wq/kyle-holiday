@@ -1,7 +1,39 @@
 import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { navLinks, site } from "../data/site";
 import "./SiteNav.css";
+
+function NavLinks({
+  suppressActive,
+  onNavigate,
+  className,
+  id,
+}: {
+  suppressActive: boolean;
+  onNavigate?: () => void;
+  className: string;
+  id?: string;
+}) {
+  return (
+    <nav id={id} className={className} aria-label="Main navigation">
+      {navLinks.map((link) => (
+        <NavLink
+          key={link.to}
+          to={link.to}
+          className={({ isActive }) =>
+            `site-nav__link${
+              isActive && !suppressActive ? " site-nav__link--active" : ""
+            }`
+          }
+          onClick={onNavigate}
+        >
+          {link.label}
+        </NavLink>
+      ))}
+    </nav>
+  );
+}
 
 export function SiteNav() {
   const { pathname, hash } = useLocation();
@@ -16,6 +48,7 @@ export function SiteNav() {
   useEffect(() => {
     if (!menuOpen) return;
 
+    const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
 
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -27,7 +60,7 @@ export function SiteNav() {
     window.addEventListener("keydown", handleKeyDown);
 
     return () => {
-      document.body.style.overflow = "";
+      document.body.style.overflow = previousOverflow;
       window.removeEventListener("keydown", handleKeyDown);
     };
   }, [menuOpen]);
@@ -43,6 +76,29 @@ export function SiteNav() {
     }
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
+
+  const handleToggle = () => {
+    setMenuOpen((open) => !open);
+  };
+
+  const mobileMenu =
+    menuOpen &&
+    createPortal(
+      <div className="site-nav__mobile-root" role="presentation">
+        <button
+          type="button"
+          className="site-nav__backdrop"
+          aria-label="Close menu"
+          onClick={closeMenu}
+        />
+        <NavLinks
+          suppressActive={suppressActive}
+          onNavigate={closeMenu}
+          className="site-nav__links site-nav__links--mobile"
+        />
+      </div>,
+      document.body,
+    );
 
   return (
     <header className={`site-nav${menuOpen ? " site-nav--open" : ""}`}>
@@ -66,40 +122,19 @@ export function SiteNav() {
           aria-expanded={menuOpen}
           aria-controls="site-nav-menu"
           aria-label={menuOpen ? "Close menu" : "Open menu"}
-          onClick={() => setMenuOpen((open) => !open)}
+          onClick={handleToggle}
         >
           <span className="site-nav__toggle-icon" aria-hidden="true" />
         </button>
 
-        <nav
+        <NavLinks
+          suppressActive={suppressActive}
+          className="site-nav__links site-nav__links--desktop"
           id="site-nav-menu"
-          className="site-nav__links"
-          aria-label="Main navigation"
-        >
-          {navLinks.map((link) => (
-            <NavLink
-              key={link.to}
-              to={link.to}
-              className={({ isActive }) =>
-                `site-nav__link${
-                  isActive && !suppressActive ? " site-nav__link--active" : ""
-                }`
-              }
-              onClick={closeMenu}
-            >
-              {link.label}
-            </NavLink>
-          ))}
-        </nav>
+        />
       </div>
 
-      <button
-        type="button"
-        className="site-nav__backdrop"
-        aria-label="Close menu"
-        tabIndex={menuOpen ? 0 : -1}
-        onClick={closeMenu}
-      />
+      {mobileMenu}
     </header>
   );
 }
