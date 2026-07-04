@@ -15,21 +15,53 @@ function NavLinks({
   className: string;
   id?: string;
 }) {
+  const { pathname, hash } = useLocation();
+
+  const isSubLinkActive = (to: string) => {
+    const [toPath, toHash] = to.split("#");
+    if (pathname !== toPath) return false;
+    return hash === `#${toHash}` || (!hash && toHash === "pet-play-tags");
+  };
+
   return (
     <nav id={id} className={className} aria-label="Main navigation">
       {navLinks.map((link) => (
-        <NavLink
+        <div
           key={link.to}
-          to={link.to}
-          className={({ isActive }) =>
-            `site-nav__link${
-              isActive && !suppressActive ? " site-nav__link--active" : ""
-            }`
-          }
-          onClick={onNavigate}
+          className={`site-nav__item${
+            "children" in link ? " site-nav__item--has-children" : ""
+          }`}
         >
-          {link.label}
-        </NavLink>
+          <NavLink
+            to={link.to}
+            className={({ isActive }) =>
+              `site-nav__link${
+                isActive && !suppressActive ? " site-nav__link--active" : ""
+              }`
+            }
+            onClick={onNavigate}
+          >
+            {link.label}
+          </NavLink>
+          {"children" in link && (
+            <div className="site-nav__submenu" aria-label={`${link.label} sections`}>
+              {link.children.map((child) => (
+                <NavLink
+                  key={child.to}
+                  to={child.to}
+                  className={`site-nav__submenu-link${
+                    isSubLinkActive(child.to)
+                      ? " site-nav__submenu-link--active"
+                      : ""
+                  }`}
+                  onClick={onNavigate}
+                >
+                  {child.label}
+                </NavLink>
+              ))}
+            </div>
+          )}
+        </div>
       ))}
     </nav>
   );
@@ -123,7 +155,10 @@ export function SiteNav() {
               height={40}
             />
           </span>
-          <span className="site-nav__name">{site.name}</span>
+          <span className="site-nav__brand-text">
+            <span className="site-nav__name">{site.name}</span>
+            <span className="site-nav__tagline">{site.tagline}</span>
+          </span>
         </NavLink>
 
         <button

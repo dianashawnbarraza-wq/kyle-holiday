@@ -1,3 +1,5 @@
+import { useMemo, useState } from "react";
+import { useLocation } from "react-router-dom";
 import { CTAButton } from "../components/CTAButton";
 import { GalleryGrid } from "../components/GalleryGrid";
 import { SectionHeader } from "../components/SectionHeader";
@@ -5,7 +7,7 @@ import { TagGallery } from "../components/TagGallery";
 import { artStickers, artTshirts } from "../data/art";
 import { leatherCategories, leatherDetails, leatherIntro } from "../data/leatherwork";
 import { site } from "../data/site";
-import { tagGallery } from "../data/tags";
+import { tagGallery, type TagShape } from "../data/tags";
 import "./ShopPage.css";
 
 const shopCategories = [
@@ -14,9 +16,28 @@ const shopCategories = [
   { href: "#art", label: "Art" },
 ] as const;
 
+const tagFilters: { value: "all" | TagShape; label: string }[] = [
+  { value: "all", label: "All" },
+  { value: "bone", label: "Bones" },
+  { value: "round", label: "Round Tags" },
+  { value: "heart", label: "Hearts" },
+  { value: "other", label: "Other" },
+];
+
 const artShopItems = [...artStickers, ...artTshirts];
 
 export function ShopPage() {
+  const { hash } = useLocation();
+  const [activeTagFilter, setActiveTagFilter] = useState<"all" | TagShape>(
+    "all",
+  );
+  const activeCategory = hash || "#pet-play-tags";
+
+  const filteredTags = useMemo(() => {
+    if (activeTagFilter === "all") return tagGallery;
+    return tagGallery.filter((tag) => tag.shape === activeTagFilter);
+  }, [activeTagFilter]);
+
   return (
     <div className="page shop-page">
       <div className="page-inner">
@@ -27,15 +48,22 @@ export function ShopPage() {
         />
 
         <nav className="shop-page__category-nav" aria-label="Shop categories">
-          {shopCategories.map((category) => (
-            <a
-              key={category.href}
-              href={category.href}
-              className="shop-page__category-link"
-            >
-              {category.label}
-            </a>
-          ))}
+          {shopCategories.map((category) => {
+            const isActive = activeCategory === category.href;
+
+            return (
+              <a
+                key={category.href}
+                href={category.href}
+                className={`shop-page__category-link${
+                  isActive ? " shop-page__category-link--active" : ""
+                }`}
+                aria-current={isActive ? "true" : undefined}
+              >
+                {category.label}
+              </a>
+            );
+          })}
         </nav>
 
         <section className="section shop-section" id="pet-play-tags">
@@ -48,7 +76,39 @@ export function ShopPage() {
               Shop All on Etsy
             </CTAButton>
           </div>
-          <TagGallery items={tagGallery} />
+
+          <div className="shop-filter" aria-label="Filter pet play tags by shape">
+            {tagFilters.map((filter) => {
+              const isActive = activeTagFilter === filter.value;
+              const count =
+                filter.value === "all"
+                  ? tagGallery.length
+                  : tagGallery.filter((tag) => tag.shape === filter.value).length;
+
+              return (
+                <button
+                  key={filter.value}
+                  type="button"
+                  className={`shop-filter__button${
+                    isActive ? " shop-filter__button--active" : ""
+                  }`}
+                  aria-pressed={isActive}
+                  onClick={() => setActiveTagFilter(filter.value)}
+                >
+                  {filter.label}
+                  <span className="shop-filter__count">{count}</span>
+                </button>
+              );
+            })}
+          </div>
+
+          {filteredTags.length > 0 ? (
+            <TagGallery items={filteredTags} />
+          ) : (
+            <p className="shop-filter__empty">
+              No active Etsy listings in this shape yet. Check back soon.
+            </p>
+          )}
         </section>
 
         <section className="section shop-section" id="leatherwork">

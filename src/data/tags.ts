@@ -1,5 +1,7 @@
 import type { GalleryImage } from "./gallery";
 
+export type TagShape = "bone" | "round" | "heart" | "other";
+
 export type TagPiece = {
   id: string;
   title: string;
@@ -7,6 +9,7 @@ export type TagPiece = {
   src: string;
   alt: string;
   shopUrl: string;
+  shape: TagShape;
 };
 
 export const tagIntroImage = {
@@ -44,6 +47,7 @@ export const tagGallery: TagPiece[] = [
     id: "puppy-bone-old-english",
     title: "Personalized Puppy Play Collar Tag",
     caption: "Bone shape, Old English font",
+    shape: "bone",
     src: "/images/tags/etsy/puppy-bone.jpg",
     alt: "Personalized puppy play collar tag in bone shape with Old English font",
     shopUrl:
@@ -53,6 +57,7 @@ export const tagGallery: TagPiece[] = [
     id: "double-sided-bone",
     title: "Double-Sided Pup/Pet Collar Tag",
     caption: "Bone shape, engraved on both sides",
+    shape: "bone",
     src: "/images/tags/etsy/double-sided-bone.jpg",
     alt: "Double-sided personalized pup pet collar tag in bone shape",
     shopUrl:
@@ -62,6 +67,7 @@ export const tagGallery: TagPiece[] = [
     id: "heart-tag",
     title: "Heart Pet Play Tag",
     caption: "Heart shape, custom engraving",
+    shape: "heart",
     src: "/images/tags/etsy/heart-tag.jpg",
     alt: "Custom heart pet play tag with engraved text",
     shopUrl:
@@ -71,6 +77,7 @@ export const tagGallery: TagPiece[] = [
     id: "barbed-wire-bone",
     title: "Barbed Wire Puppy/Pet Play Collar Tag",
     caption: "Bone shape with barbed wire border",
+    shape: "bone",
     src: "/images/tags/etsy/barbed-wire-bone.jpg",
     alt: "Personalized barbed wire puppy pet play collar tag in bone shape",
     shopUrl:
@@ -80,6 +87,7 @@ export const tagGallery: TagPiece[] = [
     id: "chain-bone",
     title: "Chain Bone Puppy/Pet Play Collar Tag",
     caption: "Bone shape with chain link border",
+    shape: "bone",
     src: "/images/tags/etsy/chain-bone.png",
     alt: "Personalized chain bone puppy pet play tags in yellow, pink, and blue with custom engraving",
     shopUrl:
@@ -89,6 +97,7 @@ export const tagGallery: TagPiece[] = [
     id: "toony-font-bone",
     title: "Toony Font Puppy Play Collar Tag",
     caption: "Bone shape, toony font",
+    shape: "bone",
     src: "/images/tags/etsy/toony-font-bone.jpg",
     alt: "Personalized toony font puppy play collar tag in bone shape",
     shopUrl:
@@ -98,6 +107,7 @@ export const tagGallery: TagPiece[] = [
     id: "barbed-wire-custom",
     title: "Custom Engraved Barbed Wire Tag",
     caption: "Barbed wire border, custom text",
+    shape: "other",
     src: "/images/tags/etsy/barbed-wire-custom.jpg",
     alt: "Custom engraved barbed wire pet play collar tag",
     shopUrl:

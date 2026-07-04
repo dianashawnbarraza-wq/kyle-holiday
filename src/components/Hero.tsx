@@ -19,7 +19,6 @@ export function Hero({ compact = false }: HeroProps) {
         />
       </div>
       <div className="hero__content">
-        <p className="hero__eyebrow">{site.tagline}</p>
         <h1 className="hero__title">{site.name}</h1>
         {!compact && (
           <>
