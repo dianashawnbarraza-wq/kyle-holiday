@@ -22,8 +22,13 @@ export function Hero({ compact = false }: HeroProps) {
         <h1 className="hero__title">{site.name}</h1>
         {!compact && (
           <>
-            <p className="hero__role">{site.title}</p>
-            <h2 className="hero__subtitle">{site.heroIntro}</h2>
+            <p className="hero__role">
+              <span>{site.title}</span>
+              <span className="hero__role-separator" aria-hidden="true">
+                ·
+              </span>
+              <span>Making Play Personal</span>
+            </p>
             <div className="hero__ctas cta-group">
               <CTAButton to="/shop">Shop</CTAButton>
               <CTAButton to="/#events" variant="secondary">
