@@ -6,6 +6,7 @@ import { ScrollToHash } from "./components/ScrollToHash";
 import { HomePage } from "./pages/HomePage";
 import { AboutPage } from "./pages/AboutPage";
 import { PetPlayTagsPage } from "./pages/PetPlayTagsPage";
+import { ShopPage } from "./pages/ShopPage";
 import { ArtPage } from "./pages/ArtPage";
 import { LeatherworkPage } from "./pages/LeatherworkPage";
 import { ContactPage } from "./pages/ContactPage";
@@ -20,6 +21,7 @@ export default function App() {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/about" element={<AboutPage />} />
+          <Route path="/shop" element={<ShopPage />} />
           <Route path="/pet-play-tags" element={<PetPlayTagsPage />} />
           <Route path="/art" element={<ArtPage />} />
           <Route path="/leatherwork" element={<LeatherworkPage />} />

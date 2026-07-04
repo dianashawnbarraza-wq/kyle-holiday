@@ -26,11 +26,12 @@ export function Hero({ compact = false }: HeroProps) {
             <p className="hero__role">{site.title}</p>
             <h2 className="hero__subtitle">{site.heroIntro}</h2>
             <div className="hero__ctas cta-group">
-              <CTAButton to="/pet-play-tags">Pet Play Tags</CTAButton>
+              <CTAButton to="/shop">Shop</CTAButton>
               <CTAButton to="/#events" variant="secondary">
                 Events
               </CTAButton>
             </div>
+            <p className="hero__cta-note">New pet play tag styles!</p>
           </>
         )}
       </div>

@@ -94,6 +94,14 @@
   margin-top: var(--space-4);
 }
 
+.hero__cta-note {
+  margin-top: var(--space-2);
+  color: var(--accent-light);
+  font-size: 0.95rem;
+  letter-spacing: 0.04em;
+  text-shadow: 0 2px 24px rgba(0, 0, 0, 0.5);
+}
+
 @media (max-width: 640px) {
   .hero {
     min-height: 62vh;

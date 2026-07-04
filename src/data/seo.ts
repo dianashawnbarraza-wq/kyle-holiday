@@ -49,6 +49,21 @@ export const pageSeo: Record<string, PageSeoConfig> = {
     path: "/",
     keywords: sharedKeywords,
   },
+  "/shop": {
+    title: "Shop Pet Play Tags, Leatherwork & Art | Kyle Holiday",
+    description:
+      "Shop Kyle Holiday pet play tags, puppy play collar tags, custom leatherwork, stickers, tees, and queer art. Leather Work is easy to find as the second shop section.",
+    path: "/shop",
+    keywords: [
+      "Kyle Holiday shop",
+      "pet play tags",
+      "custom leatherwork",
+      "leather work",
+      "queer art",
+      "puppy play tag",
+      ...sharedKeywords,
+    ],
+  },
   "/pet-play-tags": {
     title: "Custom Pet Play Tags & Puppy Play ID Tags | Kyle Holiday",
     description:
@@ -232,7 +247,7 @@ export function getJsonLdForPath(pathname: string): Record<string, unknown>[] {
     graphs.push(cruiseLaEventJsonLd);
   }
 
-  if (pathname === "/pet-play-tags") {
+  if (pathname === "/pet-play-tags" || pathname === "/shop") {
     graphs.push(petTagsItemListJsonLd);
     graphs.push({
       "@context": "https://schema.org",

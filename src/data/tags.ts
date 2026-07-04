@@ -77,6 +77,15 @@ export const tagGallery: TagPiece[] = [
       "https://www.etsy.com/listing/1836159961/personalized-puppy-play-collar-tag",
   },
   {
+    id: "chain-bone",
+    title: "Chain Bone Puppy/Pet Play Collar Tag",
+    caption: "Bone shape with chain link border",
+    src: "/images/tags/etsy/chain-bone.png",
+    alt: "Personalized chain bone puppy pet play tags in yellow, pink, and blue with custom engraving",
+    shopUrl:
+      "https://www.etsy.com/listing/4528276792/personalized-chain-puppypet-play-collar",
+  },
+  {
     id: "toony-font-bone",
     title: "Toony Font Puppy Play Collar Tag",
     caption: "Bone shape, toony font",
