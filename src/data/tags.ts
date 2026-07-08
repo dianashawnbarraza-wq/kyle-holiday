@@ -58,7 +58,7 @@ export const tagGallery: TagPiece[] = [
     title: "Double-Sided Pup/Pet Collar Tag",
     caption: "Bone shape, engraved on both sides",
     shape: "bone",
-    src: "/images/tags/etsy/double-sided-bone.png",
+    src: "/images/tags/etsy/double-sided-bone.jpg",
     alt: "Double-sided blue bone pet play tags engraved with Stray on the front and custom pet ID details on the back",
     shopUrl:
       "https://www.etsy.com/listing/4509742979/double-sided-personalized-puppet-collar",
@@ -68,7 +68,7 @@ export const tagGallery: TagPiece[] = [
     title: "Heart Pet Play Tag",
     caption: "Heart shape, custom engraving",
     shape: "heart",
-    src: "/images/tags/etsy/heart-tag.png",
+    src: "/images/tags/etsy/heart-tag.jpg",
     alt: "Assorted heart-shaped pet play tags in multiple colors with custom engraving — good girl, femme, feral, and more",
     shopUrl:
       "https://www.etsy.com/listing/1840728495/custom-heart-pet-play-tag-engraved",
