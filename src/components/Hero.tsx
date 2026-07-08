@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { CTAButton } from "./CTAButton";
 import { site } from "../data/site";
 import "./Hero.css";
@@ -30,12 +31,18 @@ export function Hero({ compact = false }: HeroProps) {
               <span>Making Play Personal</span>
             </p>
             <div className="hero__ctas cta-group">
-              <CTAButton to="/shop">Shop</CTAButton>
+              <CTAButton to="/shop#pet-play-tags">Shop</CTAButton>
               <CTAButton to="/#events" variant="secondary">
                 Events
               </CTAButton>
             </div>
-            <p className="hero__cta-note">New pet play tag styles!</p>
+            <p className="hero__cta-note">
+              New{" "}
+              <Link to="/shop#pet-play-tags" className="hero__cta-note-link">
+                pet play tag
+              </Link>{" "}
+              styles!
+            </p>
           </>
         )}
       </div>

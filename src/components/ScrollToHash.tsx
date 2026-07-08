@@ -11,9 +11,11 @@ export function ScrollToHash() {
       if (target) {
         const nav = document.querySelector(".site-nav");
         const subnav = document.querySelector(".art-subnav");
+        const shopFilters = document.querySelector(".shop-page__category-nav");
         const offset =
           (nav?.getBoundingClientRect().height ?? 0) +
           (subnav?.getBoundingClientRect().height ?? 0) +
+          (shopFilters?.getBoundingClientRect().height ?? 0) +
           16;
         const top =
           target.getBoundingClientRect().top + window.scrollY - offset;

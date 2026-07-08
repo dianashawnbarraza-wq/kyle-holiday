@@ -29,7 +29,7 @@ export const site = {
 export const navLinks = [
   { to: "/#events", label: "Events" },
   {
-    to: "/shop",
+    to: "/shop#pet-play-tags",
     label: "Shop",
     children: [
       { to: "/shop#pet-play-tags", label: "Pet Play Tags" },

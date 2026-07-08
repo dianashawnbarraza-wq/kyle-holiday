@@ -110,6 +110,16 @@
   text-shadow: 0 2px 24px rgba(0, 0, 0, 0.5);
 }
 
+.hero__cta-note-link {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
+.hero__cta-note-link:hover {
+  color: var(--text-primary);
+}
+
 @media (max-width: 640px) {
   .hero {
     min-height: 62vh;

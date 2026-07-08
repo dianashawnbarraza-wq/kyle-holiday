@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import { CTAButton } from "../components/CTAButton";
 import { GalleryGrid } from "../components/GalleryGrid";
 import { SectionHeader } from "../components/SectionHeader";
@@ -20,8 +21,28 @@ type ShopFilter = (typeof shopFilters)[number]["value"];
 
 const artShopItems = [...artStickers, ...artTshirts];
 
+function filterFromHash(hash: string): ShopFilter {
+  if (hash === "#leatherwork") return "leatherwork";
+  if (hash === "#art") return "art";
+  if (hash === "#pet-play-tags" || hash === "") return "pet-play-tags";
+  return "pet-play-tags";
+}
+
 export function ShopPage() {
-  const [activeFilter, setActiveFilter] = useState<ShopFilter>("all");
+  const { hash } = useLocation();
+  const navigate = useNavigate();
+  const [activeFilter, setActiveFilter] = useState<ShopFilter>(() =>
+    filterFromHash(hash),
+  );
+
+  useEffect(() => {
+    if (!hash) {
+      navigate("/shop#pet-play-tags", { replace: true });
+      return;
+    }
+
+    setActiveFilter(filterFromHash(hash));
+  }, [hash, navigate]);
 
   const showSection = (section: Exclude<ShopFilter, "all">) =>
     activeFilter === "all" || activeFilter === section;
