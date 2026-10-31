@@ -55,6 +55,11 @@
   margin-bottom: var(--space-3);
 }
 
+.shop-section__hall-of-fame {
+  margin-top: var(--space-5);
+  scroll-margin-top: calc(var(--nav-height) + var(--space-6));
+}
+
 
 .shop-leather-grid {
   display: grid;
