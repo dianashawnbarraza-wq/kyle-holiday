@@ -2,12 +2,13 @@ import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { CTAButton } from "../components/CTAButton";
 import { GalleryGrid } from "../components/GalleryGrid";
+import { KyleGallery } from "../components/KyleGallery";
 import { SectionHeader } from "../components/SectionHeader";
 import { TagGallery } from "../components/TagGallery";
 import { artStickers, artTshirts } from "../data/art";
 import { leatherCategories, leatherDetails, leatherIntro } from "../data/leatherwork";
 import { site } from "../data/site";
-import { tagGallery } from "../data/tags";
+import { tagGallery, tagHallOfFame } from "../data/tags";
 import "./ShopPage.css";
 
 const shopFilters = [
@@ -88,6 +89,11 @@ export function ShopPage() {
               </CTAButton>
             </div>
             <TagGallery items={tagGallery} />
+
+            <div className="shop-section__hall-of-fame" id="tag-hall-of-fame">
+              <SectionHeader title="Tag Hall of Fame" />
+              <KyleGallery images={tagHallOfFame} />
+            </div>
           </section>
         )}
 
