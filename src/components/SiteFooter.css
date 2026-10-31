@@ -1,6 +1,6 @@
 .site-footer {
-  border-top: 1px solid var(--border-subtle);
-  background: var(--bg-warm);
+  border-top: 1px solid rgba(232, 51, 42, 0.18);
+  background: #0d0d0d;
   padding: var(--space-5) var(--space-3) var(--space-4);
 }
 
@@ -24,7 +24,7 @@
 }
 
 .site-footer__brand:hover .site-footer__name {
-  color: var(--accent-light);
+  color: #e8332a;
 }
 
 .site-footer__logo-wrap {
@@ -64,8 +64,9 @@
   transition: color var(--transition);
 }
 
+.site-footer a.site-footer__link:hover,
 .site-footer__link:hover {
-  color: var(--accent-light);
+  color: #e8332a;
 }
 
 .site-footer__copy {

@@ -1,25 +1,25 @@
 :root {
   --bg-deep: #0d0d0d;
-  --bg-warm: #121612;
-  --bg-surface: #181c18;
-  --bg-elevated: #1f241f;
+  --bg-warm: #141010;
+  --bg-surface: #1a1414;
+  --bg-elevated: #221818;
 
   --text-primary: #e8e0d8;
-  --text-muted: #9a9f95;
-  --text-faint: #6b7068;
+  --text-muted: #a39a96;
+  --text-faint: #746c68;
 
-  --accent: #8fce78;
-  --accent-light: #b5e8a4;
-  --accent-hover: #a3e890;
-  --accent-glow: rgba(163, 232, 144, 0.35);
-  --accent-border: rgba(181, 232, 164, 0.55);
-  --accent-subtle: rgba(143, 206, 120, 0.16);
+  --accent: #e8332a;
+  --accent-light: #ff5a52;
+  --accent-hover: #c9221c;
+  --accent-glow: rgba(232, 51, 42, 0.35);
+  --accent-border: rgba(232, 51, 42, 0.55);
+  --accent-subtle: rgba(232, 51, 42, 0.16);
 
-  --border-subtle: rgba(181, 232, 164, 0.12);
-  --border-hover: rgba(181, 232, 164, 0.24);
+  --border-subtle: rgba(232, 51, 42, 0.12);
+  --border-hover: rgba(232, 51, 42, 0.28);
 
   --font-display: "Cormorant Garamond", "Libre Baskerville", Georgia, serif;
-  --font-brand: "UnifrakturMaguntia", "Old English Text MT", Georgia, serif;
+  --font-brand: "Germania One", "Old English Text MT", Georgia, serif;
   --font-body: "DM Sans", system-ui, -apple-system, sans-serif;
 
   --radius-sm: 6px;

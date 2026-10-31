@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=UnifrakturMaguntia&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=Germania+One&display=swap");
 
 @import "./tokens.css";
 
@@ -26,6 +26,59 @@ body {
   overflow-x: clip;
 }
 
+@media (pointer: fine) {
+  /* Default site chrome is dark — red cursor */
+  body,
+  a,
+  button,
+  [role="button"] {
+    cursor: url("/images/cursor-plug-red.svg") 16 2, auto;
+  }
+
+  /* Soften over text on dark surfaces */
+  p,
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  li,
+  label,
+  blockquote,
+  figcaption,
+  td,
+  th,
+  .prose {
+    cursor: url("/images/cursor-plug-red-soft.svg") 16 2, text;
+  }
+
+  /* Black cursor on red surfaces */
+  .cursor-on-red,
+  .cursor-on-red a,
+  .cursor-on-red button,
+  .cursor-on-red [role="button"] {
+    cursor: url("/images/cursor-plug.svg") 16 2, auto;
+  }
+
+  .cursor-on-red p,
+  .cursor-on-red h1,
+  .cursor-on-red h2,
+  .cursor-on-red h3,
+  .cursor-on-red h4,
+  .cursor-on-red h5,
+  .cursor-on-red h6,
+  .cursor-on-red li,
+  .cursor-on-red label,
+  .cursor-on-red blockquote,
+  .cursor-on-red figcaption,
+  .cursor-on-red td,
+  .cursor-on-red th,
+  .cursor-on-red .prose {
+    cursor: url("/images/cursor-plug-soft.svg") 16 2, text;
+  }
+}
+
 body::before {
   content: "";
   position: fixed;
@@ -34,7 +87,7 @@ body::before {
   z-index: 1;
   background:
     radial-gradient(ellipse 80% 50% at 50% -10%, var(--accent-subtle), transparent),
-    radial-gradient(ellipse 60% 40% at 80% 100%, rgba(40, 55, 38, 0.15), transparent),
+    radial-gradient(ellipse 60% 40% at 80% 100%, rgba(80, 28, 24, 0.18), transparent),
     url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
   opacity: 0.9;
 }
@@ -82,15 +135,23 @@ h4 {
 }
 
 h1 {
-  font-size: clamp(2.5rem, 6vw, 4rem);
+  font-size: clamp(3rem, 7vw, 4.75rem);
 }
 
 h2 {
-  font-size: clamp(1.75rem, 4vw, 2.5rem);
+  font-size: clamp(2.25rem, 5vw, 3.25rem);
 }
 
 h3 {
-  font-size: clamp(1.25rem, 2.5vw, 1.5rem);
+  font-size: clamp(1.5rem, 3vw, 2rem);
+}
+
+h4 {
+  font-size: clamp(1.2rem, 2.2vw, 1.45rem);
+}
+
+p {
+  font-size: 16px;
 }
 
 p + p {

@@ -1,9 +1,7 @@
-import { Link } from "react-router-dom";
-import { CTAButton } from "./CTAButton";
 import { site } from "../data/site";
 import "./Hero.css";
 
-const heroImage = "/images/hero.png";
+const heroImage = "/images/hero-cruise-vest.jpg";
 
 type HeroProps = {
   compact?: boolean;
@@ -11,40 +9,22 @@ type HeroProps = {
 
 export function Hero({ compact = false }: HeroProps) {
   return (
-    <section className={`hero${compact ? " hero--compact" : ""}`}>
-      <div className="hero__bg">
-        <img
-          src={heroImage}
-          alt="Kyle Holiday self portrait in leather at a bar entrance"
-          className="hero__image"
-        />
-      </div>
-      <div className="hero__content">
-        <h1 className="hero__title">{site.name}</h1>
-        {!compact && (
-          <>
-            <p className="hero__role">
-              <span>{site.title}</span>
-              <span className="hero__role-separator" aria-hidden="true">
-                ·
-              </span>
-              <span>Making Play Personal</span>
-            </p>
-            <div className="hero__ctas cta-group">
-              <CTAButton to="/shop#pet-play-tags">Shop</CTAButton>
-              <CTAButton to="/#events" variant="secondary">
-                Events
-              </CTAButton>
-            </div>
-            <p className="hero__cta-note">
-              New{" "}
-              <Link to="/shop#pet-play-tags" className="hero__cta-note-link">
-                pet play tag
-              </Link>{" "}
-              styles!
-            </p>
-          </>
-        )}
+    <section
+      className={`hero cursor-on-red${compact ? " hero--compact" : ""}`}
+    >
+      <div className="hero__layout">
+        <div className="hero__copy">
+          <h1 className="hero__title">{site.name}</h1>
+          <p className="hero__tagline">{site.heroIntro.replace(/\.$/, "")}</p>
+        </div>
+
+        <div className="hero__media">
+          <img
+            src={heroImage}
+            alt="Kyle Holiday from behind in a black leather vest with Mx. Cruise LA Leather 2026 title patch"
+            className="hero__image"
+          />
+        </div>
       </div>
     </section>
   );

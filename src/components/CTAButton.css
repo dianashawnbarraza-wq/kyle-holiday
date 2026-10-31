@@ -24,16 +24,17 @@
 }
 
 .cta-btn--primary {
-  background: var(--accent);
-  color: var(--bg-deep);
-  border-color: var(--accent);
-  box-shadow: var(--shadow-glow);
+  background: #e8332a;
+  color: #ffffff;
+  border-color: #e8332a;
+  box-shadow: none;
 }
 
 .cta-btn--primary:hover {
-  background: var(--accent-hover);
-  color: var(--bg-deep);
-  box-shadow: 0 0 48px var(--accent-glow);
+  background: #c9221c;
+  color: #ffffff;
+  border-color: #c9221c;
+  box-shadow: none;
 }
 
 .cta-btn--secondary {
@@ -44,7 +45,7 @@
 
 .cta-btn--secondary:hover {
   background: var(--accent-subtle);
-  color: var(--text-primary);
+  color: var(--accent-light);
   border-color: var(--accent);
 }
 

@@ -1,6 +1,7 @@
 export const site = {
   name: "Kyle Holiday",
   logo: "/logo.png",
+  brandMark: "KH",
   tagline: "Leather · Play · Art",
   pronouns: "he/they",
   title: "Mx. Cruise LA Leather 2026",
@@ -27,16 +28,10 @@ export const site = {
 } as const;
 
 export const navLinks = [
+  { to: "/art", label: "Art" },
+  { to: "/shop#pet-play-tags", label: "Tags" },
+  { to: "/leatherwork", label: "Leather" },
   { to: "/#events", label: "Events" },
-  {
-    to: "/shop#pet-play-tags",
-    label: "Shop",
-    children: [
-      { to: "/shop#pet-play-tags", label: "Pet Play Tags" },
-      { to: "/shop#leatherwork", label: "Leather Work" },
-      { to: "/shop#art", label: "Art" },
-    ],
-  },
   { to: "/about", label: "About" },
   { to: "/contact", label: "Contact" },
 ] as const;

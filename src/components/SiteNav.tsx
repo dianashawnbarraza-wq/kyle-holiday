@@ -15,53 +15,21 @@ function NavLinks({
   className: string;
   id?: string;
 }) {
-  const { pathname, hash } = useLocation();
-
-  const isSubLinkActive = (to: string) => {
-    const [toPath, toHash] = to.split("#");
-    if (pathname !== toPath) return false;
-    return hash === `#${toHash}` || (!hash && toHash === "pet-play-tags");
-  };
-
   return (
     <nav id={id} className={className} aria-label="Main navigation">
       {navLinks.map((link) => (
-        <div
+        <NavLink
           key={link.to}
-          className={`site-nav__item${
-            "children" in link ? " site-nav__item--has-children" : ""
-          }`}
+          to={link.to}
+          className={({ isActive }) =>
+            `site-nav__link${
+              isActive && !suppressActive ? " site-nav__link--active" : ""
+            }`
+          }
+          onClick={onNavigate}
         >
-          <NavLink
-            to={link.to}
-            className={({ isActive }) =>
-              `site-nav__link${
-                isActive && !suppressActive ? " site-nav__link--active" : ""
-              }`
-            }
-            onClick={onNavigate}
-          >
-            {link.label}
-          </NavLink>
-          {"children" in link && (
-            <div className="site-nav__submenu" aria-label={`${link.label} sections`}>
-              {link.children.map((child) => (
-                <NavLink
-                  key={child.to}
-                  to={child.to}
-                  className={`site-nav__submenu-link${
-                    isSubLinkActive(child.to)
-                      ? " site-nav__submenu-link--active"
-                      : ""
-                  }`}
-                  onClick={onNavigate}
-                >
-                  {child.label}
-                </NavLink>
-              ))}
-            </div>
-          )}
-        </div>
+          {link.label}
+        </NavLink>
       ))}
     </nav>
   );
@@ -71,7 +39,8 @@ export function SiteNav() {
   const { pathname, hash } = useLocation();
   const navigate = useNavigate();
   const [menuOpen, setMenuOpen] = useState(false);
-  const suppressActive = pathname === "/";
+  const isHome = pathname === "/";
+  const suppressActive = isHome;
 
   useEffect(() => {
     setMenuOpen(false);
@@ -143,22 +112,20 @@ export function SiteNav() {
     );
 
   return (
-    <header className={`site-nav${menuOpen ? " site-nav--open" : ""}`}>
+    <header
+      className={`site-nav${menuOpen ? " site-nav--open" : ""}${
+        isHome ? " site-nav--home" : ""
+      }`}
+    >
       <div className="site-nav__inner">
-        <NavLink to="/" className="site-nav__brand" end onClick={handleBrandClick}>
-          <span className="site-nav__logo-wrap">
-            <img
-              src={site.logo}
-              alt=""
-              className="site-nav__logo"
-              width={40}
-              height={40}
-            />
-          </span>
-          <span className="site-nav__brand-text">
-            <span className="site-nav__name">{site.name}</span>
-            <span className="site-nav__tagline">{site.tagline}</span>
-          </span>
+        <NavLink
+          to="/"
+          className="site-nav__brand"
+          end
+          onClick={handleBrandClick}
+          aria-label={site.name}
+        >
+          <span className="site-nav__mark">{site.brandMark}</span>
         </NavLink>
 
         <button
