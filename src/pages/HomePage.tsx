@@ -43,6 +43,10 @@ export function HomePage() {
       <Hero />
 
       <div className="home-page__content">
+          <section className="section home-spotlight-section">
+            <HomeOfferings />
+          </section>
+
           <section className="section home-intro" ref={introRef}>
             <div className="home-intro__layout">
               <div className="home-intro__photo-wrap">
@@ -58,9 +62,9 @@ export function HomePage() {
                   Making art, leather, and trouble
                 </h2>
                 <p className="home-intro__text">
-                  Hi, I&apos;m Kyle (Mx. Cruise LA Leather 2026, they/he). Born
-                  in Los Angeles, I&apos;m a Latine artist, leatherworker, pet
-                  play accessory maker, and kinkster. I got into leatherworking
+                  Born in Los Angeles, I&apos;m a Latine artist, leatherworker,
+                  pet play accessory maker, and kinkster. I got into
+                  leatherworking
                   to make gear that was gender affirming and custom. I&apos;m
                   also passionate about sharing my knowledge with others.
                 </p>
@@ -88,10 +92,6 @@ export function HomePage() {
             </div>
           </section>
 
-          <section className="section home-spotlight-section">
-            <HomeOfferings />
-          </section>
-
           <section className="section home-events" id="events">
             <SectionHeader
               title="Events"
@@ -100,7 +100,7 @@ export function HomePage() {
             <CollapsibleEventList events={events} initialCount={4} />
           </section>
 
-          <section className="section">
+          <section className="section home-title-year">
             <SectionHeader
               title={kyleGallerySection.title}
               subtitle={kyleGallerySection.subtitle}

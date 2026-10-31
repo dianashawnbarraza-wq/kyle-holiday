@@ -14,8 +14,8 @@ export function SiteFooter() {
               src={site.logo}
               alt=""
               className="site-footer__logo"
-              width={56}
-              height={56}
+              width={128}
+              height={128}
             />
           </span>
           <span className="site-footer__name">{site.name}</span>

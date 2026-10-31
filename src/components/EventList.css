@@ -9,10 +9,12 @@
   display: grid;
   grid-template-columns: 132px 1fr;
   gap: var(--space-3);
-  padding: var(--space-3);
+  padding: 0;
+  overflow: hidden;
   background: var(--bg-surface);
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-md);
+  align-items: stretch;
   transition: border-color var(--transition), box-shadow var(--transition);
 }
 
@@ -26,14 +28,13 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  align-self: start;
+  align-self: stretch;
   min-width: 118px;
-  padding: 10px 12px;
+  padding: 12px;
   text-align: center;
   color: var(--accent-light);
   background: var(--accent-subtle);
-  border: 1px solid var(--accent-border);
-  border-radius: var(--radius-sm);
+  border-right: 1px solid var(--accent-border);
 }
 
 .event-list__date {
@@ -55,12 +56,15 @@
 .event-list__body {
   display: flex;
   flex-direction: column;
+  justify-content: center;
   gap: 6px;
+  padding: var(--space-3) 0;
 }
 
 .event-list__title {
   font-family: var(--font-display);
   font-size: 1.55rem;
+  font-weight: 700;
   line-height: 1.15;
   color: var(--text-primary);
 }
@@ -85,19 +89,22 @@
   font-size: 0.78rem;
 }
 
-.event-list--compact .event-list__item {
-  padding: var(--space-2);
+.event-list--compact .event-list__body,
+.event-list--compact .event-list__flyer-trigger {
+  padding-block: var(--space-2);
 }
 
 .event-list__item--has-flyer {
   grid-template-columns: 132px 1fr minmax(110px, 160px);
-  align-items: center;
+  align-items: stretch;
 }
 
 .event-list__flyer-trigger {
   display: block;
+  align-self: center;
   width: 100%;
-  padding: 0;
+  padding: var(--space-3);
+  padding-left: 0;
   border: none;
   background: none;
   cursor: pointer;
@@ -134,20 +141,61 @@
 }
 
 @media (max-width: 720px) {
-  .event-list__item {
-    grid-template-columns: 1fr;
-    gap: var(--space-1);
-  }
-
+  .event-list__item,
   .event-list__item--has-flyer {
-    grid-template-columns: 1fr;
+    grid-template-columns: 84px minmax(0, 1fr);
+    grid-template-areas:
+      "when body"
+      "when flyer";
+    gap: 0;
   }
 
-  .event-list__flyer-wrap {
-    max-width: 180px;
+  .event-list__when {
+    grid-area: when;
+    min-width: 0;
+    min-height: 0;
+    padding: 12px 8px;
+  }
+
+  .event-list__date {
+    font-size: 0.92rem;
+    white-space: normal;
+  }
+
+  .event-list__time {
+    font-size: 0.75rem;
+  }
+
+  .event-list__body {
+    grid-area: body;
+    min-width: 0;
+    padding: var(--space-2) var(--space-3) var(--space-2) var(--space-2);
+  }
+
+  .event-list__title {
+    font-size: 1.25rem;
+  }
+
+  .event-list__location,
+  .event-list__role {
+    font-size: 0.95rem;
   }
 
   .event-list__flyer-trigger {
+    grid-area: flyer;
     justify-self: start;
+    width: min(132px, 42%);
+    padding: 0 var(--space-3) var(--space-3) var(--space-2);
+  }
+}
+
+@media (max-width: 400px) {
+  .event-list__item,
+  .event-list__item--has-flyer {
+    grid-template-columns: 76px minmax(0, 1fr);
+  }
+
+  .event-list__title {
+    font-size: 1.15rem;
   }
 }

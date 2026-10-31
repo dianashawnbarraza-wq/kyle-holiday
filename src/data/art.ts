@@ -119,7 +119,7 @@ export const artPrints: ArtPiece[] = [
   {
     id: "great-butts-of-la",
     title: "Great Butts of LA",
-    caption: "Risograph print",
+    caption: "Risograph print + custom frame",
     src: "/images/art/great-butts-of-la.png",
     alt: "Great Butts of LA risograph print by Kyle Holiday",
   },
@@ -129,6 +129,13 @@ export const artPrints: ArtPiece[] = [
     caption: "Risograph print",
     src: "/images/art/olive-garden.jpg",
     alt: "My Pussy Tastes Like Olive Garden — Kyle Holiday Riso Print",
+  },
+  {
+    id: "elvira",
+    title: "Elvira",
+    caption: "Risograph print + custom frame",
+    src: "/images/art/elvira.jpg",
+    alt: "Elvira risograph print in a neon green custom frame by Kyle Holiday",
   },
 ];
 

@@ -45,11 +45,26 @@
 }
 
 .site-nav__mark {
-  font-family: var(--font-brand);
-  font-size: clamp(1.75rem, 3vw, 2.35rem);
-  font-weight: 400;
-  letter-spacing: 0.02em;
-  line-height: 1;
+  position: relative;
+  display: inline-block;
+  padding-top: 0.24em;
+  font-family: var(--font-display);
+  font-size: clamp(1.9rem, 3.2vw, 2.6rem);
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  line-height: 0.9;
+}
+
+.site-nav__horns {
+  position: absolute;
+  top: 0.04em;
+  left: 50%;
+  width: 1.08em;
+  height: 0.44em;
+  transform: translateX(-50%);
+  fill: currentColor;
+  overflow: visible;
+  pointer-events: none;
 }
 
 .site-nav__brand:hover {

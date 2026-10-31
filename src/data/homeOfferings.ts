@@ -17,7 +17,7 @@ export const homeOfferings: HomeOffering[] = [
   {
     id: "tags",
     label: "Play tags",
-    to: "/shop#pet-play-tags",
+    to: "/pet-play-tags",
     image: "/images/tags/hall-of-fame/brat-collar.png",
     imageAlt: "Red bone tag engraved with brat on a black studded leather collar",
   },

@@ -17,7 +17,7 @@ export const tagIntroImage = {
   alt: "Assorted Kyle Holiday pet play tags on branded backing cards — bone, heart, and drop shapes in multiple colors",
 };
 
-export const tagIntro = `Since 2023, I've been helping make play more fun with custom pet play tags, puppy play collar tags, and personalized pet ID tags for pups, handlers, furries, and creatures worldwide. Choose from bone, heart, and drop shapes in 16 colors — including blacklight reactive and glow in the dark options. Each tag is laser-cut, engraved, and handmade in Los Angeles. I've vended at leather and fetish events across Southern California, including the Eagle, Precinct, Bullet Bar, and the International Puppy & Trainer Contest in Chicago. Thank you for the trust!`;
+export const tagIntro = `Since 2023, I've been helping make play more fun with custom pet play tags, puppy play collar tags, and personalized pet ID tags for pups, handlers, furries, and creatures worldwide. Choose from bone, heart, and drop shapes in 16 colors — including blacklight reactive and glow in the dark options. Each tag is laser-cut, engraved, and handmade in Los Angeles. I've vended at leather and fetish events across Southern California, including the Eagle, Precinct, Bullet Bar, and the International Puppy & Trainer Contest in Chicago.`;
 
 export const tagFaq = [
   {

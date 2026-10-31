@@ -1,13 +1,9 @@
 .collapsible-event-list__actions {
+  display: flex;
+  justify-content: center;
   margin-top: var(--space-3);
 }
 
 .collapsible-event-list__btn {
-  width: 100%;
-}
-
-@media (min-width: 540px) {
-  .collapsible-event-list__btn {
-    width: auto;
-  }
+  width: auto;
 }

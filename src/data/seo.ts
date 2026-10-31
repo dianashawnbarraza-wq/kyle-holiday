@@ -125,6 +125,20 @@ export const pageSeo: Record<string, PageSeoConfig> = {
       ...sharedKeywords,
     ],
   },
+  "/events": {
+    title: "Events | Kyle Holiday — Los Angeles and Beyond",
+    description:
+      "Find Kyle Holiday at leather events, Cruise LA, RIVET nights, and more across Los Angeles and beyond.",
+    path: "/events",
+    keywords: [
+      "Kyle Holiday events",
+      "Cruise LA",
+      "Eagle LA",
+      "RIVET leather",
+      "Los Angeles leather events",
+      ...sharedKeywords,
+    ],
+  },
   "/contact": {
     title: "Contact Kyle Holiday | Cruise LA & Custom Orders",
     description:
@@ -243,7 +257,12 @@ export function getJsonLdForPath(pathname: string): Record<string, unknown>[] {
     graphs.push(organizationJsonLd);
   }
 
-  if (pathname === "/" || pathname === "/contact" || pathname === "/about") {
+  if (
+    pathname === "/" ||
+    pathname === "/contact" ||
+    pathname === "/about" ||
+    pathname === "/events"
+  ) {
     graphs.push(cruiseLaEventJsonLd);
   }
 

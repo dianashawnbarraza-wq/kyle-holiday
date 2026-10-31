@@ -4,7 +4,7 @@ export type KyleGalleryImage = GalleryImage;
 
 export const kyleGallerySection = {
   title: "My Title Year",
-  subtitle: "Some pics from my title year.",
+  subtitle: "Some sweet moments from 2026",
 } as const;
 
 export const kyleGallery: KyleGalleryImage[] = [

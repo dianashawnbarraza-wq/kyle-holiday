@@ -9,18 +9,25 @@ function NavLinks({
   onNavigate,
   className,
   id,
+  includeHome,
 }: {
   suppressActive: boolean;
   onNavigate?: () => void;
   className: string;
   id?: string;
+  includeHome?: boolean;
 }) {
+  const links = includeHome
+    ? [{ to: "/", label: "Home" }, ...navLinks]
+    : navLinks;
+
   return (
     <nav id={id} className={className} aria-label="Main navigation">
-      {navLinks.map((link) => (
+      {links.map((link) => (
         <NavLink
           key={link.to}
           to={link.to}
+          end={link.to === "/"}
           className={({ isActive }) =>
             `site-nav__link${
               isActive && !suppressActive ? " site-nav__link--active" : ""
@@ -40,6 +47,14 @@ export function SiteNav() {
   const navigate = useNavigate();
   const [menuOpen, setMenuOpen] = useState(false);
   const isHome = pathname === "/";
+  const isHeroPage =
+    isHome ||
+    pathname === "/art" ||
+    pathname === "/shop" ||
+    pathname === "/pet-play-tags" ||
+    pathname === "/leatherwork" ||
+    pathname === "/events" ||
+    pathname === "/contact";
   const suppressActive = isHome;
 
   useEffect(() => {
@@ -104,6 +119,7 @@ export function SiteNav() {
           <NavLinks
             suppressActive={suppressActive}
             onNavigate={closeMenu}
+            includeHome
             className="site-nav__links site-nav__links--mobile"
           />
         </div>
@@ -114,7 +130,7 @@ export function SiteNav() {
   return (
     <header
       className={`site-nav${menuOpen ? " site-nav--open" : ""}${
-        isHome ? " site-nav--home" : ""
+        isHeroPage ? " site-nav--home" : ""
       }`}
     >
       <div className="site-nav__inner">
@@ -125,7 +141,17 @@ export function SiteNav() {
           onClick={handleBrandClick}
           aria-label={site.name}
         >
-          <span className="site-nav__mark">{site.brandMark}</span>
+          <span className="site-nav__mark">
+            <svg
+              className="site-nav__horns"
+              viewBox="0 0 80 18"
+              aria-hidden="true"
+            >
+              <path d="M18 17C13 12 17 1.8 29 3.1C23 6.4 27 12 36 17Z" />
+              <path d="M62 17C67 12 63 1.8 51 3.1C57 6.4 53 12 44 17Z" />
+            </svg>
+            {site.brandMark}
+          </span>
         </NavLink>
 
         <button

@@ -32,7 +32,7 @@ body {
   a,
   button,
   [role="button"] {
-    cursor: url("/images/cursor-plug-red.svg") 16 2, auto;
+    cursor: url("/images/cursor-plug-red.svg") 9 1, auto;
   }
 
   /* Soften over text on dark surfaces */
@@ -50,7 +50,7 @@ body {
   td,
   th,
   .prose {
-    cursor: url("/images/cursor-plug-red-soft.svg") 16 2, text;
+    cursor: url("/images/cursor-plug-red-soft.svg") 9 1, text;
   }
 
   /* Black cursor on red surfaces */
@@ -58,7 +58,7 @@ body {
   .cursor-on-red a,
   .cursor-on-red button,
   .cursor-on-red [role="button"] {
-    cursor: url("/images/cursor-plug.svg") 16 2, auto;
+    cursor: url("/images/cursor-plug.svg") 9 1, auto;
   }
 
   .cursor-on-red p,
@@ -75,7 +75,7 @@ body {
   .cursor-on-red td,
   .cursor-on-red th,
   .cursor-on-red .prose {
-    cursor: url("/images/cursor-plug-soft.svg") 16 2, text;
+    cursor: url("/images/cursor-plug-soft.svg") 9 1, text;
   }
 }
 
@@ -163,6 +163,17 @@ p + p {
   padding: var(--space-5) var(--space-3) var(--space-6);
   min-width: 0;
   max-width: 100%;
+}
+
+.page--after-hero {
+  width: 100%;
+  max-width: 100%;
+  padding: var(--space-6) clamp(1.25rem, 6vw, 4.5rem);
+}
+
+.page--after-hero .page-inner {
+  max-width: none;
+  width: 100%;
 }
 
 .page-inner {

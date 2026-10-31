@@ -10,6 +10,7 @@ import { ShopPage } from "./pages/ShopPage";
 import { ArtPage } from "./pages/ArtPage";
 import { LeatherworkPage } from "./pages/LeatherworkPage";
 import { ContactPage } from "./pages/ContactPage";
+import { EventsPage } from "./pages/EventsPage";
 
 export default function App() {
   return (
@@ -25,6 +26,7 @@ export default function App() {
           <Route path="/pet-play-tags" element={<PetPlayTagsPage />} />
           <Route path="/art" element={<ArtPage />} />
           <Route path="/leatherwork" element={<LeatherworkPage />} />
+          <Route path="/events" element={<EventsPage />} />
           <Route path="/contact" element={<ContactPage />} />
         </Routes>
       </main>

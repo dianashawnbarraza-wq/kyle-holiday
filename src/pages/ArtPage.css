@@ -1,7 +1,7 @@
 .art-featured {
   display: grid;
-  grid-template-columns: 300px 1fr;
-  gap: var(--space-4);
+  grid-template-columns: minmax(280px, 46%) 1fr;
+  gap: var(--space-5);
   align-items: start;
   padding: var(--space-4);
   margin-bottom: var(--space-4);
@@ -19,9 +19,9 @@
 
 .art-featured__image {
   width: 100%;
-  height: 100%;
-  object-fit: cover;
-  aspect-ratio: 2 / 3;
+  height: auto;
+  object-fit: contain;
+  object-position: center;
   display: block;
 }
 
@@ -65,14 +65,35 @@
   justify-content: center;
 }
 
+.art-page .gallery-grid {
+  grid-template-columns: repeat(auto-fill, minmax(420px, 1fr));
+  gap: var(--space-4);
+}
+
+.art-page .art-gallery .gallery-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+@media (max-width: 960px) {
+  .art-page .art-gallery .gallery-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .art-page .art-gallery .gallery-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
 .art-tshirts {
   display: grid;
-  gap: var(--space-4);
+  gap: var(--space-5);
 }
 
 .art-tshirt-card {
   display: grid;
-  grid-template-columns: minmax(200px, 280px) 1fr;
+  grid-template-columns: minmax(280px, 420px) 1fr;
   gap: var(--space-4);
   align-items: center;
   padding: var(--space-4);
@@ -94,9 +115,9 @@
 
 .art-tshirt-card__image {
   width: 100%;
+  height: auto;
+  object-fit: contain;
   display: block;
-  aspect-ratio: 1;
-  object-fit: cover;
 }
 
 .art-tshirt-card__title {
@@ -110,11 +131,16 @@
 }
 
 @media (max-width: 720px) {
-  .art-featured {
-    grid-template-columns: 1fr;
-  }
-
+  .art-featured,
   .art-tshirt-card {
     grid-template-columns: 1fr;
+    padding: var(--space-3);
+  }
+
+  .art-featured__image,
+  .art-tshirt-card__image {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
   }
 }

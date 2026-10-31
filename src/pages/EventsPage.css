@@ -1,0 +1,42 @@
+.events-page .hero__image {
+  object-position: center center;
+}
+
+@media (max-width: 860px) {
+  .events-page .hero,
+  .events-page .hero__layout {
+    min-height: auto;
+  }
+
+  .events-page .hero__media {
+    min-height: 0;
+    width: 100%;
+    aspect-ratio: 819 / 1024;
+    max-height: 62vh;
+  }
+
+  .events-page .hero__image {
+    object-fit: contain;
+    object-position: center center;
+  }
+
+  .events-page .hero__copy {
+    padding-top: clamp(1.25rem, 4vw, 2rem);
+    padding-bottom: clamp(1.75rem, 5vw, 2.5rem);
+  }
+
+  .events-page .hero__tagline {
+    max-width: 22ch;
+  }
+}
+
+@media (max-width: 480px) {
+  .events-page .hero__title {
+    font-size: clamp(2.4rem, 14vw, 3.25rem);
+  }
+
+  .events-page .hero__tagline {
+    font-size: 1.1rem;
+    max-width: 22ch;
+  }
+}

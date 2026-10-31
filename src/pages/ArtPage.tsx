@@ -1,8 +1,8 @@
 import { SectionHeader } from "../components/SectionHeader";
 import { CTAButton } from "../components/CTAButton";
-import { ArtSubNav } from "../components/ArtSubNav";
 import { FeaturedThumbGallery } from "../components/FeaturedThumbGallery";
 import { GalleryGrid } from "../components/GalleryGrid";
+import { PageHero } from "../components/PageHero";
 import {
   artPrints,
   artStickers,
@@ -14,21 +14,22 @@ import "./ArtPage.css";
 
 export function ArtPage() {
   return (
-    <div className="page">
-      <div className="page-inner">
-        <SectionHeader
-          title="Art"
-          subtitle="Prints, Risograph, Stickers, and T-shirts"
-          level={1}
-        />
+    <div className="art-page">
+      <PageHero
+        title="Art"
+        tagline="Specializing in risograph printing and custom frame making"
+        image="/images/art/together-in-leather.png"
+        imageAlt="Together in Leather risograph print by Kyle Holiday"
+        imagePosition="center 20%"
+      />
 
-        <ArtSubNav />
-
+      <div className="page page--after-hero">
+        <div className="page-inner">
         <section className="section" id="prints">
-          <SectionHeader title="Prints" subtitle="Risograph and framed works" />
+          <SectionHeader title="Framed prints, stickers, and t-shirts" />
 
           {featuredInstallations.map((installation) => (
-            <div key={installation.id} className="art-featured">
+            <article key={installation.id} className="art-featured">
               <div className="art-featured__visual">
                 <img
                   src={installation.image}
@@ -47,7 +48,7 @@ export function ArtPage() {
                   <FeaturedThumbGallery images={installation.gallery} />
                 )}
               </div>
-            </div>
+            </article>
           ))}
 
           <div className="art-gallery">
@@ -121,6 +122,7 @@ export function ArtPage() {
             </div>
           </div>
         </section>
+        </div>
       </div>
     </div>
   );

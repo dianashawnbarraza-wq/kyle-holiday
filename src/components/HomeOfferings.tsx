@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react";
+import type { CSSProperties } from "react";
 import { Link } from "react-router-dom";
 import { homeOfferings } from "../data/homeOfferings";
 import "./HomeOfferings.css";
@@ -18,14 +19,13 @@ export function HomeOfferings() {
       return;
     }
 
+    section.classList.add("will-animate");
+
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting) {
-          section.classList.add("is-visible");
-          observer.disconnect();
-        }
+        section.classList.toggle("is-visible", entry.isIntersecting);
       },
-      { threshold: 0.2 },
+      { threshold: 0.18, rootMargin: "0px 0px -12% 0px" },
     );
 
     observer.observe(section);
@@ -39,7 +39,11 @@ export function HomeOfferings() {
           <figure
             key={item.id}
             className="home-offerings__frame"
-            style={{ animationDelay: `${180 + index * 220}ms` }}
+            style={
+              {
+                "--offer-delay": `${180 + index * 220}ms`,
+              } as CSSProperties
+            }
           >
             <img
               src={item.image}
@@ -51,13 +55,16 @@ export function HomeOfferings() {
       </div>
 
       <div className="home-offerings__copy">
-        <h2 className="home-offerings__title">Let&apos;s have a good time</h2>
+        <h2 className="home-offerings__title">Try it and find out</h2>
         <p className="home-offerings__text">
-          I vend in person around Los Angeles and offer items online.{" "}
+          Hi, I&apos;m Kyle (Mx. Cruise LA Leather 2026, they/he). I&apos;m a
+          leather queer who crafts,
+          makes art, and creates custom leather gear. Check out my work or{" "}
           <Link to="/contact" className="home-offerings__inline-link">
-            Get in touch
+            get in touch
           </Link>{" "}
-          if you would like to have me at your event.
+          if you would like to have me at your event or if you have a custom
+          idea.
         </p>
         <div className="home-offerings__links">
           {homeOfferings.map((item) => (
