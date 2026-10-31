@@ -14,6 +14,18 @@ function eventFlyerId(event: EventItem) {
   return `${event.sortDate}-${event.title}`;
 }
 
+function splitEventWhen(value: string) {
+  const comma = value.indexOf(", ");
+  if (comma === -1) {
+    return { date: value, time: null };
+  }
+
+  return {
+    date: value.slice(0, comma),
+    time: value.slice(comma + 2),
+  };
+}
+
 export function EventList({ events, compact = false }: EventListProps) {
   const [activeFlyerIndex, setActiveFlyerIndex] = useState<number | null>(null);
 
@@ -42,6 +54,7 @@ export function EventList({ events, compact = false }: EventListProps) {
           const flyerIndex = event.flyer
             ? flyerIndexById.get(eventFlyerId(event))
             : undefined;
+          const when = splitEventWhen(event.date);
 
           return (
             <li
@@ -50,7 +63,12 @@ export function EventList({ events, compact = false }: EventListProps) {
                 event.flyer ? " event-list__item--has-flyer" : ""
               }`}
             >
-              <time className="event-list__date">{event.date}</time>
+              <time className="event-list__when" dateTime={event.sortDate}>
+                <span className="event-list__date">{when.date}</span>
+                {when.time && (
+                  <span className="event-list__time">{when.time}</span>
+                )}
+              </time>
               <div className="event-list__body">
                 <span className="event-list__title">{event.title}</span>
                 <span className="event-list__location">{event.location}</span>

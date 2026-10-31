@@ -239,8 +239,10 @@
   box-shadow: none;
 }
 
-.home-page__content .section:nth-child(odd) .event-list__date {
+.home-page__content .section:nth-child(odd) .event-list__when {
   color: var(--home-red);
+  background: rgba(232, 51, 42, 0.12);
+  border-color: rgba(232, 51, 42, 0.45);
 }
 
 .home-page__content .section:nth-child(odd) .event-list__title {
@@ -258,7 +260,12 @@
   border-color: rgba(0, 0, 0, 0.18);
 }
 
-.home-page__content .section:nth-child(even) .event-list__date,
+.home-page__content .section:nth-child(even) .event-list__when {
+  color: var(--home-ink);
+  background: rgba(0, 0, 0, 0.08);
+  border-color: rgba(0, 0, 0, 0.22);
+}
+
 .home-page__content .section:nth-child(even) .event-list__title {
   color: var(--home-ink);
 }

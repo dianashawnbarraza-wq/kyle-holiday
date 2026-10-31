@@ -30,7 +30,7 @@ export function CollapsibleEventList({
               className="cta-btn cta-btn--ghost collapsible-event-list__btn"
               onClick={() => setExpanded(true)}
             >
-              Load more
+              Show more
             </button>
           ) : (
             <button
