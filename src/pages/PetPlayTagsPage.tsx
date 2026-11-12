@@ -16,7 +16,7 @@ export function PetPlayTagsPage() {
         imageAlt="Red heart pet play tag engraved Diet Coke Dollop on a Kyle Holiday backing card"
         imagePosition="center 28%"
         links={[
-          { label: "Shop on Etsy", href: site.etsy, external: true },
+          { label: "Santa Kyle's Workshop", href: "/shop" },
           {
             label: "Visit Stockroom",
             href: site.stockroom.url,

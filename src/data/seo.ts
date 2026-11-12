@@ -50,9 +50,9 @@ export const pageSeo: Record<string, PageSeoConfig> = {
     keywords: sharedKeywords,
   },
   "/shop": {
-    title: "Shop Pet Play Tags, Leatherwork & Art | Kyle Holiday",
+    title: "Santa Kyle's Workshop | Custom Play Tags and T-Shirts | Kyle Holiday",
     description:
-      "Shop Kyle Holiday pet play tags, puppy play collar tags, custom leatherwork, stickers, tees, and queer art. Leather Work is easy to find as the second shop section.",
+      "Santa Kyle's Workshop: order custom Kyle Holiday play tags and t-shirts. Pick a style, size, color, and engraving, add several to your bag, then check out.",
     path: "/shop",
     keywords: [
       "Kyle Holiday shop",
@@ -63,6 +63,17 @@ export const pageSeo: Record<string, PageSeoConfig> = {
       "puppy play tag",
       ...sharedKeywords,
     ],
+  },
+  "/shop/thanks": {
+    title: "Thank you for your order | Kyle Holiday",
+    description:
+      "Your Kyle Holiday order is in. You'll get a Stripe receipt, then shipping details from Kyle.",
+    path: "/shop/thanks",
+  },
+  "/orders": {
+    title: "Order queue | Kyle Holiday",
+    description: "Private order queue for Kyle Holiday shop fulfillments.",
+    path: "/orders",
   },
   "/pet-play-tags": {
     title: "Custom Pet Play Tags & Puppy Play ID Tags | Kyle Holiday",
@@ -266,7 +277,7 @@ export function getJsonLdForPath(pathname: string): Record<string, unknown>[] {
     graphs.push(cruiseLaEventJsonLd);
   }
 
-  if (pathname === "/pet-play-tags" || pathname === "/shop") {
+  if (pathname === "/shop") {
     graphs.push(petTagsItemListJsonLd);
     graphs.push({
       "@context": "https://schema.org",

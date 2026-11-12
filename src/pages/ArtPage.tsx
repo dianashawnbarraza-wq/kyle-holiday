@@ -98,8 +98,8 @@ export function ArtPage() {
                   <h3 className="art-tshirt-card__title">{shirt.title}</h3>
                   <p className="art-tshirt-card__caption">{shirt.caption}</p>
                   {shirt.shopUrl && (
-                    <CTAButton href={shirt.shopUrl} external>
-                      Shop on Etsy
+                    <CTAButton to="/shop?style=shirt">
+                      Order in the shop
                     </CTAButton>
                   )}
                 </div>

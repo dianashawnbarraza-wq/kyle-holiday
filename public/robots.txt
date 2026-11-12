@@ -1,4 +1,6 @@
 User-agent: *
 Allow: /
+Disallow: /orders
+Disallow: /shop/thanks
 
 Sitemap: https://www.kyleholiday.com/sitemap.xml

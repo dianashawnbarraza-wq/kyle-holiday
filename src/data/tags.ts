@@ -38,7 +38,7 @@ export const tagFaq = [
   {
     question: "Where can I buy Kyle Holiday pet play tags?",
     answer:
-      "Shop the full collection on Etsy, catch me vending at leather events around Los Angeles, or visit The Stockroom in LA for select styles in person.",
+      "Order custom tags on this site, catch me vending at leather events around Los Angeles, or visit The Stockroom in LA for select styles in person.",
   },
 ] as const;
 

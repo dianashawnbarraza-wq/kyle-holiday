@@ -10,12 +10,16 @@
 
 .home-offerings__gallery {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1.2fr 1fr;
   grid-template-rows: 1fr 1fr;
   min-height: 100dvh;
   margin: 0;
   overflow: hidden;
   background: #0d0d0d;
+}
+
+.home-offerings__frame:first-child {
+  grid-row: 1 / span 2;
 }
 
 .home-offerings__frame {
@@ -138,7 +142,14 @@
   }
 
   .home-offerings__gallery {
-    min-height: 78vh;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1.15fr 1fr;
+    min-height: 70vh;
+  }
+
+  .home-offerings__frame:first-child {
+    grid-column: 1 / -1;
+    grid-row: auto;
   }
 
   .home-offerings__copy {

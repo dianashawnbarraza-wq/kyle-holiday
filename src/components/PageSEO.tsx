@@ -70,7 +70,13 @@ export function PageSEO() {
     upsertMeta("name", "description", seo.description);
     upsertMeta("name", "keywords", keywords);
     upsertMeta("name", "author", "Kyle Holiday");
-    upsertMeta("name", "robots", "index, follow, max-image-preview:large");
+    upsertMeta(
+      "name",
+      "robots",
+      pathname.startsWith("/orders") || pathname.startsWith("/shop/thanks")
+        ? "noindex, nofollow"
+        : "index, follow, max-image-preview:large",
+    );
 
     upsertMeta("property", "og:title", seo.title);
     upsertMeta("property", "og:description", seo.description);

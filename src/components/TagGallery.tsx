@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+import { resolveStyleId } from "../data/shop";
 import type { TagPiece } from "../data/tags";
 import { CTAButton } from "./CTAButton";
 import "./TagGallery.css";
@@ -12,10 +14,8 @@ export function TagGallery({ items }: TagGalleryProps) {
       {items.map((item) => (
         <article key={item.id} className="tag-gallery__card">
           <div className="tag-gallery__image-wrap">
-            <a
-              href={item.shopUrl}
-              target="_blank"
-              rel="noopener noreferrer"
+            <Link
+              to={`/shop?style=${resolveStyleId(item.id) ?? "bone"}`}
               className="tag-gallery__image-link"
             >
               <img
@@ -24,18 +24,17 @@ export function TagGallery({ items }: TagGalleryProps) {
                 className="tag-gallery__image"
                 loading="lazy"
               />
-            </a>
+            </Link>
           </div>
           <div className="tag-gallery__info">
             <h3 className="tag-gallery__title">{item.title}</h3>
             <p className="tag-gallery__caption">{item.caption}</p>
             <CTAButton
-              href={item.shopUrl}
-              external
+              to={`/shop?style=${resolveStyleId(item.id) ?? "bone"}`}
               variant="ghost"
               className="tag-gallery__shop-link"
             >
-              View on Etsy
+              Order this style
             </CTAButton>
           </div>
         </article>

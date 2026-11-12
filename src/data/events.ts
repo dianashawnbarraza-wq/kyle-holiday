@@ -11,6 +11,21 @@ export type EventItem = {
 
 const allEvents: EventItem[] = [
   {
+    sortDate: "2026-11-21",
+    date: "11/21/26, 4–9 PM",
+    title: "Cruise LA Holiday Market",
+    location: "Eagle LA",
+    role: "Vending — third Saturday Cruise LA holiday market",
+    links: [
+      {
+        label: "Eagle LA listing",
+        href: "https://eaglela.com/events/cruise-la-16/",
+      },
+    ],
+    flyer: "/images/events/cruise-la-generic.jpg",
+    flyerAlt: "Cruise LA flyer for the November holiday market at Eagle LA",
+  },
+  {
     sortDate: "2026-10-17",
     date: "10/17/26, 4 PM–2 AM",
     title: "Cruise LA Title Babes Bash!",

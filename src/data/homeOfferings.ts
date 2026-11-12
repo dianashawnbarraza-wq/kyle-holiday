@@ -8,16 +8,9 @@ export type HomeOffering = {
 
 export const homeOfferings: HomeOffering[] = [
   {
-    id: "shirt",
-    label: "Shirts",
-    to: "/art#t-shirts",
-    image: "/images/title-tshirt.png",
-    imageAlt: "Trans Leather Babes screen-printed t-shirt by Kyle Holiday",
-  },
-  {
-    id: "tags",
-    label: "Play tags",
-    to: "/pet-play-tags",
+    id: "shop",
+    label: "Shop",
+    to: "/shop",
     image: "/images/tags/hall-of-fame/brat-collar.png",
     imageAlt: "Red bone tag engraved with brat on a black studded leather collar",
   },

@@ -51,7 +51,8 @@ export function SiteNav() {
     isHome ||
     pathname === "/art" ||
     pathname === "/shop" ||
-    pathname === "/pet-play-tags" ||
+    pathname === "/shop/thanks" ||
+    pathname === "/orders" ||
     pathname === "/leatherwork" ||
     pathname === "/events" ||
     pathname === "/contact";
