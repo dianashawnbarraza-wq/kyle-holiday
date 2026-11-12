@@ -1,9 +1,9 @@
 import type { ServerResponse } from "node:http";
-import type { ApiRequest } from "./http";
-import { readRawBody, sendJson } from "./http";
-import { emailKyleNewOrder } from "./notifyOrder";
-import { getShopOrder } from "./shopOrders";
-import { getStripeClient } from "./stripeClient";
+import type { ApiRequest } from "./http.js";
+import { readRawBody, sendJson } from "./http.js";
+import { emailKyleNewOrder } from "./notifyOrder.js";
+import { getShopOrder } from "./shopOrders.js";
+import { getStripeClient } from "./stripeClient.js";
 
 function requestOrigin(req: ApiRequest) {
   const host = req.headers.host;

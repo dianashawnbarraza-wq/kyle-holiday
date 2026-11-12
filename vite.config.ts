@@ -4,10 +4,10 @@ import react from "@vitejs/plugin-react";
 import {
   createCheckoutSession,
   type CheckoutPayload,
-} from "./src/server/createCheckoutSession";
-import { handleOrdersApi } from "./src/server/handleOrdersApi";
-import { handleStripeWebhook } from "./src/server/handleStripeWebhook";
-import { readJsonBody } from "./src/server/http";
+} from "./src/server/createCheckoutSession.js";
+import { handleOrdersApi } from "./src/server/handleOrdersApi.js";
+import { handleStripeWebhook } from "./src/server/handleStripeWebhook.js";
+import { readJsonBody } from "./src/server/http.js";
 
 function jsonError(res: ServerResponse, status: number, error: unknown) {
   const message =

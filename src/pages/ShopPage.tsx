@@ -15,6 +15,8 @@ import {
   cartTotalCents,
   cartWeightOz,
   formatUsd,
+  stickerDealSavingsCents,
+  stickersUntilDeal,
   formatWeight,
   getStyle,
   isHolidayCutoffPassed,
@@ -38,7 +40,11 @@ function readCart(): CartItem[] {
     const raw = localStorage.getItem(CART_KEY);
     if (!raw) return [];
     const parsed = JSON.parse(raw) as CartItem[];
-    return Array.isArray(parsed) ? parsed : [];
+    if (!Array.isArray(parsed)) return [];
+    return parsed.filter((item) => {
+      const style = getStyle(item.styleId);
+      return Boolean(style && style.id !== "mystery-sticker-pack");
+    });
   } catch {
     return [];
   }
@@ -82,6 +88,8 @@ export function ShopPage() {
   }, [bagOpen]);
 
   const subtotal = useMemo(() => cartSubtotalCents(items), [items]);
+  const stickerSavings = useMemo(() => stickerDealSavingsCents(items), [items]);
+  const stickerNudge = useMemo(() => stickersUntilDeal(items), [items]);
   const shipping = useMemo(
     () => cartShippingCents(items, fulfillment),
     [items, fulfillment],
@@ -197,7 +205,13 @@ export function ShopPage() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ items, fulfillment }),
       });
-      const data = (await response.json()) as { url?: string; error?: string };
+      const raw = await response.text();
+      let data: { url?: string; error?: string } = {};
+      try {
+        data = raw ? (JSON.parse(raw) as { url?: string; error?: string }) : {};
+      } catch {
+        throw new Error("Could not start checkout. Try again in a minute.");
+      }
       if (!response.ok || !data.url) {
         throw new Error(data.error || "Could not start checkout");
       }
@@ -224,6 +238,7 @@ export function ShopPage() {
           { label: "Shop Tags", href: "/shop#tags" },
           { label: "Shop Tees", href: "/shop#tees" },
           { label: "Shop Stickers", href: "/shop#stickers" },
+          { label: "Shop Prints", href: "/shop#prints" },
         ]}
       />
 
@@ -237,7 +252,7 @@ export function ShopPage() {
 
             <div className="shop-builder__layout">
               <div className="shop-builder__form">
-                {(["tag", "shirt", "sticker"] as const).map((kind) => {
+                {(["tag", "shirt", "sticker", "print"] as const).map((kind) => {
                   const options = shopStyles.filter(
                     (option) => option.kind === kind,
                   );
@@ -247,7 +262,9 @@ export function ShopPage() {
                       ? "tags"
                       : kind === "shirt"
                         ? "tees"
-                        : "stickers";
+                        : kind === "print"
+                          ? "prints"
+                          : "stickers";
                   return (
                     <div
                       key={kind}
@@ -259,7 +276,9 @@ export function ShopPage() {
                           ? "Tags"
                           : kind === "shirt"
                             ? "Tees"
-                            : "Vinyl stickers that can get wet 💦"}
+                            : kind === "print"
+                              ? "Prints"
+                              : "Vinyl stickers that can get wet 💦 · 3 for $10, your pick"}
                       </p>
                       <div className="shop-styles">
                         {options.map((option, index) => (
@@ -482,7 +501,20 @@ export function ShopPage() {
                   })}
                 </fieldset>
 
+                {stickerNudge > 0 && items.some((item) => getStyle(item.styleId)?.kind === "sticker") && (
+                  <p className="shop-bag__deal-hint">
+                    Add {stickerNudge} more{" "}
+                    {stickerNudge === 1 ? "sticker" : "stickers"} for 3 for $10.
+                  </p>
+                )}
+
                 <div className="shop-bag__totals">
+                  {stickerSavings > 0 && (
+                    <p className="shop-bag__deal">
+                      <span>3 for $10, your pick</span>
+                      <span>−{formatUsd(stickerSavings)}</span>
+                    </p>
+                  )}
                   <p>
                     <span>Subtotal</span>
                     <span>{formatUsd(subtotal)}</span>

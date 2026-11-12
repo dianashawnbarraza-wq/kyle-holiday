@@ -2,7 +2,7 @@ import type { IncomingMessage, ServerResponse } from "node:http";
 import {
   createCheckoutSession,
   type CheckoutPayload,
-} from "../src/server/createCheckoutSession";
+} from "../src/server/createCheckoutSession.js";
 
 type VercelRequest = IncomingMessage & {
   method?: string;

@@ -1,11 +1,11 @@
 import { Resend } from "resend";
-import { site } from "../data/site";
-import { formatUsd } from "../data/shop";
+import { site } from "../data/site.js";
+import { formatUsd } from "../data/shop.js";
 import {
   formatAddress,
   orderSummaryLine,
   type ShopOrder,
-} from "./shopOrders";
+} from "./shopOrders.js";
 
 function notifyEmail() {
   return process.env.ORDER_NOTIFY_EMAIL?.trim() || site.email;

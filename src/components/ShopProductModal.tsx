@@ -185,7 +185,11 @@ export function ShopProductModal({
       <div className="shop-modal__sheet">
         <header className="shop-modal__header">
           <div>
-            <p className="shop-modal__kicker">{style.caption}</p>
+            <p className="shop-modal__kicker">
+              {style.kind === "sticker"
+                ? `${style.caption} · 3 for $10, your pick`
+                : style.caption}
+            </p>
             <h2 id="shop-modal-title" className="shop-modal__title">
               {style.title}
             </h2>

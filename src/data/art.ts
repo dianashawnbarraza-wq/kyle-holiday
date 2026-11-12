@@ -117,6 +117,15 @@ export const featuredInstallations: FeaturedInstallation[] = [
 
 export const artPrints: ArtPiece[] = [
   {
+    id: "leather-burger-boys-print",
+    title: "Leather Burger Boys Art Print",
+    caption: "Together in Leather · framed risograph",
+    src: "/images/art/together-in-leather.png",
+    alt: "Together in Leather risograph print in a pink acrylic frame",
+    shopUrl:
+      "https://www.etsy.com/listing/1718363772/big-boys-3-color-riso-print-with-custom",
+  },
+  {
     id: "great-butts-of-la",
     title: "Great Butts of LA",
     caption: "Risograph print + custom frame",
@@ -193,6 +202,24 @@ export const artStickers: ArtPiece[] = [
     alt: "Get Me Pregnant at Rainforest Cafe vinyl sticker by Kyle Holiday",
     shopUrl:
       "https://www.etsy.com/listing/1766984835/get-me-pregnant-at-rainforest-cafe-vinyl",
+  },
+  {
+    id: "phantom-sticker",
+    title: "My Other Boyfriend Is the Phantom of the Opera",
+    caption: "Vinyl sticker",
+    src: "/images/art/stickers/phantom-sticker.jpg",
+    alt: "My Other Boyfriend Is the Phantom of the Opera vinyl sticker by Kyle Holiday",
+    shopUrl:
+      "https://www.etsy.com/listing/1870848030/my-other-boyfriend-is-the-phantom-of-the",
+  },
+  {
+    id: "anne-rice-sticker",
+    title: "Anne Rice",
+    caption: "Vinyl sticker",
+    src: "/images/art/stickers/anne-rice-sticker.jpg",
+    alt: "Anne Rice vinyl sticker by Kyle Holiday",
+    shopUrl:
+      "https://www.etsy.com/listing/1806820361/anne-rice-vampiregothicwater",
   },
 ];
 

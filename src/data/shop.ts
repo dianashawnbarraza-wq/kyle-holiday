@@ -3,8 +3,11 @@ export const shopSiteUrl = "https://www.kyleholiday.com";
 export const MAX_CART_ITEMS = 20;
 export const MAX_ENGRAVING_LENGTH = 20;
 export const DOUBLE_SIDED_UPCHARGE_CENTS = 200;
+export const STICKER_PRICE_CENTS = 400;
+export const STICKER_DEAL_COUNT = 3;
+export const STICKER_DEAL_CENTS = 1000;
 
-export type ProductKind = "tag" | "shirt" | "sticker" | "test";
+export type ProductKind = "tag" | "shirt" | "sticker" | "print" | "test";
 
 export type ShopSize = {
   id: string;
@@ -279,7 +282,16 @@ const largeOnly: ShopSize[] = [
 const roundSize: ShopSize[] = [
   { id: "one-size", name: "1.5\" wide", priceCents: 1400 },
 ];
+const dropSize: ShopSize[] = [
+  { id: "one-size", name: "Drop · 1.5\"", priceCents: 1500 },
+];
+const conversationHeartSizes: ShopSize[] = [
+  { id: "small", name: "Small · 1.2\"", priceCents: 1500 },
+  { id: "medium", name: "Medium · 1.55\"", priceCents: 1800 },
+  { id: "large", name: "Large · 1.8\"", priceCents: 2000 },
+];
 const stickerSize: ShopSize[] = [{ id: "one-size", name: "One size" }];
+const printSize: ShopSize[] = [{ id: "one-size", name: "Framed print" }];
 const shirtSizes: ShopSize[] = [
   { id: "s", name: "S" },
   { id: "m", name: "M" },
@@ -393,6 +405,27 @@ export const shopStyles: ShopStyle[] = [
     allowsEngraving: true,
   },
   {
+    id: "conversation-heart",
+    kind: "tag",
+    title: "Custom Conversation Heart Tag",
+    caption: "Candy heart · custom text",
+    src: "/images/tags/etsy/conversation-heart.jpg",
+    alt: "Pastel conversation heart tags engraved PEACHES, POPPY, and MOMMY",
+    gallery: [
+      "/images/tags/etsy/conversation-heart.jpg",
+      "/images/tags/etsy/heart-tag.jpg",
+      "/images/tags/hall-of-fame/good-girl-heart.png",
+      ...tagReferencePhotos,
+    ],
+    priceCents: 1500,
+    weightOz: 1,
+    sizes: conversationHeartSizes,
+    allowsSides: false,
+    allowsFont: true,
+    allowsColor: true,
+    allowsEngraving: true,
+  },
+  {
     id: "barbed-wire",
     kind: "tag",
     title: "Custom Barbed Wire Bone Tag",
@@ -450,6 +483,26 @@ export const shopStyles: ShopStyle[] = [
     allowsEngraving: true,
   },
   {
+    id: "bite-risk",
+    kind: "tag",
+    title: "Custom Bite Me / Bite Risk Tag",
+    caption: "Drop shape",
+    src: "/images/tags/etsy/bite-me-drop.jpg",
+    alt: "Red teardrop Bite Me tag with Sleepytime Bondage Bear stickers",
+    gallery: [
+      "/images/tags/etsy/bite-me-drop.jpg",
+      "/images/tags/bite-risk-round.png",
+      ...tagReferencePhotos,
+    ],
+    priceCents: 1500,
+    weightOz: 1,
+    sizes: dropSize,
+    allowsSides: false,
+    allowsFont: true,
+    allowsColor: true,
+    allowsEngraving: true,
+  },
+  {
     id: "shirt",
     kind: "shirt",
     title: "Trans Leather Babes Tee",
@@ -472,7 +525,7 @@ export const shopStyles: ShopStyle[] = [
     caption: "Vinyl sticker",
     src: "/images/art/stickers/olive-garden-sticker.jpg",
     alt: "My Pussy Tastes Like Olive Garden vinyl sticker by Kyle Holiday",
-    priceCents: 400,
+    priceCents: STICKER_PRICE_CENTS,
     weightOz: 0.2,
     sizes: stickerSize,
     allowsSides: false,
@@ -487,7 +540,7 @@ export const shopStyles: ShopStyle[] = [
     caption: "Vinyl sticker",
     src: "/images/art/stickers/shadowbanned-sticker.png",
     alt: "All my friends are shadowbanned vinyl sticker by Kyle Holiday",
-    priceCents: 400,
+    priceCents: STICKER_PRICE_CENTS,
     weightOz: 0.2,
     sizes: stickerSize,
     allowsSides: false,
@@ -502,7 +555,7 @@ export const shopStyles: ShopStyle[] = [
     caption: "Holographic vinyl sticker",
     src: "/images/art/stickers/praise-coming-sticker.png",
     alt: "Keep the Praise Coming holographic vinyl sticker by Kyle Holiday",
-    priceCents: 400,
+    priceCents: STICKER_PRICE_CENTS,
     weightOz: 0.2,
     sizes: stickerSize,
     allowsSides: false,
@@ -517,7 +570,7 @@ export const shopStyles: ShopStyle[] = [
     caption: "Vinyl sticker",
     src: "/images/art/stickers/sleepytime-bear-sticker.png",
     alt: "Sleepytime bondage bear vinyl sticker by Kyle Holiday",
-    priceCents: 400,
+    priceCents: STICKER_PRICE_CENTS,
     weightOz: 0.2,
     sizes: stickerSize,
     allowsSides: false,
@@ -532,7 +585,7 @@ export const shopStyles: ShopStyle[] = [
     caption: "Vinyl sticker",
     src: "/images/art/stickers/trans-leather-babes-sticker.png",
     alt: "Trans Leather Babes vinyl sticker by Kyle Holiday",
-    priceCents: 400,
+    priceCents: STICKER_PRICE_CENTS,
     weightOz: 0.2,
     sizes: stickerSize,
     allowsSides: false,
@@ -547,7 +600,7 @@ export const shopStyles: ShopStyle[] = [
     caption: "Vinyl sticker",
     src: "/images/art/stickers/rainforest-cafe-sticker.jpg",
     alt: "Get Me Pregnant at Rainforest Cafe vinyl sticker by Kyle Holiday",
-    priceCents: 400,
+    priceCents: STICKER_PRICE_CENTS,
     weightOz: 0.2,
     sizes: stickerSize,
     allowsSides: false,
@@ -556,15 +609,53 @@ export const shopStyles: ShopStyle[] = [
     allowsEngraving: false,
   },
   {
-    id: "mystery-sticker-pack",
+    id: "phantom-sticker",
     kind: "sticker",
-    title: "Mystery Sticker Pack",
-    caption: "Three for $10",
-    src: "/images/art/stickers/mystery-sticker-pack.jpg",
-    alt: "Kyle Holiday mystery sticker pack",
-    priceCents: 1000,
-    weightOz: 0.6,
+    title: "My Other Boyfriend Is the Phantom of the Opera",
+    caption: "Vinyl sticker",
+    src: "/images/art/stickers/phantom-sticker.jpg",
+    alt: "My Other Boyfriend Is the Phantom of the Opera vinyl sticker by Kyle Holiday",
+    gallery: [
+      "/images/art/stickers/phantom-sticker.jpg",
+      "/images/art/stickers/phantom-sticker-hand.jpg",
+    ],
+    priceCents: STICKER_PRICE_CENTS,
+    weightOz: 0.2,
     sizes: stickerSize,
+    allowsSides: false,
+    allowsFont: false,
+    allowsColor: false,
+    allowsEngraving: false,
+  },
+  {
+    id: "anne-rice-sticker",
+    kind: "sticker",
+    title: "Anne Rice",
+    caption: "Vinyl sticker",
+    src: "/images/art/stickers/anne-rice-sticker.jpg",
+    alt: "Anne Rice vinyl sticker by Kyle Holiday",
+    priceCents: STICKER_PRICE_CENTS,
+    weightOz: 0.2,
+    sizes: stickerSize,
+    allowsSides: false,
+    allowsFont: false,
+    allowsColor: false,
+    allowsEngraving: false,
+  },
+  {
+    id: "leather-burger-boys-print",
+    kind: "print",
+    title: "Leather Burger Boys Art Print",
+    caption: "Together in Leather · framed risograph",
+    src: "/images/art/together-in-leather.png",
+    alt: "Together in Leather risograph print in a pink acrylic frame",
+    gallery: [
+      "/images/art/together-in-leather.png",
+      "/images/art/together-in-leather/together-in-leather-print.png",
+    ],
+    priceCents: 20000,
+    weightOz: 16,
+    sizes: printSize,
     allowsSides: false,
     allowsFont: false,
     allowsColor: false,
@@ -591,16 +682,21 @@ export const tagStyleRedirects: Record<string, string> = {
   "puppy-bone-old-english": "bone",
   "double-sided-bone": "bone",
   "heart-tag": "heart",
+  "conversation-heart-tag": "conversation-heart",
+  "bite-me": "bite-risk",
+  "bite-risk-tag": "bite-risk",
   "barbed-wire-bone": "barbed-wire",
   "barbed-wire-custom": "barbed-wire",
   "chain-bone": "chain-bone",
   "toony-font-bone": "bone",
+  "mystery-sticker-pack": "olive-garden-sticker",
 };
 
 export const itemWeightsOz = {
   tag: 1,
   shirt: 6,
   sticker: 0.2,
+  print: 16,
   test: 1,
 } as const;
 export const PACKAGING_WEIGHT_OZ = 1;
@@ -644,6 +740,9 @@ export function resolveStyleId(styleId: string | null) {
   if (!styleId) return null;
   if (styleId === "sticker" || styleId === "stickers") {
     return shopStyles.find((style) => style.kind === "sticker")?.id ?? null;
+  }
+  if (styleId === "print" || styleId === "prints") {
+    return shopStyles.find((style) => style.kind === "print")?.id ?? null;
   }
   if (styleId === "tee" || styleId === "tees") return "shirt";
   return (
@@ -778,11 +877,35 @@ export function itemUnitPrice(
   return base + extra;
 }
 
-export function cartSubtotalCents(items: CartItem[]) {
+export function isStickerCartItem(item: Pick<CartItem, "styleId">) {
+  return getStyle(item.styleId)?.kind === "sticker";
+}
+
+export function stickerCartQuantity(items: CartItem[]) {
   return items.reduce(
+    (sum, item) => sum + (isStickerCartItem(item) ? item.quantity : 0),
+    0,
+  );
+}
+
+export function stickerDealSavingsCents(items: CartItem[]) {
+  const groups = Math.floor(stickerCartQuantity(items) / STICKER_DEAL_COUNT);
+  const offPerGroup =
+    STICKER_PRICE_CENTS * STICKER_DEAL_COUNT - STICKER_DEAL_CENTS;
+  return groups * offPerGroup;
+}
+
+export function stickersUntilDeal(items: CartItem[]) {
+  const leftover = stickerCartQuantity(items) % STICKER_DEAL_COUNT;
+  return leftover === 0 ? 0 : STICKER_DEAL_COUNT - leftover;
+}
+
+export function cartSubtotalCents(items: CartItem[]) {
+  const raw = items.reduce(
     (sum, item) => sum + itemUnitPrice(item) * item.quantity,
     0,
   );
+  return raw - stickerDealSavingsCents(items);
 }
 
 export function cartShippingCents(items: CartItem[], fulfillment: Fulfillment) {
@@ -802,7 +925,8 @@ export function itemSummary(item: CartItem) {
   const style = getStyle(item.styleId);
   if (!style) return "";
   const size = getSize(style, item.sizeId);
-  const parts = style.kind === "sticker" ? [] : [size?.name];
+  const parts =
+    style.kind === "sticker" || style.kind === "print" ? [] : [size?.name];
   if (style.allowsColor && item.colorId) {
     parts.push(getColor(item.colorId)?.name);
   }

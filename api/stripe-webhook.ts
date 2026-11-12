@@ -1,5 +1,5 @@
 import type { IncomingMessage, ServerResponse } from "node:http";
-import { handleStripeWebhook } from "../src/server/handleStripeWebhook";
+import { handleStripeWebhook } from "../src/server/handleStripeWebhook.js";
 
 export const config = {
   api: {

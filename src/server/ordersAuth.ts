@@ -1,6 +1,6 @@
 import { createHmac, timingSafeEqual } from "node:crypto";
 import type { ServerResponse } from "node:http";
-import { parseCookies, type ApiRequest } from "./http";
+import { parseCookies, type ApiRequest } from "./http.js";
 
 export const ORDERS_COOKIE = "kyle_orders";
 

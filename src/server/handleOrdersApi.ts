@@ -5,19 +5,19 @@ import {
   ordersPasswordConfigured,
   passwordMatches,
   setOrdersCookie,
-} from "./ordersAuth";
+} from "./ordersAuth.js";
 import {
   type ApiRequest,
   readJsonBody,
   sendJson,
-} from "./http";
+} from "./http.js";
 import {
   getShopOrder,
   listShopOrders,
   pirateShipUrl,
   setOrderShipped,
   shipFromLines,
-} from "./shopOrders";
+} from "./shopOrders.js";
 
 function requestOrigin(req: ApiRequest) {
   if (typeof req.headers.origin === "string" && req.headers.origin) {

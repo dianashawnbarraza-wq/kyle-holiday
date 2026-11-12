@@ -1,6 +1,6 @@
 import Stripe from "stripe";
-import { site } from "../data/site";
-import { getStripeClient } from "./stripeClient";
+import { site } from "../data/site.js";
+import { getStripeClient } from "./stripeClient.js";
 import {
   type CartItem,
   type Fulfillment,
@@ -22,7 +22,8 @@ import {
   itemUnitPrice,
   sanitizeEngraving,
   shopSiteUrl,
-} from "../data/shop";
+  stickerDealSavingsCents,
+} from "../data/shop.js";
 
 export type CheckoutPayload = {
   items?: Array<{
@@ -166,6 +167,19 @@ export async function createCheckoutSession(
   const method = getShippingMethod(fulfillment);
   const weight = cartWeightOz(items);
 
+  const stickerSavings = stickerDealSavingsCents(items);
+  const discounts: Stripe.Checkout.SessionCreateParams.Discount[] = [];
+  if (stickerSavings > 0) {
+    const coupon = await stripe.coupons.create({
+      amount_off: stickerSavings,
+      currency: "usd",
+      duration: "once",
+      name: "3 stickers for $10",
+      metadata: { source: "sticker-deal" },
+    });
+    discounts.push({ coupon: coupon.id });
+  }
+
   const session = await stripe.checkout.sessions.create({
     mode: "payment",
     success_url: `${origin}/shop/thanks?session_id={CHECKOUT_SESSION_ID}`,
@@ -206,11 +220,13 @@ export async function createCheckoutSession(
         },
       };
     }),
+    ...(discounts.length > 0 ? { discounts } : {}),
     metadata: {
       fulfillment,
       item_count: String(cartQuantity(items)),
       weight_oz: String(weight),
       weight: formatWeight(weight),
+      sticker_deal_savings: String(stickerSavings),
       engravings: items
         .map((item) => item.engraving)
         .filter(Boolean)

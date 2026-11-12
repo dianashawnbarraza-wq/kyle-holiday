@@ -57,7 +57,10 @@ export function ArtPage() {
         </section>
 
         <section className="section" id="stickers">
-          <SectionHeader title="Stickers" subtitle="Vinyl stickers and packs" />
+          <SectionHeader
+            title="Stickers"
+            subtitle="Vinyl stickers · 3 for $10, your pick"
+          />
           <GalleryGrid
             items={artStickers}
             imageAspect="square"

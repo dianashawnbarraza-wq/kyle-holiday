@@ -2,12 +2,12 @@ import type Stripe from "stripe";
 import {
   type ShopOrder,
   type ShopOrderAddress,
-} from "../data/shopOrder";
-import { site } from "../data/site";
-import { formatUsd } from "../data/shop";
-import { getStripeClient } from "./stripeClient";
+} from "../data/shopOrder.js";
+import { site } from "../data/site.js";
+import { formatUsd } from "../data/shop.js";
+import { getStripeClient } from "./stripeClient.js";
 
-export type { ShopOrder, ShopOrderAddress, ShopOrderItem } from "../data/shopOrder";
+export type { ShopOrder, ShopOrderAddress, ShopOrderItem } from "../data/shopOrder.js";
 
 function addressFrom(
   session: Stripe.Checkout.Session,

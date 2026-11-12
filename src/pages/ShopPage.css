@@ -357,11 +357,21 @@
   color: var(--text-muted);
 }
 
+.shop-bag__deal-hint {
+  margin: 0 0 var(--space-2);
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
 .shop-bag__totals {
   display: grid;
   gap: 6px;
   padding-top: var(--space-2);
   border-top: 1px solid var(--border-subtle);
+}
+
+.shop-bag__deal {
+  color: var(--accent) !important;
 }
 
 .shop-bag__totals p {
