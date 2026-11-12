@@ -1,11 +1,17 @@
 import { useMemo } from "react";
 import "./Snowfall.css";
 
-const FLAKE_COUNT = 80;
 const GLYPHS = ["❄", "❅", "✻", "✦"];
 
-function makeFlakes() {
-  return Array.from({ length: FLAKE_COUNT }, (_, index) => {
+function flakeCount() {
+  if (typeof window === "undefined") return 80;
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return 8;
+  if (window.matchMedia("(max-width: 860px)").matches) return 16;
+  return 80;
+}
+
+function makeFlakes(count: number) {
+  return Array.from({ length: count }, (_, index) => {
     const seed = (index * 9301 + 49297) % 233280;
     const rand = seed / 233280;
     const rand2 = ((index * 49297 + 9301) % 233280) / 233280;
@@ -28,7 +34,7 @@ function makeFlakes() {
 }
 
 export function Snowfall() {
-  const flakes = useMemo(makeFlakes, []);
+  const flakes = useMemo(() => makeFlakes(flakeCount()), []);
 
   return (
     <div className="snowfall" aria-hidden="true">

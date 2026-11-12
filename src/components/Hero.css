@@ -213,6 +213,47 @@
   .hero--enter .hero__media {
     animation-name: hero-media-in-mobile;
   }
+
+  .hero--shop {
+    min-height: 0;
+    overflow: visible;
+  }
+
+  .hero--shop .hero__layout {
+    min-height: 0;
+    padding-top: var(--nav-height);
+    padding-bottom: 0;
+  }
+
+  .hero--shop .hero__media {
+    height: 140px;
+    min-height: 140px;
+    max-height: 140px;
+  }
+
+  .hero--shop .hero__copy {
+    padding: 0.75rem 1.25rem 1.15rem;
+    gap: 0.3rem;
+  }
+
+  .hero--shop .hero__title {
+    font-size: clamp(1.7rem, 8vw, 2.25rem);
+  }
+
+  .hero--shop .hero__tagline {
+    font-size: 0.88rem;
+    line-height: 1.3;
+  }
+
+  .hero--shop .hero__links {
+    margin-top: 0.5rem;
+    gap: 0.7rem 1.15rem;
+  }
+
+  .hero--shop .hero__link {
+    font-size: 15px;
+    white-space: nowrap;
+  }
 }
 
 @keyframes hero-media-in-mobile {

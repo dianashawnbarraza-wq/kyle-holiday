@@ -51,6 +51,7 @@ export function ShopPage() {
   const [fulfillment, setFulfillment] = useState<Fulfillment>("ground");
   const [checkoutError, setCheckoutError] = useState<string | null>(null);
   const [checkingOut, setCheckingOut] = useState(false);
+  const [bagOpen, setBagOpen] = useState(false);
 
   const openStyle = openStyleId ? getStyle(openStyleId) : undefined;
 
@@ -62,6 +63,23 @@ export function ShopPage() {
   useEffect(() => {
     localStorage.setItem(CART_KEY, JSON.stringify(items));
   }, [items]);
+
+  useEffect(() => {
+    if (!bagOpen) return;
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    function onKey(event: KeyboardEvent) {
+      if (event.key === "Escape") setBagOpen(false);
+    }
+
+    window.addEventListener("keydown", onKey);
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener("keydown", onKey);
+    };
+  }, [bagOpen]);
 
   const subtotal = useMemo(() => cartSubtotalCents(items), [items]);
   const shipping = useMemo(
@@ -77,6 +95,7 @@ export function ShopPage() {
   const bagFull = quantity >= MAX_CART_ITEMS;
 
   function openProduct(styleId: string) {
+    setBagOpen(false);
     setOpenStyleId(styleId);
     setCheckoutError(null);
   }
@@ -145,6 +164,9 @@ export function ShopPage() {
       ];
     });
     closeProduct();
+    if (window.matchMedia("(max-width: 860px)").matches) {
+      setBagOpen(true);
+    }
   }
 
   function updateQuantity(id: string, nextQuantity: number) {
@@ -192,6 +214,7 @@ export function ShopPage() {
     <div className="shop-page shop-page--holiday">
       <Snowfall />
       <PageHero
+        className="hero--shop"
         title="Santa Kyle's Workshop"
         tagline="Order by December 17th (USPS Ground) for holiday delivery"
         image="/images/shop/santas-workshop-hero.jpg"
@@ -236,10 +259,10 @@ export function ShopPage() {
                           ? "Tags"
                           : kind === "shirt"
                             ? "Tees"
-                            : "Stickers"}
+                            : "Vinyl stickers that can get wet 💦"}
                       </p>
                       <div className="shop-styles">
-                        {options.map((option) => (
+                        {options.map((option, index) => (
                           <button
                             key={option.id}
                             type="button"
@@ -250,6 +273,12 @@ export function ShopPage() {
                               src={option.src}
                               alt=""
                               className="shop-style__image"
+                              width={400}
+                              height={400}
+                              decoding="async"
+                              loading={
+                                kind === "tag" && index < 4 ? "eager" : "lazy"
+                              }
                             />
                             <span className="shop-style__copy">
                               <span className="shop-style__title">
@@ -288,6 +317,10 @@ export function ShopPage() {
                               src={option.src}
                               alt=""
                               className="shop-style__image"
+                              width={400}
+                              height={400}
+                              decoding="async"
+                              loading="lazy"
                             />
                             <span className="shop-style__copy">
                               <span className="shop-style__title">
@@ -309,6 +342,10 @@ export function ShopPage() {
                       src="/images/leather/femme-harness.jpeg"
                       alt=""
                       className="shop-style__image"
+                      width={400}
+                      height={400}
+                      decoding="async"
+                      loading="lazy"
                     />
                     <div className="shop-leather__copy">
                       <Link
@@ -328,11 +365,35 @@ export function ShopPage() {
                 </div>
               </div>
 
-              <aside className="shop-bag" aria-live="polite">
-                <h3 className="shop-bag__title">
-                  Your sack
-                  {quantity > 0 ? ` · ${quantity}` : ""}
-                </h3>
+              {bagOpen && (
+                <button
+                  type="button"
+                  className="shop-bag-backdrop"
+                  aria-label="Close sack"
+                  onClick={() => setBagOpen(false)}
+                />
+              )}
+
+              <aside
+                className={`shop-bag${bagOpen ? " shop-bag--open" : ""}`}
+                id="sack"
+                aria-live="polite"
+              >
+                <div className="shop-bag__handle" aria-hidden="true" />
+                <div className="shop-bag__header">
+                  <h3 className="shop-bag__title">
+                    Your sack
+                    {quantity > 0 ? ` · ${quantity}` : ""}
+                  </h3>
+                  <button
+                    type="button"
+                    className="shop-bag__close"
+                    aria-label="Close sack"
+                    onClick={() => setBagOpen(false)}
+                  >
+                    ×
+                  </button>
+                </div>
 
                 {items.length === 0 ? (
                   <p className="shop-bag__empty">
@@ -458,6 +519,23 @@ export function ShopPage() {
           </section>
         </div>
       </div>
+
+      {!openStyle && !bagOpen && (
+        <button
+          type="button"
+          className="shop-sack-bar"
+          aria-controls="sack"
+          aria-expanded={bagOpen}
+          onClick={() => setBagOpen(true)}
+        >
+          <span className="shop-sack-bar__label">Your sack</span>
+          <span className="shop-sack-bar__meta">
+            {quantity > 0
+              ? `${quantity} · ${formatUsd(total)}`
+              : "Tap to open"}
+          </span>
+        </button>
+      )}
 
       {openStyle && (
         <ShopProductModal

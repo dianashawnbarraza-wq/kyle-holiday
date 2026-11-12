@@ -14,6 +14,7 @@ type PageHeroProps = {
   imageAlt: string;
   imagePosition?: string;
   links?: PageHeroLink[];
+  className?: string;
 };
 
 export function PageHero({
@@ -23,9 +24,12 @@ export function PageHero({
   imageAlt,
   imagePosition,
   links,
+  className,
 }: PageHeroProps) {
   return (
-    <section className="hero hero--enter cursor-on-red">
+    <section
+      className={`hero hero--enter cursor-on-red${className ? ` ${className}` : ""}`}
+    >
       <div className="hero__layout">
         <div className="hero__copy">
           <h1 className="hero__title">{title}</h1>
@@ -58,6 +62,8 @@ export function PageHero({
             src={image}
             alt={imageAlt}
             className="hero__image"
+            decoding="async"
+            fetchPriority="high"
             style={
               imagePosition ? { objectPosition: imagePosition } : undefined
             }

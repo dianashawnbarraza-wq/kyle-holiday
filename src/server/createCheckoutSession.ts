@@ -170,6 +170,13 @@ export async function createCheckoutSession(
     mode: "payment",
     success_url: `${origin}/shop/thanks?session_id={CHECKOUT_SESSION_ID}`,
     cancel_url: `${origin}/shop`,
+    payment_intent_data: {
+      description: "Santa Kyle's Workshop",
+      statement_descriptor: "KYLE HOLIDAY",
+    },
+    branding_settings: {
+      display_name: "Kyle Holiday",
+    },
     phone_number_collection: { enabled: true },
     billing_address_collection: "required",
     shipping_address_collection: { allowed_countries: ["US"] },
