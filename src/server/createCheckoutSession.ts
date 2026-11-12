@@ -207,6 +207,7 @@ export async function createCheckoutSession(
     shipping_options: shippingOptionsFor(items, fulfillment),
     line_items: items.map((item) => {
       const style = getStyle(item.styleId)!;
+      const description = itemSummary(item) || style.caption;
       return {
         quantity: item.quantity,
         price_data: {
@@ -214,7 +215,7 @@ export async function createCheckoutSession(
           unit_amount: itemUnitPrice(item),
           product_data: {
             name: style.title,
-            description: itemSummary(item),
+            ...(description ? { description } : {}),
             images: [`${shopSiteUrl}${style.src}`],
           },
         },
