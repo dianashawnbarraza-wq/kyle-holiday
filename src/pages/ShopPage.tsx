@@ -546,6 +546,7 @@ export function ShopPage() {
                 >
                   {checkingOut ? "Sending you to checkout…" : "Checkout"}
                 </button>
+                <p className="shop-bag__packaging">Ships in discreet packaging</p>
               </aside>
             </div>
           </section>

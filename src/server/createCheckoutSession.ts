@@ -197,8 +197,8 @@ export async function createCheckoutSession(
     custom_text: {
       submit: {
         message: method
-          ? `USPS ${method.label.replace("USPS ", "")}. Christmas cutoff ${method.cutoffLabel}.`
-          : "Handmade in Los Angeles. I'll email tracking when it ships.",
+          ? `USPS ${method.label.replace("USPS ", "")}. Christmas cutoff ${method.cutoffLabel}. Ships in discreet packaging.`
+          : "Handmade in Los Angeles. Ships in discreet packaging.",
       },
       after_submit: {
         message: `Follow me on Instagram ${site.instagramHandle} for making-of and shipping updates: ${site.instagram}`,
