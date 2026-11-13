@@ -1,6 +1,10 @@
 import { Resend } from "resend";
 import { site } from "../data/site.js";
-import { formatUsd } from "../data/shop.js";
+import {
+  formatUsd,
+  fulfillmentLabel,
+  isPickupFulfillment,
+} from "../data/shop.js";
 import {
   formatAddress,
   orderSummaryLine,
@@ -27,7 +31,11 @@ function escapeHtml(value: string) {
 }
 
 function orderEmailHtml(order: ShopOrder, origin: string) {
-  const address = formatAddress(order.shipping) || "No shipping address";
+  const pickup = isPickupFulfillment(order.fulfillment);
+  const how = fulfillmentLabel(order.fulfillment) || order.fulfillment;
+  const address = pickup
+    ? how || "Event pickup"
+    : formatAddress(order.shipping) || "No shipping address";
   const items = order.items
     .map((item) => {
       const detail = item.description
@@ -50,12 +58,12 @@ function orderEmailHtml(order: ShopOrder, origin: string) {
     <h1 style="font-size:28px;margin:0 0 16px">New order</h1>
     <p>${escapeHtml(order.name || "Someone")} paid ${formatUsd(order.amountTotal)}.</p>
     <table style="width:100%;border-collapse:collapse">${items}</table>
-    <p><strong>Ship to</strong><br>${escapeHtml(address).replaceAll("\n", "<br>")}</p>
+    <p><strong>${pickup ? "Pickup" : "Ship to"}</strong><br>${escapeHtml(address).replaceAll("\n", "<br>")}</p>
     <p>
       ${order.email ? `Email: ${escapeHtml(order.email)}<br>` : ""}
       ${order.phone ? `Phone: ${escapeHtml(order.phone)}<br>` : ""}
-      ${order.fulfillment ? `Shipping: ${escapeHtml(order.fulfillment)}<br>` : ""}
-      ${order.weight ? `Weight: ${escapeHtml(order.weight)}` : ""}
+      ${how ? `${pickup ? "Pickup" : "Shipping"}: ${escapeHtml(how)}<br>` : ""}
+      ${!pickup && order.weight ? `Weight: ${escapeHtml(order.weight)}` : ""}
     </p>
     <p><a href="${origin}/orders">Open the order queue</a></p>
   </div>`;
@@ -79,7 +87,9 @@ export async function emailKyleNewOrder(order: ShopOrder, origin: string) {
       "New Santa Kyle's Workshop order",
       orderSummaryLine(order),
       "",
-      formatAddress(order.shipping) || "No shipping address",
+      isPickupFulfillment(order.fulfillment)
+        ? fulfillmentLabel(order.fulfillment) || "Event pickup"
+        : formatAddress(order.shipping) || "No shipping address",
       order.email ?? "",
       order.phone ?? "",
       "",

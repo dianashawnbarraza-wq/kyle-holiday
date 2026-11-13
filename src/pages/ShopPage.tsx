@@ -18,12 +18,13 @@ import {
   stickerDealSavingsCents,
   stickersUntilDeal,
   formatWeight,
+  availableFulfillmentMethods,
   getStyle,
   isHolidayCutoffPassed,
+  isPickupFulfillment,
   itemSummary,
   itemUnitPrice,
   resolveStyleId,
-  shippingMethods,
   shopStyles,
   stylePriceLabel,
 } from "../data/shop";
@@ -71,6 +72,12 @@ export function ShopPage() {
   }, [items]);
 
   useEffect(() => {
+    if (!availableFulfillmentMethods().some((method) => method.id === fulfillment)) {
+      setFulfillment("ground");
+    }
+  }, [fulfillment]);
+
+  useEffect(() => {
     if (!bagOpen) return;
 
     const previousOverflow = document.body.style.overflow;
@@ -101,6 +108,8 @@ export function ShopPage() {
   const weightOz = useMemo(() => cartWeightOz(items), [items]);
   const quantity = cartQuantity(items);
   const bagFull = quantity >= MAX_CART_ITEMS;
+  const pickup = isPickupFulfillment(fulfillment);
+  const fulfillmentOptions = availableFulfillmentMethods();
 
   function openProduct(styleId: string) {
     setBagOpen(false);
@@ -470,8 +479,9 @@ export function ShopPage() {
                 )}
 
                 <fieldset className="shop-fulfillment">
-                  <legend className="shop-field__label">Shipping</legend>
-                  {shippingMethods.map((method) => {
+                  <legend className="shop-field__label">Shipping & pickup</legend>
+                  {fulfillmentOptions.map((method) => {
+                    const methodPickup = method.kind === "pickup";
                     const price = cartShippingCents(items, method.id);
                     const missed = isHolidayCutoffPassed(method.cutoffDate);
                     return (
@@ -488,12 +498,20 @@ export function ShopPage() {
                         <span>
                           <span className="shop-radio__name">
                             {method.label}
-                            {items.length > 0 ? ` · ${formatUsd(price)}` : ""}
+                            {methodPickup
+                              ? " · Free"
+                              : items.length > 0
+                                ? ` · ${formatUsd(price)}`
+                                : ""}
                           </span>
                           <span className="shop-radio__cutoff">
-                            {missed
-                              ? `Christmas cutoff was ${method.cutoffLabel}`
-                              : `Christmas cutoff ${method.cutoffLabel}`}
+                            {methodPickup
+                              ? [method.cutoffLabel, method.detail]
+                                  .filter(Boolean)
+                                  .join(" · ")
+                              : missed
+                                ? `Christmas cutoff was ${method.cutoffLabel}`
+                                : `Christmas cutoff ${method.cutoffLabel}`}
                           </span>
                         </span>
                       </label>
@@ -521,10 +539,12 @@ export function ShopPage() {
                   </p>
                   <p>
                     <span>
-                      Shipping
-                      {items.length > 0 ? ` · ${formatWeight(weightOz)}` : ""}
+                      {pickup ? "Pickup" : "Shipping"}
+                      {!pickup && items.length > 0
+                        ? ` · ${formatWeight(weightOz)}`
+                        : ""}
                     </span>
-                    <span>{formatUsd(shipping)}</span>
+                    <span>{pickup ? "Free" : formatUsd(shipping)}</span>
                   </p>
                   <p className="shop-bag__total">
                     <span>Total</span>
@@ -546,7 +566,11 @@ export function ShopPage() {
                 >
                   {checkingOut ? "Sending you to checkout…" : "Checkout"}
                 </button>
-                <p className="shop-bag__packaging">Ships in discreet packaging</p>
+                <p className="shop-bag__packaging">
+                  {pickup
+                    ? "I'll have it at the event. Ask for Kyle."
+                    : "Ships in discreet packaging"}
+                </p>
               </aside>
             </div>
           </section>

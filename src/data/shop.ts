@@ -69,7 +69,11 @@ export type CartItem = {
   quantity: number;
 };
 
-export type Fulfillment = "ground" | "priority";
+export type Fulfillment =
+  | "ground"
+  | "priority"
+  | "pickup-cruise"
+  | "pickup-akbar";
 
 export const shopFonts: ShopFont[] = [
   { id: "old-english", name: "Old English" },
@@ -701,11 +705,13 @@ export const itemWeightsOz = {
 } as const;
 export const PACKAGING_WEIGHT_OZ = 1;
 
-export type ShippingMethodId = "ground" | "priority";
+export type ShippingMethodId = Fulfillment;
 
 export type ShippingMethod = {
   id: ShippingMethodId;
+  kind: "ship" | "pickup";
   label: string;
+  detail?: string;
   cutoffLabel: string;
   cutoffDate: string;
 };
@@ -713,15 +719,33 @@ export type ShippingMethod = {
 export const shippingMethods: ShippingMethod[] = [
   {
     id: "ground",
+    kind: "ship",
     label: "USPS Ground Advantage",
     cutoffLabel: "Thursday, Dec. 17",
     cutoffDate: "2026-12-17",
   },
   {
     id: "priority",
+    kind: "ship",
     label: "USPS Priority Mail",
     cutoffLabel: "Friday, Dec. 18",
     cutoffDate: "2026-12-18",
+  },
+  {
+    id: "pickup-cruise",
+    kind: "pickup",
+    label: "Pickup at Cruise",
+    detail: "Cruise LA Holiday Market · Eagle LA",
+    cutoffLabel: "Saturday, Nov. 21",
+    cutoffDate: "2026-11-21",
+  },
+  {
+    id: "pickup-akbar",
+    kind: "pickup",
+    label: "Pickup at Pink Pony Club",
+    detail: "Akbar, Silver Lake",
+    cutoffLabel: "Saturday, Dec. 6",
+    cutoffDate: "2026-12-06",
   },
 ];
 
@@ -791,8 +815,31 @@ export function getSize(style: ShopStyle, sizeId: string) {
   return style.sizes.find((size) => size.id === sizeId);
 }
 
-export function getShippingMethod(id: ShippingMethodId) {
+export function getShippingMethod(id: string | null | undefined) {
   return shippingMethods.find((method) => method.id === id);
+}
+
+export function isPickupFulfillment(id: string | null | undefined) {
+  return getShippingMethod(id)?.kind === "pickup";
+}
+
+export function fulfillmentLabel(id: string | null | undefined) {
+  const method = getShippingMethod(id);
+  if (!method) return id ?? "";
+  if (method.kind === "pickup") {
+    return method.detail
+      ? `${method.label} · ${method.cutoffLabel} · ${method.detail}`
+      : `${method.label} · ${method.cutoffLabel}`;
+  }
+  return method.label;
+}
+
+export function availableFulfillmentMethods(now = new Date()) {
+  return shippingMethods.filter(
+    (method) =>
+      method.kind === "ship" ||
+      !isHolidayCutoffPassed(method.cutoffDate, now),
+  );
 }
 
 export function isHolidayCutoffPassed(cutoffDate: string, now = new Date()) {
@@ -820,6 +867,8 @@ function rateFromTable(table: number[], pounds: number) {
 }
 
 export function shippingCentsFor(items: CartItem[], method: ShippingMethodId) {
+  if (isPickupFulfillment(method)) return 0;
+
   const weightOz = cartWeightOz(items);
   if (weightOz <= 0) return 0;
 

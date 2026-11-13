@@ -1,6 +1,10 @@
 import { useEffect, useMemo, useState } from "react";
 import { PageHero } from "../components/PageHero";
-import { formatUsd } from "../data/shop";
+import {
+  formatUsd,
+  fulfillmentLabel,
+  isPickupFulfillment,
+} from "../data/shop";
 import type { ShopOrder } from "../data/shopOrder";
 import "../components/CTAButton.css";
 import "./ShopPage.css";
@@ -249,8 +253,17 @@ export function OrdersPage() {
                                   ))}
                                 </div>
                                 <div>
-                                  <p className="order-slip__label">Ship to</p>
-                                  {order.shipping ? (
+                                  <p className="order-slip__label">
+                                    {isPickupFulfillment(order.fulfillment)
+                                      ? "Pickup"
+                                      : "Ship to"}
+                                  </p>
+                                  {isPickupFulfillment(order.fulfillment) ? (
+                                    <p>
+                                      {fulfillmentLabel(order.fulfillment) ||
+                                        order.fulfillment}
+                                    </p>
+                                  ) : order.shipping ? (
                                     <>
                                       <p>{order.shipping.name}</p>
                                       <p>{order.shipping.line1}</p>
@@ -288,21 +301,26 @@ export function OrdersPage() {
                               </ul>
                               <p className="order-slip__total">
                                 {order.fulfillment
-                                  ? `${order.fulfillment} · `
+                                  ? `${fulfillmentLabel(order.fulfillment) || order.fulfillment} · `
                                   : ""}
-                                {order.weight ? `${order.weight} · ` : ""}
+                                {!isPickupFulfillment(order.fulfillment) &&
+                                order.weight
+                                  ? `${order.weight} · `
+                                  : ""}
                                 {formatUsd(order.amountTotal)}
                               </p>
                             </div>
 
                             <div className="order-card__actions">
-                              <button
-                                type="button"
-                                className="cta-btn cta-btn--primary"
-                                onClick={() => void createLabel(order)}
-                              >
-                                Create label
-                              </button>
+                              {!isPickupFulfillment(order.fulfillment) && (
+                                <button
+                                  type="button"
+                                  className="cta-btn cta-btn--primary"
+                                  onClick={() => void createLabel(order)}
+                                >
+                                  Create label
+                                </button>
+                              )}
                               <button
                                 type="button"
                                 className="cta-btn cta-btn--secondary"
@@ -310,9 +328,13 @@ export function OrdersPage() {
                                   void markShipped(order.id, !order.shipped)
                                 }
                               >
-                                {order.shipped
-                                  ? "Mark as not shipped"
-                                  : "Mark shipped"}
+                                {isPickupFulfillment(order.fulfillment)
+                                  ? order.shipped
+                                    ? "Mark as not picked up"
+                                    : "Mark picked up"
+                                  : order.shipped
+                                    ? "Mark as not shipped"
+                                    : "Mark shipped"}
                               </button>
                             </div>
                           </div>

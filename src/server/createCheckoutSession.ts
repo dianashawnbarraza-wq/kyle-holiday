@@ -14,10 +14,12 @@ import {
   getColor,
   getFont,
   isValidEngravingFill,
+  fulfillmentLabel,
   getShippingMethod,
   getSize,
   getStyle,
   isHolidayCutoffPassed,
+  isPickupFulfillment,
   itemSummary,
   itemUnitPrice,
   sanitizeEngraving,
@@ -46,9 +48,18 @@ function getStripe() {
 }
 
 function normalizeFulfillment(value: string | undefined): Fulfillment {
-  if (value === "ground" || value === "priority") return value;
   if (value === "ship") return "ground";
-  throw new Error("Choose Ground Advantage or Priority Mail");
+  const method = getShippingMethod(value);
+  if (!method) {
+    throw new Error("Choose shipping or pickup");
+  }
+  if (
+    method.kind === "pickup" &&
+    isHolidayCutoffPassed(method.cutoffDate)
+  ) {
+    throw new Error("That pickup date has passed. Choose shipping or another pickup.");
+  }
+  return method.id;
 }
 
 function normalizeCart(payload: CheckoutPayload): {
@@ -125,6 +136,8 @@ function shippingOptionsFor(
   items: CartItem[],
   fulfillment: Fulfillment,
 ): Stripe.Checkout.SessionCreateParams.ShippingOption[] {
+  if (isPickupFulfillment(fulfillment)) return [];
+
   const method = getShippingMethod(fulfillment)!;
   const amount = cartShippingCents(items, fulfillment);
   const missedCutoff = isHolidayCutoffPassed(method.cutoffDate);
@@ -165,6 +178,7 @@ export async function createCheckoutSession(
   const { items, fulfillment } = normalizeCart(payload);
   const stripe = getStripe();
   const method = getShippingMethod(fulfillment);
+  const pickup = isPickupFulfillment(fulfillment);
   const weight = cartWeightOz(items);
 
   const stickerSavings = stickerDealSavingsCents(items);
@@ -185,7 +199,9 @@ export async function createCheckoutSession(
     success_url: `${origin}/shop/thanks?session_id={CHECKOUT_SESSION_ID}`,
     cancel_url: `${origin}/shop`,
     payment_intent_data: {
-      description: "Santa Kyle's Workshop",
+      description: pickup
+        ? fulfillmentLabel(fulfillment)
+        : "Santa Kyle's Workshop",
       statement_descriptor: "KYLE HOLIDAY",
     },
     branding_settings: {
@@ -193,18 +209,25 @@ export async function createCheckoutSession(
     },
     phone_number_collection: { enabled: true },
     billing_address_collection: "required",
-    shipping_address_collection: { allowed_countries: ["US"] },
+    ...(pickup
+      ? {}
+      : {
+          shipping_address_collection: { allowed_countries: ["US"] },
+          shipping_options: shippingOptionsFor(items, fulfillment),
+        }),
     custom_text: {
       submit: {
-        message: method
-          ? `USPS ${method.label.replace("USPS ", "")}. Christmas cutoff ${method.cutoffLabel}. Ships in discreet packaging.`
-          : "Handmade in Los Angeles. Ships in discreet packaging.",
+        message:
+          pickup && method
+            ? `${method.label}${method.detail ? `, ${method.detail}` : ""}, ${method.cutoffLabel}. I'll have your order at the table.`
+            : method
+              ? `USPS ${method.label.replace("USPS ", "")}. Christmas cutoff ${method.cutoffLabel}. Ships in discreet packaging.`
+              : "Handmade in Los Angeles. Ships in discreet packaging.",
       },
       after_submit: {
         message: `Follow me on Instagram ${site.instagramHandle} for making-of and shipping updates: ${site.instagram}`,
       },
     },
-    shipping_options: shippingOptionsFor(items, fulfillment),
     line_items: items.map((item) => {
       const style = getStyle(item.styleId)!;
       const description = itemSummary(item) || style.caption;
@@ -224,6 +247,7 @@ export async function createCheckoutSession(
     ...(discounts.length > 0 ? { discounts } : {}),
     metadata: {
       fulfillment,
+      fulfillment_label: fulfillmentLabel(fulfillment),
       item_count: String(cartQuantity(items)),
       weight_oz: String(weight),
       weight: formatWeight(weight),

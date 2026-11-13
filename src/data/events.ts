@@ -11,6 +11,13 @@ export type EventItem = {
 
 const allEvents: EventItem[] = [
   {
+    sortDate: "2026-12-06",
+    date: "12/6/26",
+    title: "Pink Pony Club",
+    location: "Akbar, Silver Lake",
+    role: "Shop pickup — Santa Kyle's Workshop",
+  },
+  {
     sortDate: "2026-11-21",
     date: "11/21/26, 4–9 PM",
     title: "Cruise LA Holiday Market",
