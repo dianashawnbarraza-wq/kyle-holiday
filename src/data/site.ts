@@ -15,6 +15,15 @@ export const site = {
     bannerText: "Shop in person at The Stockroom in Los Angeles",
     name: "The Stockroom",
   },
+  /** Sitewide shop promo — hide after end of endsOn (America/Los_Angeles). */
+  promo: {
+    code: "TRYIT",
+    percentOff: 15,
+    /** Inclusive last day the offer is valid. */
+    endsOn: "2026-12-01",
+    href: "/shop",
+    text: "Save 15% with code TRYIT through Dec 1",
+  },
   about: [
     `Kyle Holiday (he/they, Mx. Cruise LA Leather 2026) is a Mexican-American artist, leather worker, trans leather titleholder, and kinkster residing and born in Los Angeles. His work celebrates trans identity, kink, and play through art, custom pet play tags, and handmade leather gear.`,
     `Passionate about art, education, and accessibility in leather, they are eager to share their craft and to help others embrace their own leather journey. Kyle currently co-hosts an educational series called RIVET, helping the queer community grow their skills and knowledge of leather.`,

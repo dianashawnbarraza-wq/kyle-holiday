@@ -50,6 +50,7 @@ export type ShopStyle = {
   kind: ProductKind;
   title: string;
   caption: string;
+  description?: string;
   src: string;
   alt: string;
   gallery?: Array<string | ShopGalleryPhoto>;
@@ -318,8 +319,10 @@ export const shopStyles: ShopStyle[] = [
     kind: "lace-lock",
     title: "Boot Lace Locks",
     caption: "Custom engraved pair · 2 for $20",
+    description:
+      "Silver metallic boot lace locks that last and look amazing on lace up boots. Customize them to make them your own.",
     src: "/images/shop/boot-lace-locks.jpg",
-    alt: "Copper boot lace locks engraved LICK, GOOD, DYKE, DADDY, MOMMY, PUP, BOY, and FAG on a black leather boot",
+    alt: "Silver metallic boot lace locks engraved LICK, GOOD, DYKE, DADDY, MOMMY, PUP, BOY, and FAG on a black leather boot",
     priceCents: 2000,
     weightOz: 1,
     sizes: laceLockSize,
@@ -1042,11 +1045,23 @@ export function itemSummary(item: CartItem) {
   if (style.allowsSides) {
     parts.push(item.sides === 2 ? "Two sides" : "One side");
   }
-  if (item.engraving) {
-    parts.push(item.engraving);
-  }
-  if (item.backEngraving) {
-    parts.push(item.backEngraving);
+  if (style.kind === "lace-lock") {
+    if (
+      item.engraving &&
+      item.backEngraving &&
+      item.engraving !== item.backEngraving
+    ) {
+      parts.push(`${item.engraving} / ${item.backEngraving}`);
+    } else if (item.engraving) {
+      parts.push(item.engraving);
+    }
+  } else {
+    if (item.engraving) {
+      parts.push(item.engraving);
+    }
+    if (item.backEngraving) {
+      parts.push(item.backEngraving);
+    }
   }
   return parts.filter(Boolean).join(" · ");
 }

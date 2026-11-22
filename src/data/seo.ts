@@ -1,5 +1,6 @@
 import { site } from "./site";
-import { tagFaq, tagGallery } from "./tags";
+import { shopStyles } from "./shop";
+import { tagFaq } from "./tags";
 
 export const siteUrl = "https://www.kyleholiday.com";
 
@@ -7,27 +8,40 @@ export const defaultOgImage = `${siteUrl}/images/hero.png`;
 
 export const seoKeywords = [
   "Kyle Holiday",
+  "pet play",
   "pet play tags",
-  "pet ID tags",
-  "puppy play tag",
+  "puppy play",
+  "puppy play tags",
   "puppy play collar tag",
+  "pet ID tags",
   "custom pet tag",
   "custom engraved tag",
   "personalized pup tag",
   "furries",
   "furry pet tag",
+  "Mx Leather",
+  "Mx. Leather",
   "Mx. Cruise LA Leather",
-  "Mx. leather title",
+  "Mx Leather titleholder",
   "leather titleholder",
+  "leather community",
+  "queer leather",
+  "kink",
+  "BDSM",
+  "BDSM community",
+  "fetish",
   "Cruise LA",
   "Eagle LA",
   "queer leather Los Angeles",
   "trans leather artist",
   "custom leather gear",
+  "leather collars",
+  "leather harness",
   "RIVET leather",
   "pet play accessories",
   "laser cut pet tags",
   "Los Angeles leatherworker",
+  "Los Angeles BDSM",
 ] as const;
 
 export type PageSeoConfig = {
@@ -43,24 +57,26 @@ const sharedKeywords = seoKeywords;
 
 export const pageSeo: Record<string, PageSeoConfig> = {
   "/": {
-    title: `${site.name} — Pet Play Tags, Leather & Art | ${site.title}`,
+    title: `${site.name} — Leather, Pet Play, Puppy Play & Kink | ${site.title}`,
     description:
-      "Kyle Holiday (Mx. Cruise LA Leather 2026) makes custom pet play tags, puppy play collar tags, pet ID tags, leather gear, and queer art in Los Angeles. Host of Cruise LA at Eagle LA.",
+      "Kyle Holiday is Mx. Cruise LA Leather 2026 — a trans leather titleholder making custom pet play tags, puppy play collar tags, leather gear, and kink art in Los Angeles. Leather, BDSM, and puppy play community in LA.",
     path: "/",
     keywords: sharedKeywords,
   },
   "/shop": {
-    title: "Santa Kyle's Workshop | Custom Play Tags and T-Shirts | Kyle Holiday",
+    title:
+      "Shop Pet Play Tags, Puppy Play & Boot Lace Locks | Kyle Holiday",
     description:
-      "Santa Kyle's Workshop: order custom Kyle Holiday play tags and t-shirts. Pick a style, size, color, and engraving, add several to your bag, then check out.",
+      "Santa Kyle's Workshop: custom pet play tags, puppy play collar tags, engraved boot lace locks, leather-scene tees, and stickers. Handmade in Los Angeles for the leather, kink, and BDSM community.",
     path: "/shop",
     keywords: [
       "Kyle Holiday shop",
       "pet play tags",
+      "puppy play tags",
+      "boot lace locks",
       "custom leatherwork",
-      "leather work",
-      "queer art",
-      "puppy play tag",
+      "BDSM shop Los Angeles",
+      "kink shop",
       ...sharedKeywords,
     ],
   },
@@ -112,22 +128,25 @@ export const pageSeo: Record<string, PageSeoConfig> = {
     ],
   },
   "/leatherwork": {
-    title: "Custom Leather Gear Los Angeles | Kyle Holiday",
+    title: "Custom Leather, Kink & BDSM Gear Los Angeles | Kyle Holiday",
     description:
-      "Custom leather collars, harnesses, cuffs, and pup gear made to order in Los Angeles by Kyle Holiday — Mx. Cruise LA Leather 2026.",
+      "Custom leather collars, harnesses, puppy play gear, and BDSM pieces made to order in Los Angeles by Kyle Holiday — Mx. Leather titleholder, Mx. Cruise LA Leather 2026.",
     path: "/leatherwork",
     keywords: [
       "custom leather gear",
+      "BDSM leather",
+      "kink leather gear",
       "puppy collar",
       "leather harness Los Angeles",
       "queer leatherworker",
+      "Mx Leather",
       ...sharedKeywords,
     ],
   },
   "/art": {
-    title: "Queer Leather Art, Prints & Stickers | Kyle Holiday",
+    title: "Queer Leather, Kink & BDSM Art | Kyle Holiday",
     description:
-      "Risograph prints, stickers, and screenprinted tees by Kyle Holiday — queer, trans, and kink-forward art from Los Angeles.",
+      "Risograph prints, stickers, and screenprinted tees by Kyle Holiday — queer, trans, leather, kink, and BDSM art from Los Angeles.",
     path: "/art",
     keywords: [
       "queer leather art",
@@ -137,23 +156,25 @@ export const pageSeo: Record<string, PageSeoConfig> = {
     ],
   },
   "/events": {
-    title: "Events | Kyle Holiday — Los Angeles and Beyond",
+    title: "Leather, Kink & BDSM Events | Kyle Holiday",
     description:
-      "Find Kyle Holiday at leather events, Cruise LA, RIVET nights, and more across Los Angeles and beyond.",
+      "Find Kyle Holiday — Mx. Cruise LA Leather 2026 — at leather, kink, BDSM, and puppy play events, Cruise LA at Eagle LA, and RIVET nights across Los Angeles.",
     path: "/events",
     keywords: [
       "Kyle Holiday events",
+      "leather events Los Angeles",
+      "BDSM events LA",
+      "kink events Los Angeles",
       "Cruise LA",
       "Eagle LA",
       "RIVET leather",
-      "Los Angeles leather events",
       ...sharedKeywords,
     ],
   },
   "/contact": {
-    title: "Contact Kyle Holiday | Cruise LA & Custom Orders",
+    title: "Contact Kyle Holiday | Leather, Pet Play & Custom Orders",
     description:
-      "Email Kyle Holiday for custom pet play tags, leather quotes, and event bookings. Find Cruise LA every 3rd Saturday at Eagle LA, 4–9pm.",
+      "Email Kyle Holiday for custom pet play tags, puppy play tags, leather gear, and event bookings. Mx. Cruise LA Leather 2026 hosts Cruise LA every 3rd Saturday at Eagle LA.",
     path: "/contact",
     keywords: [
       "Cruise LA",
@@ -165,8 +186,12 @@ export const pageSeo: Record<string, PageSeoConfig> = {
   },
 };
 
+const pathAliases: Record<string, string> = {
+  "/leather": "/leatherwork",
+};
+
 export function getPageSeo(pathname: string): PageSeoConfig {
-  return pageSeo[pathname] ?? pageSeo["/"];
+  return pageSeo[pathAliases[pathname] ?? pathname] ?? pageSeo["/"];
 }
 
 const personJsonLd = {
@@ -180,8 +205,13 @@ const personJsonLd = {
   email: site.email,
   sameAs: [site.instagram, site.etsy],
   knowsAbout: [
-    "pet play tags",
+    "leather",
+    "kink",
+    "BDSM",
+    "pet play",
     "puppy play",
+    "Mx Leather",
+    "pet play tags",
     "custom leatherwork",
     "queer leather community",
     "Cruise LA",
@@ -217,7 +247,7 @@ const cruiseLaEventJsonLd = {
   "@type": "Event",
   name: site.cruiseLA.name,
   description:
-    "Queer leather party hosted by Kyle Holiday — Mx. Cruise LA Leather 2026. Every 3rd Saturday of the month at Eagle LA.",
+    "Queer leather, kink, and BDSM party hosted by Kyle Holiday — Mx. Cruise LA Leather 2026. Every 3rd Saturday of the month at Eagle LA.",
   eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
   eventStatus: "https://schema.org/EventScheduled",
   location: {
@@ -237,48 +267,72 @@ const cruiseLaEventJsonLd = {
   },
 };
 
-const petTagsItemListJsonLd = {
+const shopCatalogJsonLd = {
   "@context": "https://schema.org",
   "@type": "ItemList",
-  name: "Kyle Holiday Pet Play Tags",
+  name: "Santa Kyle's Workshop",
   description:
-    "Custom pet play tags, puppy play collar tags, and personalized pet ID tags available on Etsy.",
-  itemListElement: tagGallery.map((tag, index) => ({
-    "@type": "ListItem",
-    position: index + 1,
-    item: {
-      "@type": "Product",
-      name: tag.title,
-      description: tag.caption,
-      image: `${siteUrl}${tag.src}`,
-      url: tag.shopUrl,
-      brand: {
-        "@type": "Brand",
-        name: site.name,
+    "Custom pet play tags, puppy play collar tags, boot lace locks, leather-scene tees, and stickers handmade in Los Angeles.",
+  url: `${siteUrl}/shop`,
+  itemListElement: shopStyles
+    .filter((style) => style.kind !== "test")
+    .map((style, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      item: {
+        "@type": "Product",
+        name: style.title,
+        description: style.description || style.caption,
+        image: `${siteUrl}${style.src}`,
+        url: `${siteUrl}/shop?style=${style.id}`,
+        brand: {
+          "@type": "Brand",
+          name: site.name,
+        },
+        category:
+          style.kind === "tag"
+            ? "Pet Play Tags"
+            : style.kind === "lace-lock"
+              ? "Boot Lace Locks"
+              : style.kind === "shirt"
+                ? "T-Shirts"
+                : style.kind === "print"
+                  ? "Art Prints"
+                  : "Stickers",
       },
-      category: "Pet Play Tags",
-    },
-  })),
+    })),
 };
 
 export function getJsonLdForPath(pathname: string): Record<string, unknown>[] {
+  const path = pathAliases[pathname] ?? pathname;
   const graphs: Record<string, unknown>[] = [websiteJsonLd, personJsonLd];
 
-  if (pathname === "/about") {
+  if (path === "/about") {
     graphs.push(organizationJsonLd);
   }
 
   if (
-    pathname === "/" ||
-    pathname === "/contact" ||
-    pathname === "/about" ||
-    pathname === "/events"
+    path === "/" ||
+    path === "/contact" ||
+    path === "/about" ||
+    path === "/events"
   ) {
     graphs.push(cruiseLaEventJsonLd);
   }
 
-  if (pathname === "/shop") {
-    graphs.push(petTagsItemListJsonLd);
+  if (path === "/leatherwork") {
+    graphs.push({
+      "@context": "https://schema.org",
+      "@type": "OfferCatalog",
+      name: "Custom leather and BDSM gear",
+      description:
+        "Made-to-order leather collars, harnesses, puppy play gear, and kink pieces by Kyle Holiday in Los Angeles.",
+      url: `${siteUrl}/leatherwork`,
+    });
+  }
+
+  if (path === "/shop") {
+    graphs.push(shopCatalogJsonLd);
     graphs.push({
       "@context": "https://schema.org",
       "@type": "FAQPage",

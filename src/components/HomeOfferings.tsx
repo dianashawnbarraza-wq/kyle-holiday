@@ -58,8 +58,8 @@ export function HomeOfferings() {
         <h2 className="home-offerings__title">Try it and find out</h2>
         <p className="home-offerings__text">
           Hi, I&apos;m Kyle (Mx. Cruise LA Leather 2026, they/he). I&apos;m a
-          leather queer who crafts,
-          makes art, and creates custom leather gear. Check out my work or{" "}
+          leather queer who crafts pet play tags, makes kink and BDSM art, and
+          creates custom leather gear. Check out my work or{" "}
           <Link to="/contact" className="home-offerings__inline-link">
             get in touch
           </Link>{" "}

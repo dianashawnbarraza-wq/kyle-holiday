@@ -44,7 +44,7 @@ export function LeatherworkPage() {
     <div className="leather-page">
       <PageHero
         title="Leather"
-        tagline="Custom gear for all bodies"
+        tagline="Custom leather for play, kink, and all bodies"
         image="/images/leather/femme-harness.jpeg"
         imageAlt="Black leather femme harness"
         imagePosition="center 18%"

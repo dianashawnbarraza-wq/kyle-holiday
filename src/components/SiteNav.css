@@ -1,6 +1,6 @@
 .site-nav {
   position: sticky;
-  top: 0;
+  top: var(--promo-banner-height);
   z-index: 100;
   height: var(--nav-height);
   background: rgba(13, 13, 13, 0.85);
@@ -12,6 +12,7 @@
 
 .site-nav--home {
   position: absolute;
+  top: var(--promo-banner-height);
   left: 0;
   right: 0;
   background: transparent;
@@ -211,7 +212,7 @@
 
 .site-nav__mobile-panel {
   position: absolute;
-  top: var(--nav-height);
+  top: calc(var(--promo-banner-height) + var(--nav-height));
   left: 0;
   right: 0;
   background: rgba(13, 13, 13, 0.98);

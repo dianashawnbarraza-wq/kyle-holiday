@@ -1,5 +1,6 @@
 import { Navigate, Route, Routes } from "react-router-dom";
 import { PageSEO } from "./components/PageSEO";
+import { PromoBanner, isPromoActive } from "./components/PromoBanner";
 import { SiteNav } from "./components/SiteNav";
 import { SiteFooter } from "./components/SiteFooter";
 import { ScrollToHash } from "./components/ScrollToHash";
@@ -14,10 +15,13 @@ import { ContactPage } from "./pages/ContactPage";
 import { EventsPage } from "./pages/EventsPage";
 
 export default function App() {
+  const promoActive = isPromoActive();
+
   return (
-    <>
+    <div className={promoActive ? "has-promo-banner" : undefined}>
       <PageSEO />
       <ScrollToHash />
+      <PromoBanner />
       <SiteNav />
       <main>
         <Routes>
@@ -31,12 +35,16 @@ export default function App() {
             element={<Navigate to="/shop" replace />}
           />
           <Route path="/art" element={<ArtPage />} />
+          <Route
+            path="/leather"
+            element={<Navigate to="/leatherwork" replace />}
+          />
           <Route path="/leatherwork" element={<LeatherworkPage />} />
           <Route path="/events" element={<EventsPage />} />
           <Route path="/contact" element={<ContactPage />} />
         </Routes>
       </main>
       <SiteFooter />
-    </>
+    </div>
   );
 }

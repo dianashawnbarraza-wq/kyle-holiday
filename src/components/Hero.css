@@ -26,7 +26,7 @@
   width: 100%;
   min-height: inherit;
   padding:
-    calc(var(--nav-height) + clamp(1.5rem, 4vw, 3rem))
+    calc(var(--promo-banner-height) + var(--nav-height) + clamp(1.5rem, 4vw, 3rem))
     0
     clamp(2rem, 5vw, 4rem);
 }
@@ -221,7 +221,7 @@
 
   .hero--shop .hero__layout {
     min-height: 0;
-    padding-top: var(--nav-height);
+    padding-top: calc(var(--promo-banner-height) + var(--nav-height));
     padding-bottom: 0;
   }
 

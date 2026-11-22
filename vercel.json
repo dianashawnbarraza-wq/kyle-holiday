@@ -13,6 +13,11 @@
       "source": "/pet-play-tags",
       "destination": "/shop",
       "permanent": true
+    },
+    {
+      "source": "/leather",
+      "destination": "/leatherwork",
+      "permanent": true
     }
   ],
   "rewrites": [

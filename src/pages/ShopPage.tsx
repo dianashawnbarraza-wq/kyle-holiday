@@ -325,6 +325,11 @@ export function ShopPage() {
                                   ? option.caption
                                   : `${option.caption} · ${stylePriceLabel(option)}`}
                               </span>
+                              {option.description && (
+                                <span className="shop-style__description">
+                                  {option.description}
+                                </span>
+                              )}
                             </span>
                           </button>
                         ))}

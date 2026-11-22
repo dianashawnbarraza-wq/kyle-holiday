@@ -83,20 +83,26 @@ function normalizeCart(payload: CheckoutPayload): {
     const quantity = Math.min(10, Math.max(1, Math.floor(item.quantity ?? 1)));
 
     if (style.kind !== "tag") {
+      const limit = styleEngravingLimit(style);
       const engraving = style.allowsEngraving
-        ? sanitizeEngraving(
-            item.engraving ?? "",
-            styleEngravingLimit(style),
-          )
+        ? sanitizeEngraving(item.engraving ?? "", limit)
         : undefined;
+      const backEngraving =
+        style.kind === "lace-lock"
+          ? sanitizeEngraving(item.backEngraving || engraving || "", limit)
+          : undefined;
       if (style.allowsEngraving && !engraving) {
         throw new Error("Add engraving text");
+      }
+      if (style.kind === "lace-lock" && !backEngraving) {
+        throw new Error("Add text for both locks");
       }
       return {
         id: `item-${index}`,
         styleId: style.id,
         sizeId: size.id,
         engraving,
+        backEngraving,
         quantity,
       };
     }
@@ -247,7 +253,8 @@ export async function createCheckoutSession(
     },
     line_items: items.map((item) => {
       const style = getStyle(item.styleId)!;
-      const description = itemSummary(item) || style.caption;
+      const description =
+        itemSummary(item) || style.description || style.caption;
       return {
         quantity: item.quantity,
         price_data: {
@@ -261,7 +268,10 @@ export async function createCheckoutSession(
         },
       };
     }),
-    ...(discounts.length > 0 ? { discounts } : {}),
+    // Stripe Checkout allows either preset discounts or customer promo codes, not both.
+    ...(discounts.length > 0
+      ? { discounts }
+      : { allow_promotion_codes: true }),
     metadata: {
       fulfillment,
       fulfillment_label: fulfillmentLabel(fulfillment),
@@ -270,7 +280,9 @@ export async function createCheckoutSession(
       weight: formatWeight(weight),
       sticker_deal_savings: String(stickerSavings),
       engravings: items
-        .map((item) => item.engraving)
+        .map((item) =>
+          [item.engraving, item.backEngraving].filter(Boolean).join(" / "),
+        )
         .filter(Boolean)
         .join(", ")
         .slice(0, 500),

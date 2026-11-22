@@ -7,7 +7,7 @@
   overflow: hidden;
   background: rgba(8, 8, 8, 0.96);
   padding:
-    calc(var(--nav-height) + var(--space-3))
+    calc(var(--promo-banner-height) + var(--nav-height) + var(--space-3))
     clamp(1rem, 4vw, 2.5rem)
     0;
 }
@@ -43,6 +43,14 @@
   font-size: clamp(2rem, 5vw, 3.25rem);
 }
 
+.shop-modal__description {
+  margin: 10px 0 0;
+  max-width: 46ch;
+  font-size: 1rem;
+  line-height: 1.45;
+  color: var(--text-muted);
+}
+
 .shop-modal__close {
   flex-shrink: 0;
   width: 48px;
@@ -73,7 +81,7 @@
   display: grid;
   gap: var(--space-2);
   position: sticky;
-  top: calc(var(--nav-height) + var(--space-2));
+  top: calc(var(--promo-banner-height) + var(--nav-height) + var(--space-2));
 }
 
 .shop-modal__photo-stage {
@@ -181,6 +189,25 @@
   margin-top: 6px;
 }
 
+.shop-check {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  margin: 0 0 var(--space-4);
+  color: var(--text-primary);
+  font-size: 0.92rem;
+  cursor: pointer;
+}
+
+.shop-check input {
+  margin-top: 3px;
+}
+
+.shop-input:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
 .shop-color--disabled,
 .shop-color:disabled {
   opacity: 0.38;
@@ -270,7 +297,9 @@
 
 @media (max-width: 860px) {
   .shop-modal {
-    padding-top: calc(var(--nav-height) + var(--space-2));
+    padding-top: calc(
+      var(--promo-banner-height) + var(--nav-height) + var(--space-2)
+    );
   }
 
   .shop-modal__layout,

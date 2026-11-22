@@ -2,6 +2,10 @@
 
 @import "./tokens.css";
 
+.has-promo-banner {
+  --promo-banner-height: 36px;
+}
+
 *,
 *::before,
 *::after {

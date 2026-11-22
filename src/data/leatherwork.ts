@@ -7,7 +7,7 @@ export type LeatherCategory = {
 
 export const leatherIntro = `I'm excited to offer custom leather gear that's durable for play and perfect to wear out. My interest in leather working began as pieces "off the shelf" never fit me and more masculine pieces were definitely not made for me. I make gear for all bodies (masc and femme) and I strive to be budget friendly, offering the best in return.`;
 
-export const leatherDetails = `Black leather with your choice of black, chrome, and gold hardware. I will have gear pieces at events, but I make harnesses and belts to order.`;
+export const leatherDetails = `Black leather with your choice of black, chrome, and gold hardware. I will have gear pieces at events, but I make harnesses and belts to order. Collars, harnesses, and BDSM gear for the leather, kink, and puppy play community in Los Angeles.`;
 
 export const leatherCategories: LeatherCategory[] = [
   {

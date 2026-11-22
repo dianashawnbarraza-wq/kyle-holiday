@@ -45,6 +45,7 @@ export function ShopProductModal({
   const [sides, setSides] = useState<1 | 2>(1);
   const [engraving, setEngraving] = useState("");
   const [backEngraving, setBackEngraving] = useState("");
+  const [matchLocks, setMatchLocks] = useState(true);
   const [quantity, setQuantity] = useState(1);
   const [error, setError] = useState<string | null>(null);
   const maxQuantity = Math.max(1, Math.min(10, remaining));
@@ -128,18 +129,34 @@ export function ShopProductModal({
       return;
     }
 
-    if (style.kind !== "tag") {
-      const text = style.allowsEngraving
-        ? sanitizeEngraving(engraving, engravingLimit)
-        : undefined;
-      if (style.allowsEngraving && !text) {
-        setError("Add engraving text.");
+    if (style.kind === "lace-lock") {
+      const first = sanitizeEngraving(engraving, engravingLimit);
+      const second = sanitizeEngraving(
+        matchLocks ? engraving : backEngraving,
+        engravingLimit,
+      );
+      if (!first) {
+        setError("Add text for the first lock.");
+        return;
+      }
+      if (!second) {
+        setError("Add text for the second lock, or match the first.");
         return;
       }
       onAdd({
         styleId: style.id,
         sizeId,
-        engraving: text,
+        engraving: first,
+        backEngraving: second,
+        quantity,
+      });
+      return;
+    }
+
+    if (style.kind !== "tag") {
+      onAdd({
+        styleId: style.id,
+        sizeId,
         quantity,
       });
       return;
@@ -202,6 +219,9 @@ export function ShopProductModal({
             <h2 id="shop-modal-title" className="shop-modal__title">
               {style.title}
             </h2>
+            {style.description && (
+              <p className="shop-modal__description">{style.description}</p>
+            )}
           </div>
           <button
             type="button"
@@ -444,7 +464,7 @@ export function ShopProductModal({
                 <label className="shop-field">
                   <span className="shop-field__label">
                     {style.kind === "lace-lock"
-                      ? "Engraving"
+                      ? "First lock"
                       : sides === 2
                         ? "Front engraving"
                         : "Engraving"}
@@ -457,11 +477,43 @@ export function ShopProductModal({
                     onChange={(event) => setEngraving(event.target.value)}
                   />
                   <span className="shop-field__hint">
-                    {style.kind === "lace-lock"
-                      ? `Same text on both locks · ${engraving.length}/${engravingLimit}`
-                      : `${engraving.length}/${engravingLimit}`}
+                    {engraving.length}/{engravingLimit}
                   </span>
                 </label>
+
+                {style.kind === "lace-lock" && (
+                  <>
+                    <label className="shop-check">
+                      <input
+                        type="checkbox"
+                        checked={matchLocks}
+                        onChange={(event) => {
+                          const checked = event.target.checked;
+                          setMatchLocks(checked);
+                          if (checked) setBackEngraving(engraving);
+                        }}
+                      />
+                      <span>Second lock matches the first</span>
+                    </label>
+                    <label className="shop-field">
+                      <span className="shop-field__label">Second lock</span>
+                      <input
+                        className="shop-input"
+                        value={matchLocks ? engraving : backEngraving}
+                        maxLength={engravingLimit}
+                        placeholder="GOOD"
+                        disabled={matchLocks}
+                        onChange={(event) =>
+                          setBackEngraving(event.target.value)
+                        }
+                      />
+                      <span className="shop-field__hint">
+                        {(matchLocks ? engraving : backEngraving).length}/
+                        {engravingLimit}
+                      </span>
+                    </label>
+                  </>
+                )}
 
                 {sides === 2 && (
                   <label className="shop-field">
