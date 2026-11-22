@@ -244,6 +244,7 @@ export function ShopPage() {
         imageAlt="Kyle Holiday as Santa in a leather harness wearing a round Mx Cruise LA Leather 2026 tag"
         imagePosition="center 18%"
         links={[
+          { label: "Shop Lace Locks", href: "/shop#lace-locks" },
           { label: "Shop Tags", href: "/shop#tags" },
           { label: "Shop Tees", href: "/shop#tees" },
           { label: "Shop Stickers", href: "/shop#stickers" },
@@ -261,19 +262,21 @@ export function ShopPage() {
 
             <div className="shop-builder__layout">
               <div className="shop-builder__form">
-                {(["tag", "shirt", "sticker", "print"] as const).map((kind) => {
+                {(["lace-lock", "tag", "shirt", "sticker", "print"] as const).map((kind) => {
                   const options = shopStyles.filter(
                     (option) => option.kind === kind,
                   );
                   if (options.length === 0) return null;
                   const sectionId =
-                    kind === "tag"
-                      ? "tags"
-                      : kind === "shirt"
-                        ? "tees"
-                        : kind === "print"
-                          ? "prints"
-                          : "stickers";
+                    kind === "lace-lock"
+                      ? "lace-locks"
+                      : kind === "tag"
+                        ? "tags"
+                        : kind === "shirt"
+                          ? "tees"
+                          : kind === "print"
+                            ? "prints"
+                            : "stickers";
                   return (
                     <div
                       key={kind}
@@ -281,13 +284,15 @@ export function ShopPage() {
                       id={sectionId}
                     >
                       <p className="shop-style-group__label">
-                        {kind === "tag"
-                          ? "Tags"
-                          : kind === "shirt"
-                            ? "Tees"
-                            : kind === "print"
-                              ? "Prints"
-                              : "Vinyl stickers that can get wet 💦 · 3 for $10, your pick"}
+                        {kind === "lace-lock"
+                          ? "Boot lace locks · 2 for $20, your engraving"
+                          : kind === "tag"
+                            ? "Tags"
+                            : kind === "shirt"
+                              ? "Tees"
+                              : kind === "print"
+                                ? "Prints"
+                                : "Vinyl stickers that can get wet 💦 · 3 for $10, your pick"}
                       </p>
                       <div className="shop-styles">
                         {options.map((option, index) => (
@@ -305,7 +310,10 @@ export function ShopPage() {
                               height={400}
                               decoding="async"
                               loading={
-                                kind === "tag" && index < 4 ? "eager" : "lazy"
+                                (kind === "lace-lock" || kind === "tag") &&
+                                index < 4
+                                  ? "eager"
+                                  : "lazy"
                               }
                             />
                             <span className="shop-style__copy">

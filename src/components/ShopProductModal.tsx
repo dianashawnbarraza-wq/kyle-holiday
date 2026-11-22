@@ -7,12 +7,12 @@ import {
   type ShopFont,
   type ShopStyle,
   DOUBLE_SIDED_UPCHARGE_CENTS,
-  MAX_ENGRAVING_LENGTH,
   engravingFills,
   formatUsd,
   getColor,
   itemUnitPrice,
   sanitizeEngraving,
+  styleEngravingLimit,
   shopColors,
   shopFonts,
   styleGallery,
@@ -49,6 +49,7 @@ export function ShopProductModal({
   const [error, setError] = useState<string | null>(null);
   const maxQuantity = Math.max(1, Math.min(10, remaining));
   const bagFull = remaining < 1;
+  const engravingLimit = styleEngravingLimit(style);
 
   useEffect(() => {
     const previous = document.body.style.overflow;
@@ -128,16 +129,24 @@ export function ShopProductModal({
     }
 
     if (style.kind !== "tag") {
+      const text = style.allowsEngraving
+        ? sanitizeEngraving(engraving, engravingLimit)
+        : undefined;
+      if (style.allowsEngraving && !text) {
+        setError("Add engraving text.");
+        return;
+      }
       onAdd({
         styleId: style.id,
         sizeId,
+        engraving: text,
         quantity,
       });
       return;
     }
 
-    const front = sanitizeEngraving(engraving);
-    const back = sanitizeEngraving(backEngraving);
+    const front = sanitizeEngraving(engraving, engravingLimit);
+    const back = sanitizeEngraving(backEngraving, engravingLimit);
     const color = colorId
       ? shopColors.find((option) => option.id === colorId)
       : undefined;
@@ -434,17 +443,23 @@ export function ShopProductModal({
               <>
                 <label className="shop-field">
                   <span className="shop-field__label">
-                    {sides === 2 ? "Front engraving" : "Engraving"}
+                    {style.kind === "lace-lock"
+                      ? "Engraving"
+                      : sides === 2
+                        ? "Front engraving"
+                        : "Engraving"}
                   </span>
                   <input
                     className="shop-input"
                     value={engraving}
-                    maxLength={MAX_ENGRAVING_LENGTH}
-                    placeholder="BRAT"
+                    maxLength={engravingLimit}
+                    placeholder={style.kind === "lace-lock" ? "LICK" : "BRAT"}
                     onChange={(event) => setEngraving(event.target.value)}
                   />
                   <span className="shop-field__hint">
-                    {engraving.length}/{MAX_ENGRAVING_LENGTH}
+                    {style.kind === "lace-lock"
+                      ? `Same text on both locks · ${engraving.length}/${engravingLimit}`
+                      : `${engraving.length}/${engravingLimit}`}
                   </span>
                 </label>
 
@@ -454,7 +469,7 @@ export function ShopProductModal({
                     <input
                       className="shop-input"
                       value={backEngraving}
-                      maxLength={MAX_ENGRAVING_LENGTH}
+                      maxLength={engravingLimit}
                       placeholder="good pup"
                       onChange={(event) =>
                         setBackEngraving(event.target.value)

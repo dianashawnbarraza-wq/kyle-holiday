@@ -2,12 +2,19 @@ export const shopSiteUrl = "https://www.kyleholiday.com";
 
 export const MAX_CART_ITEMS = 20;
 export const MAX_ENGRAVING_LENGTH = 20;
+export const LACE_LOCK_ENGRAVING_LENGTH = 7;
 export const DOUBLE_SIDED_UPCHARGE_CENTS = 200;
 export const STICKER_PRICE_CENTS = 400;
 export const STICKER_DEAL_COUNT = 3;
 export const STICKER_DEAL_CENTS = 1000;
 
-export type ProductKind = "tag" | "shirt" | "sticker" | "print" | "test";
+export type ProductKind =
+  | "lace-lock"
+  | "tag"
+  | "shirt"
+  | "sticker"
+  | "print"
+  | "test";
 
 export type ShopSize = {
   id: string;
@@ -53,6 +60,7 @@ export type ShopStyle = {
   allowsFont: boolean;
   allowsColor: boolean;
   allowsEngraving: boolean;
+  maxEngravingLength?: number;
 };
 
 export type CartItem = {
@@ -295,6 +303,7 @@ const conversationHeartSizes: ShopSize[] = [
   { id: "large", name: "Large · 1.8\"", priceCents: 2000 },
 ];
 const stickerSize: ShopSize[] = [{ id: "one-size", name: "One size" }];
+const laceLockSize: ShopSize[] = [{ id: "pair", name: "Pair" }];
 const printSize: ShopSize[] = [{ id: "one-size", name: "Framed print" }];
 const shirtSizes: ShopSize[] = [
   { id: "s", name: "S" },
@@ -304,6 +313,22 @@ const shirtSizes: ShopSize[] = [
 ];
 
 export const shopStyles: ShopStyle[] = [
+  {
+    id: "boot-lace-locks",
+    kind: "lace-lock",
+    title: "Boot Lace Locks",
+    caption: "Custom engraved pair · 2 for $20",
+    src: "/images/shop/boot-lace-locks.jpg",
+    alt: "Copper boot lace locks engraved LICK, GOOD, DYKE, DADDY, MOMMY, PUP, BOY, and FAG on a black leather boot",
+    priceCents: 2000,
+    weightOz: 1,
+    sizes: laceLockSize,
+    allowsSides: false,
+    allowsFont: false,
+    allowsColor: false,
+    allowsEngraving: true,
+    maxEngravingLength: LACE_LOCK_ENGRAVING_LENGTH,
+  },
   {
     id: "bone",
     kind: "tag",
@@ -697,6 +722,7 @@ export const tagStyleRedirects: Record<string, string> = {
 };
 
 export const itemWeightsOz = {
+  "lace-lock": 1,
   tag: 1,
   shirt: 6,
   sticker: 0.2,
@@ -762,6 +788,13 @@ export function getStyle(styleId: string) {
 
 export function resolveStyleId(styleId: string | null) {
   if (!styleId) return null;
+  if (
+    styleId === "lace-lock" ||
+    styleId === "lace-locks" ||
+    styleId === "boot-lace-locks"
+  ) {
+    return "boot-lace-locks";
+  }
   if (styleId === "sticker" || styleId === "stickers") {
     return shopStyles.find((style) => style.kind === "sticker")?.id ?? null;
   }
@@ -893,8 +926,15 @@ export function formatUsd(cents: number) {
   }).format(cents / 100);
 }
 
-export function sanitizeEngraving(value: string) {
-  return value.replace(/\s+/g, " ").trim().slice(0, MAX_ENGRAVING_LENGTH);
+export function styleEngravingLimit(style: ShopStyle) {
+  return style.maxEngravingLength ?? MAX_ENGRAVING_LENGTH;
+}
+
+export function sanitizeEngraving(
+  value: string,
+  maxLength = MAX_ENGRAVING_LENGTH,
+) {
+  return value.replace(/\s+/g, " ").trim().slice(0, maxLength);
 }
 
 export function styleStartingPrice(style: ShopStyle) {
@@ -975,7 +1015,11 @@ export function itemSummary(item: CartItem) {
   if (!style) return "";
   const size = getSize(style, item.sizeId);
   const parts =
-    style.kind === "sticker" || style.kind === "print" ? [] : [size?.name];
+    style.kind === "sticker" ||
+    style.kind === "print" ||
+    style.kind === "lace-lock"
+      ? []
+      : [size?.name];
   if (style.allowsColor && item.colorId) {
     parts.push(getColor(item.colorId)?.name);
   }

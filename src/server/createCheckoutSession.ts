@@ -24,6 +24,7 @@ import {
   itemUnitPrice,
   sanitizeEngraving,
   shopSiteUrl,
+  styleEngravingLimit,
   stickerDealSavingsCents,
 } from "../data/shop.js";
 
@@ -82,10 +83,20 @@ function normalizeCart(payload: CheckoutPayload): {
     const quantity = Math.min(10, Math.max(1, Math.floor(item.quantity ?? 1)));
 
     if (style.kind !== "tag") {
+      const engraving = style.allowsEngraving
+        ? sanitizeEngraving(
+            item.engraving ?? "",
+            styleEngravingLimit(style),
+          )
+        : undefined;
+      if (style.allowsEngraving && !engraving) {
+        throw new Error("Add engraving text");
+      }
       return {
         id: `item-${index}`,
         styleId: style.id,
         sizeId: size.id,
+        engraving,
         quantity,
       };
     }
@@ -93,8 +104,14 @@ function normalizeCart(payload: CheckoutPayload): {
     const color = item.colorId ? getColor(item.colorId) : undefined;
     const font = item.fontId ? getFont(item.fontId) : undefined;
     const backFont = item.backFontId ? getFont(item.backFontId) : font;
-    const engraving = sanitizeEngraving(item.engraving ?? "");
-    const backEngraving = sanitizeEngraving(item.backEngraving ?? "");
+    const engraving = sanitizeEngraving(
+      item.engraving ?? "",
+      styleEngravingLimit(style),
+    );
+    const backEngraving = sanitizeEngraving(
+      item.backEngraving ?? "",
+      styleEngravingLimit(style),
+    );
     const sides: 1 | 2 = item.sides === 2 && style.allowsSides ? 2 : 1;
 
     if (!color) throw new Error("Choose a color");
