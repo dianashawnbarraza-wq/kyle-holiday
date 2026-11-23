@@ -1,4 +1,6 @@
 import type { ServerResponse } from "node:http";
+import type { FulfillmentStatus } from "../data/fulfillment.js";
+import { isTerminalStatus, stepsForFulfillment } from "../data/fulfillment.js";
 import {
   clearOrdersCookie,
   isOrdersAuthed,
@@ -11,12 +13,14 @@ import {
   readJsonBody,
   sendJson,
 } from "./http.js";
+import { emailBuyerOrderShipped } from "./notifyOrder.js";
 import {
   getShopOrder,
   listShopOrders,
   pirateShipUrl,
   setOrderShipped,
   shipFromLines,
+  updateOrderFulfillment,
 } from "./shopOrders.js";
 
 function requestOrigin(req: ApiRequest) {
@@ -26,6 +30,13 @@ function requestOrigin(req: ApiRequest) {
   const host = req.headers.host;
   const proto = host?.includes("localhost") ? "http" : "https";
   return `${proto}://${host ?? "www.kyleholiday.com"}`;
+}
+
+function isValidStatus(
+  status: string,
+  fulfillment: string | null,
+): status is FulfillmentStatus {
+  return stepsForFulfillment(fulfillment).some((step) => step.id === status);
 }
 
 export async function handleOrdersApi(req: ApiRequest, res: ServerResponse) {
@@ -74,6 +85,9 @@ export async function handleOrdersApi(req: ApiRequest, res: ServerResponse) {
     password?: string;
     id?: string;
     shipped?: boolean;
+    status?: string;
+    trackingNumber?: string;
+    notifyBuyer?: boolean;
   };
 
   if (body.action === "login") {
@@ -106,6 +120,52 @@ export async function handleOrdersApi(req: ApiRequest, res: ServerResponse) {
   if (body.action === "ship" && body.id) {
     const order = await setOrderShipped(body.id, body.shipped !== false);
     sendJson(res, 200, { order });
+    return;
+  }
+
+  if (body.action === "update" && body.id) {
+    const existing = await getShopOrder(body.id);
+    if (body.status && !isValidStatus(body.status, existing.fulfillment)) {
+      sendJson(res, 400, { error: "Invalid fulfillment status." });
+      return;
+    }
+
+    let order = await updateOrderFulfillment(body.id, {
+      status: body.status as FulfillmentStatus | undefined,
+      trackingNumber:
+        body.trackingNumber === undefined ? undefined : body.trackingNumber,
+    });
+
+    const shouldNotify =
+      body.notifyBuyer === true ||
+      (body.notifyBuyer !== false &&
+        body.status !== undefined &&
+        isTerminalStatus(order.status) &&
+        !existing.shippedNotified);
+
+    let notified = false;
+    if (shouldNotify && isTerminalStatus(order.status)) {
+      try {
+        const result = await emailBuyerOrderShipped(order);
+        notified = result.sent;
+        if (result.sent) {
+          order = await updateOrderFulfillment(body.id, {
+            shippedNotified: true,
+          });
+        }
+      } catch (error) {
+        sendJson(res, 502, {
+          order,
+          error:
+            error instanceof Error
+              ? error.message
+              : "Saved, but the buyer email failed.",
+        });
+        return;
+      }
+    }
+
+    sendJson(res, 200, { order, notified });
     return;
   }
 

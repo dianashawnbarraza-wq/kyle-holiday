@@ -1,4 +1,5 @@
 import { Resend } from "resend";
+import { trackingUrl } from "../data/fulfillment.js";
 import { site } from "../data/site.js";
 import {
   formatUsd,
@@ -99,6 +100,101 @@ export async function emailKyleNewOrder(order: ShopOrder, origin: string) {
       ),
       "",
       `${origin}/orders`,
+    ]
+      .filter((line) => line.length > 0)
+      .join("\n"),
+  });
+
+  if (error) {
+    throw new Error(error.message);
+  }
+
+  return { sent: true as const };
+}
+
+function shippedEmailHtml(order: ShopOrder) {
+  const pickup = isPickupFulfillment(order.fulfillment);
+  const track = order.trackingNumber
+    ? trackingUrl(order.trackingNumber)
+    : null;
+  const how = fulfillmentLabel(order.fulfillment) || order.fulfillment;
+  const items = order.items
+    .map(
+      (item) =>
+        `<li style="margin:0 0 6px"><strong>${escapeHtml(String(item.quantity))} × ${escapeHtml(item.name)}</strong>${
+          item.description
+            ? `<div style="color:#666;font-size:14px">${escapeHtml(item.description)}</div>`
+            : ""
+        }</li>`,
+    )
+    .join("");
+
+  return `<div style="font-family:Georgia,serif;max-width:560px;margin:0 auto;color:#111">
+    <p style="letter-spacing:.08em;text-transform:uppercase;font-size:12px;color:#666">Santa Kyle's Workshop</p>
+    <h1 style="font-size:28px;margin:0 0 16px">${
+      pickup ? "Ready for pickup" : "Your order is on the way"
+    }</h1>
+    <p>Hi ${escapeHtml(order.name || "friend")},</p>
+    <p>${
+      pickup
+        ? `Your order is marked picked up / ready. ${how ? escapeHtml(how) + "." : ""}`
+        : "Your Santa Kyle's Workshop order has shipped in discreet packaging."
+    }</p>
+    ${
+      !pickup && order.trackingNumber
+        ? `<p><strong>Tracking</strong><br>${escapeHtml(order.trackingNumber)}${
+            track
+              ? `<br><a href="${track}">Track with USPS</a>`
+              : ""
+          }</p>`
+        : ""
+    }
+    <p><strong>Order</strong></p>
+    <ul style="padding-left:18px;margin:0 0 16px">${items}</ul>
+    <p style="color:#666;font-size:14px">Questions? Reply to this email or reach me at ${escapeHtml(site.email)} · ${escapeHtml(site.instagramHandle)}</p>
+  </div>`;
+}
+
+export async function emailBuyerOrderShipped(order: ShopOrder) {
+  const key = process.env.RESEND_API_KEY?.trim();
+  if (!key) {
+    console.warn("RESEND_API_KEY is not set; skipped shipped email.");
+    return { sent: false as const, reason: "missing_resend" as const };
+  }
+  if (!order.email) {
+    return { sent: false as const, reason: "missing_email" as const };
+  }
+
+  const pickup = isPickupFulfillment(order.fulfillment);
+  const track = order.trackingNumber
+    ? trackingUrl(order.trackingNumber)
+    : null;
+  const resend = new Resend(key);
+  const subject = pickup
+    ? `Pickup update · ${orderSummaryLine(order)}`
+    : `Shipped · ${orderSummaryLine(order)}`;
+
+  const { error } = await resend.emails.send({
+    from: fromAddress(),
+    to: order.email,
+    replyTo: site.email,
+    subject,
+    html: shippedEmailHtml(order),
+    text: [
+      pickup
+        ? "Your Santa Kyle's Workshop order is ready / picked up."
+        : "Your Santa Kyle's Workshop order has shipped.",
+      "",
+      ...order.items.map(
+        (item) =>
+          `${item.quantity} × ${item.name}${item.description ? ` — ${item.description}` : ""}`,
+      ),
+      "",
+      order.trackingNumber
+        ? `Tracking: ${order.trackingNumber}${track ? `\n${track}` : ""}`
+        : "",
+      "",
+      `Questions? ${site.email} · ${site.instagramHandle}`,
     ]
       .filter((line) => line.length > 0)
       .join("\n"),

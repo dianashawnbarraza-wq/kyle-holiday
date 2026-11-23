@@ -1,13 +1,19 @@
 import type Stripe from "stripe";
 import {
+  type FulfillmentStatus,
+  isTerminalStatus,
+  parseFulfillmentStatus,
+} from "../data/fulfillment.js";
+import {
   type ShopOrder,
   type ShopOrderAddress,
 } from "../data/shopOrder.js";
 import { site } from "../data/site.js";
-import { formatUsd } from "../data/shop.js";
+import { formatUsd, isPickupFulfillment } from "../data/shop.js";
 import { getStripeClient } from "./stripeClient.js";
 
 export type { ShopOrder, ShopOrderAddress, ShopOrderItem } from "../data/shopOrder.js";
+export type { FulfillmentStatus } from "../data/fulfillment.js";
 
 function addressFrom(
   session: Stripe.Checkout.Session,
@@ -37,6 +43,17 @@ function addressFrom(
 
 export function orderFromSession(session: Stripe.Checkout.Session): ShopOrder {
   const lineItems = session.line_items?.data ?? [];
+  const fulfillment = session.metadata?.fulfillment ?? null;
+  const shippedFlag = session.metadata?.shipped === "true";
+  const status = parseFulfillmentStatus(
+    session.metadata?.fulfillment_status,
+    shippedFlag,
+    fulfillment,
+  );
+  const tracking =
+    session.metadata?.tracking_number?.trim() ||
+    session.metadata?.tracking?.trim() ||
+    "";
   return {
     id: session.id,
     created: session.created,
@@ -44,8 +61,11 @@ export function orderFromSession(session: Stripe.Checkout.Session): ShopOrder {
     email: session.customer_details?.email ?? session.customer_email ?? null,
     name: session.customer_details?.name ?? null,
     phone: session.customer_details?.phone ?? null,
-    fulfillment: session.metadata?.fulfillment ?? null,
-    shipped: session.metadata?.shipped === "true",
+    fulfillment,
+    status,
+    shipped: isTerminalStatus(status) || shippedFlag,
+    trackingNumber: tracking || null,
+    shippedNotified: session.metadata?.shipped_notified === "true",
     weight: session.metadata?.weight ?? null,
     shipping: addressFrom(session),
     items: lineItems.map((item) => {
@@ -100,12 +120,60 @@ export async function getShopOrder(id: string): Promise<ShopOrder> {
 }
 
 export async function setOrderShipped(id: string, shipped: boolean) {
+  const current = await getShopOrder(id);
+  const nextStatus: FulfillmentStatus = shipped
+    ? isPickupFulfillment(current.fulfillment)
+      ? "picked_up"
+      : "shipped"
+    : isPickupFulfillment(current.fulfillment)
+      ? "ready"
+      : "labeled";
+  return updateOrderFulfillment(id, { status: nextStatus });
+}
+
+export type OrderFulfillmentUpdate = {
+  status?: FulfillmentStatus;
+  trackingNumber?: string | null;
+  shippedNotified?: boolean;
+};
+
+export async function updateOrderFulfillment(
+  id: string,
+  update: OrderFulfillmentUpdate,
+) {
   const stripe = getStripeClient();
   const current = await stripe.checkout.sessions.retrieve(id);
+  const fulfillment = current.metadata?.fulfillment ?? null;
+
+  const status =
+    update.status ??
+    parseFulfillmentStatus(
+      current.metadata?.fulfillment_status,
+      current.metadata?.shipped === "true",
+      fulfillment,
+    );
+  const existingTracking =
+    current.metadata?.tracking_number?.trim() ||
+    current.metadata?.tracking?.trim() ||
+    "";
+  const trackingNumber =
+    update.trackingNumber === undefined
+      ? existingTracking || null
+      : update.trackingNumber?.trim() || null;
+  const shipped = isTerminalStatus(status);
+
   await stripe.checkout.sessions.update(id, {
     metadata: {
       ...current.metadata,
+      fulfillment_status: status,
       shipped: shipped ? "true" : "false",
+      tracking_number: trackingNumber ?? "",
+      shipped_notified:
+        update.shippedNotified === undefined
+          ? (current.metadata?.shipped_notified ?? "false")
+          : update.shippedNotified
+            ? "true"
+            : "false",
     },
   });
   return getShopOrder(id);

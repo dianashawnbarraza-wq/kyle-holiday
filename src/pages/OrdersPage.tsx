@@ -1,6 +1,12 @@
 import { useEffect, useMemo, useState } from "react";
 import { PageHero } from "../components/PageHero";
 import {
+  type FulfillmentStatus,
+  stepsForFulfillment,
+  statusLabel,
+  trackingUrl,
+} from "../data/fulfillment";
+import {
   formatUsd,
   fulfillmentLabel,
   isPickupFulfillment,
@@ -21,14 +27,19 @@ export function OrdersPage() {
   const [password, setPassword] = useState("");
   const [authed, setAuthed] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [savingId, setSavingId] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [notice, setNotice] = useState<string | null>(null);
   const [orders, setOrders] = useState<ShopOrder[]>([]);
   const [from, setFrom] = useState<string[]>([]);
   const [pirateShipUrl, setPirateShipUrl] = useState(
     "https://ship.pirateship.com/",
   );
   const [openId, setOpenId] = useState<string | null>(null);
-  const [filter, setFilter] = useState<"new" | "shipped">("new");
+  const [filter, setFilter] = useState<"active" | "done">("active");
+  const [trackingDrafts, setTrackingDrafts] = useState<Record<string, string>>(
+    {},
+  );
 
   async function loadOrders() {
     const response = await fetch("/api/orders");
@@ -88,24 +99,63 @@ export function OrdersPage() {
     setOrders([]);
   }
 
-  async function markShipped(id: string, shipped: boolean) {
+  function trackingFor(order: ShopOrder) {
+    return trackingDrafts[order.id] ?? order.trackingNumber ?? "";
+  }
+
+  async function updateOrder(
+    order: ShopOrder,
+    patch: {
+      status?: FulfillmentStatus;
+      trackingNumber?: string;
+      notifyBuyer?: boolean;
+    },
+  ) {
     setError(null);
-    const response = await fetch("/api/orders", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ action: "ship", id, shipped }),
-    });
-    const data = (await response.json()) as {
-      order?: ShopOrder;
-      error?: string;
-    };
-    if (!response.ok || !data.order) {
-      setError(data.error || "Could not update that order");
-      return;
+    setNotice(null);
+    setSavingId(order.id);
+    try {
+      const response = await fetch("/api/orders", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          action: "update",
+          id: order.id,
+          ...patch,
+        }),
+      });
+      const data = (await response.json()) as {
+        order?: ShopOrder;
+        notified?: boolean;
+        error?: string;
+      };
+      if (!response.ok || !data.order) {
+        throw new Error(data.error || "Could not update that order");
+      }
+      setOrders((current) =>
+        current.map((entry) => (entry.id === order.id ? data.order! : entry)),
+      );
+      if (patch.trackingNumber !== undefined) {
+        setTrackingDrafts((drafts) => {
+          const next = { ...drafts };
+          delete next[order.id];
+          return next;
+        });
+      }
+      if (data.notified) {
+        setNotice(
+          isPickupFulfillment(data.order.fulfillment)
+            ? "Buyer emailed about pickup."
+            : "Buyer emailed with tracking.",
+        );
+      } else if (data.error) {
+        setError(data.error);
+      }
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Could not update order");
+    } finally {
+      setSavingId(null);
     }
-    setOrders((current) =>
-      current.map((order) => (order.id === id ? data.order! : order)),
-    );
   }
 
   async function createLabel(order: ShopOrder) {
@@ -128,21 +178,27 @@ export function OrdersPage() {
     }
     window.open(pirateShipUrl, "_blank", "noopener,noreferrer");
     window.setTimeout(() => window.print(), 250);
+    if (order.status === "packing" || order.status === "making") {
+      void updateOrder(order, { status: "labeled" });
+    }
   }
 
   const visible = useMemo(
     () =>
       orders.filter((order) =>
-        filter === "shipped" ? order.shipped : !order.shipped,
+        filter === "done" ? order.shipped : !order.shipped,
       ),
     [filter, orders],
   );
+
+  const activeCount = orders.filter((order) => !order.shipped).length;
+  const doneCount = orders.filter((order) => order.shipped).length;
 
   return (
     <div className="orders-page">
       <PageHero
         title="Order queue"
-        tagline="Paid shop orders, packing slips, and labels."
+        tagline="Make → pack → label → ship. Tracking emails the buyer."
         image="/images/shop/santas-workshop-hero.jpg"
         imageAlt="Kyle Holiday as Santa in a leather harness"
         imagePosition="center 18%"
@@ -181,18 +237,17 @@ export function OrdersPage() {
                 <div className="shop-picks">
                   <button
                     type="button"
-                    className={`shop-pick${filter === "new" ? " shop-pick--active" : ""}`}
-                    onClick={() => setFilter("new")}
+                    className={`shop-pick${filter === "active" ? " shop-pick--active" : ""}`}
+                    onClick={() => setFilter("active")}
                   >
-                    Needs shipping ·{" "}
-                    {orders.filter((order) => !order.shipped).length}
+                    In progress · {activeCount}
                   </button>
                   <button
                     type="button"
-                    className={`shop-pick${filter === "shipped" ? " shop-pick--active" : ""}`}
-                    onClick={() => setFilter("shipped")}
+                    className={`shop-pick${filter === "done" ? " shop-pick--active" : ""}`}
+                    onClick={() => setFilter("done")}
                   >
-                    Shipped · {orders.filter((order) => order.shipped).length}
+                    Done · {doneCount}
                   </button>
                 </div>
                 <button
@@ -209,6 +264,11 @@ export function OrdersPage() {
                   {error}
                 </p>
               )}
+              {notice && (
+                <p className="orders-notice" role="status">
+                  {notice}
+                </p>
+              )}
 
               {visible.length === 0 ? (
                 <p className="orders-empty">No orders in this pile yet.</p>
@@ -216,20 +276,27 @@ export function OrdersPage() {
                 <ul className="orders-list">
                   {visible.map((order) => {
                     const open = openId === order.id;
+                    const pickup = isPickupFulfillment(order.fulfillment);
+                    const steps = stepsForFulfillment(order.fulfillment);
+                    const saving = savingId === order.id;
+                    const draftTracking = trackingFor(order);
+                    const trackHref = order.trackingNumber
+                      ? trackingUrl(order.trackingNumber)
+                      : null;
+
                     return (
                       <li key={order.id} className="order-card">
                         <button
                           type="button"
                           className="order-card__toggle"
-                          onClick={() =>
-                            setOpenId(open ? null : order.id)
-                          }
+                          onClick={() => setOpenId(open ? null : order.id)}
                         >
                           <span>
                             <strong>
                               {order.name || order.email || "Order"}
                             </strong>
                             <span className="order-card__meta">
+                              {statusLabel(order.status)} ·{" "}
                               {new Date(order.created * 1000).toLocaleString()}{" "}
                               · {formatUsd(order.amountTotal)}
                             </span>
@@ -241,6 +308,42 @@ export function OrdersPage() {
 
                         {open && (
                           <div className="order-card__body">
+                            <ol className="order-steps" aria-label="Fulfillment">
+                              {steps.map((step, index) => {
+                                const currentIndex = steps.findIndex(
+                                  (entry) => entry.id === order.status,
+                                );
+                                const done = index < currentIndex;
+                                const current = index === currentIndex;
+                                return (
+                                  <li
+                                    key={step.id}
+                                    className={`order-steps__item${
+                                      done ? " order-steps__item--done" : ""
+                                    }${current ? " order-steps__item--current" : ""}`}
+                                  >
+                                    <button
+                                      type="button"
+                                      className="order-steps__btn"
+                                      disabled={saving}
+                                      onClick={() =>
+                                        void updateOrder(order, {
+                                          status: step.id,
+                                          trackingNumber: draftTracking,
+                                          notifyBuyer: false,
+                                        })
+                                      }
+                                    >
+                                      <span className="order-steps__index">
+                                        {index + 1}
+                                      </span>
+                                      {step.label}
+                                    </button>
+                                  </li>
+                                );
+                              })}
+                            </ol>
+
                             <div className="order-slip" id={`slip-${order.id}`}>
                               <p className="order-slip__kicker">
                                 Santa Kyle&apos;s Workshop
@@ -254,11 +357,9 @@ export function OrdersPage() {
                                 </div>
                                 <div>
                                   <p className="order-slip__label">
-                                    {isPickupFulfillment(order.fulfillment)
-                                      ? "Pickup"
-                                      : "Ship to"}
+                                    {pickup ? "Pickup" : "Ship to"}
                                   </p>
-                                  {isPickupFulfillment(order.fulfillment) ? (
+                                  {pickup ? (
                                     <p>
                                       {fulfillmentLabel(order.fulfillment) ||
                                         order.fulfillment}
@@ -303,39 +404,114 @@ export function OrdersPage() {
                                 {order.fulfillment
                                   ? `${fulfillmentLabel(order.fulfillment) || order.fulfillment} · `
                                   : ""}
-                                {!isPickupFulfillment(order.fulfillment) &&
-                                order.weight
+                                {!pickup && order.weight
                                   ? `${order.weight} · `
                                   : ""}
                                 {formatUsd(order.amountTotal)}
                               </p>
                             </div>
 
+                            {!pickup && (
+                              <label className="shop-field order-tracking">
+                                <span className="shop-field__label">
+                                  USPS tracking
+                                </span>
+                                <input
+                                  className="shop-input"
+                                  value={draftTracking}
+                                  placeholder="Paste tracking number"
+                                  onChange={(event) =>
+                                    setTrackingDrafts((drafts) => ({
+                                      ...drafts,
+                                      [order.id]: event.target.value,
+                                    }))
+                                  }
+                                />
+                                {trackHref && order.trackingNumber && (
+                                  <a
+                                    className="order-tracking__link"
+                                    href={trackHref}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                  >
+                                    Open tracking
+                                  </a>
+                                )}
+                              </label>
+                            )}
+
                             <div className="order-card__actions">
-                              {!isPickupFulfillment(order.fulfillment) && (
+                              {!pickup && (
                                 <button
                                   type="button"
                                   className="cta-btn cta-btn--primary"
+                                  disabled={saving}
                                   onClick={() => void createLabel(order)}
                                 >
-                                  Create label
+                                  3. Create label
                                 </button>
                               )}
                               <button
                                 type="button"
                                 className="cta-btn cta-btn--secondary"
+                                disabled={saving}
                                 onClick={() =>
-                                  void markShipped(order.id, !order.shipped)
+                                  void updateOrder(order, {
+                                    trackingNumber: draftTracking,
+                                    notifyBuyer: false,
+                                  })
                                 }
                               >
-                                {isPickupFulfillment(order.fulfillment)
-                                  ? order.shipped
-                                    ? "Mark as not picked up"
-                                    : "Mark picked up"
-                                  : order.shipped
-                                    ? "Mark as not shipped"
-                                    : "Mark shipped"}
+                                Save tracking
                               </button>
+                              <button
+                                type="button"
+                                className="cta-btn cta-btn--primary"
+                                disabled={saving}
+                                onClick={() =>
+                                  void updateOrder(order, {
+                                    status: pickup ? "picked_up" : "shipped",
+                                    trackingNumber: draftTracking,
+                                    notifyBuyer: true,
+                                  })
+                                }
+                              >
+                                {pickup
+                                  ? "Mark picked up & email"
+                                  : "4. Mark shipped & email buyer"}
+                              </button>
+                              {order.shipped && order.email && (
+                                <button
+                                  type="button"
+                                  className="cta-btn cta-btn--secondary"
+                                  disabled={saving}
+                                  onClick={() =>
+                                    void updateOrder(order, {
+                                      notifyBuyer: true,
+                                      trackingNumber: draftTracking,
+                                    })
+                                  }
+                                >
+                                  {order.shippedNotified
+                                    ? "Resend buyer email"
+                                    : "Email buyer"}
+                                </button>
+                              )}
+                              {order.shipped && (
+                                <button
+                                  type="button"
+                                  className="cta-btn cta-btn--secondary"
+                                  disabled={saving}
+                                  onClick={() =>
+                                    void updateOrder(order, {
+                                      status: pickup ? "ready" : "labeled",
+                                      notifyBuyer: false,
+                                    })
+                                  }
+                                >
+                                  Move back to in progress
+                                </button>
+                              )}
                             </div>
                           </div>
                         )}
