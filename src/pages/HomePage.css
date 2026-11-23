@@ -1,7 +1,7 @@
 .home-page {
   --home-red: #e8332a;
-  --home-ink: #111111;
-  --home-ink-soft: rgba(17, 17, 17, 0.72);
+  --home-ink: #000000;
+  --home-ink-soft: rgba(0, 0, 0, 0.9);
   --home-paper: #f2f2f2;
 }
 
@@ -482,5 +482,5 @@
 }
 
 .home-page__content .home-gallery .kyle-gallery__caption {
-  color: #111111;
+  color: #000000;
 }

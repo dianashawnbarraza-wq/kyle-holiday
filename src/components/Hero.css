@@ -1,6 +1,7 @@
 .hero {
   --hero-red: #e8332a;
-  --hero-ink: #111111;
+  /* Near-black so small hero/tagline text clears 4.5:1 on brand red. */
+  --hero-ink: #000000;
   position: relative;
   min-height: 100dvh;
   display: flex;
@@ -241,7 +242,7 @@
   }
 
   .hero--shop .hero__tagline {
-    font-size: 0.88rem;
+    font-size: 0.95rem;
     line-height: 1.3;
   }
 

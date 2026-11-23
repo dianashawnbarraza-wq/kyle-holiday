@@ -23,7 +23,7 @@
 
 .shop-field__hint {
   justify-self: end;
-  font-size: 0.8rem;
+  font-size: 0.875rem;
   color: var(--text-faint);
 }
 
@@ -42,7 +42,7 @@
 
 .shop-style-group__label {
   margin: 0;
-  font-size: 0.8rem;
+  font-size: 0.875rem;
   font-weight: 600;
   letter-spacing: 0.06em;
   text-transform: uppercase;
@@ -100,12 +100,12 @@
 }
 
 .shop-style__meta {
-  font-size: 0.82rem;
+  font-size: 0.875rem;
   color: var(--text-muted);
 }
 
 .shop-style__description {
-  font-size: 0.8rem;
+  font-size: 0.875rem;
   line-height: 1.35;
   color: var(--text-muted);
 }
@@ -137,7 +137,7 @@
 }
 
 .shop-leather__email {
-  font-size: 0.82rem;
+  font-size: 0.875rem;
   color: var(--text-muted);
 }
 
@@ -188,7 +188,7 @@
   padding: 6px 10px;
   color: inherit;
   font: inherit;
-  font-size: 0.85rem;
+  font-size: 0.875rem;
   background: var(--bg-surface);
   border: 1px solid var(--border-subtle);
   border-radius: 999px;
@@ -309,7 +309,7 @@
 
 .shop-bag__meta {
   margin: 0;
-  font-size: 0.8rem;
+  font-size: 0.875rem;
   color: var(--text-muted);
 }
 
@@ -361,13 +361,13 @@
 .shop-radio__cutoff {
   display: block;
   margin-top: 2px;
-  font-size: 0.8rem;
+  font-size: 0.875rem;
   color: var(--text-muted);
 }
 
 .shop-bag__deal-hint {
   margin: 0 0 var(--space-2);
-  font-size: 0.85rem;
+  font-size: 0.875rem;
   color: var(--text-muted);
 }
 
@@ -403,7 +403,7 @@
 .shop-bag__packaging {
   margin: 0;
   text-align: center;
-  font-size: 0.85rem;
+  font-size: 0.875rem;
   color: var(--text-muted);
 }
 
@@ -445,7 +445,7 @@
 
 .shop-follow__kicker {
   margin: 0 0 6px;
-  font-size: 0.82rem;
+  font-size: 0.875rem;
   letter-spacing: 0.06em;
   text-transform: uppercase;
   color: var(--text-muted);
@@ -512,7 +512,7 @@
   }
 
   .shop-style__meta {
-    font-size: 0.75rem;
+    font-size: 0.875rem;
   }
 
   .shop-leather {
@@ -604,7 +604,7 @@
   }
 
   .shop-sack-bar__meta {
-    font-size: 0.85rem;
+    font-size: 0.875rem;
     font-weight: 600;
     letter-spacing: 0.02em;
   }

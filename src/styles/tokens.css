@@ -6,7 +6,8 @@
 
   --text-primary: #e8e0d8;
   --text-muted: #a39a96;
-  --text-faint: #746c68;
+  /* Warm gray that stays ≥4.5:1 on --bg-deep and --bg-surface (WCAG AA). */
+  --text-faint: #86807c;
 
   --accent: #e8332a;
   --accent-light: #ff5a52;

@@ -26,7 +26,7 @@
 }
 
 .art-featured__dates {
-  font-size: 0.8rem;
+  font-size: 0.875rem;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--accent-light);

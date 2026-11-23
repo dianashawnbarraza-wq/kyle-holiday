@@ -37,7 +37,7 @@
 .placeholder-image__label {
   position: relative;
   z-index: 1;
-  font-size: 0.75rem;
+  font-size: 0.875rem;
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--text-faint);
