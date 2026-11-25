@@ -11,11 +11,67 @@ export type EventItem = {
 
 const allEvents: EventItem[] = [
   {
+    sortDate: "2027-01-03",
+    date: "1/3/27, 3–9 PM",
+    title: "HOWL",
+    location: "Precinct DTLA, 357 S Broadway",
+    role: "First Sunday pup party — free, gear encouraged, mosh + performances",
+    links: [
+      {
+        label: "HOWL DTLA",
+        href: "https://www.howldtla.com/",
+      },
+    ],
+    flyer: "/images/events/howl-jan-2027.jpg",
+    flyerAlt: "HOWL pup party at Precinct DTLA",
+  },
+  {
+    sortDate: "2026-12-12",
+    date: "12/12/26",
+    title: "XXXmas",
+    location: "The Mr She, Los Angeles",
+    role: "Holiday gathering at The Mr She",
+    links: [
+      {
+        label: "The Mr She",
+        href: "https://themrshe.com/",
+      },
+    ],
+  },
+  {
+    sortDate: "2026-12-11",
+    date: "12/11/26, 7 PM–1 AM",
+    title: "Revival: A Queer Misfits Holiday Market & Fundraiser",
+    location: "DM @thechurch_la for address",
+    role: "Queer misfits holiday market and fundraiser",
+    links: [
+      {
+        label: "@thechurch_la",
+        href: "https://instagram.com/thechurch_la",
+      },
+    ],
+  },
+  {
     sortDate: "2026-12-06",
     date: "12/6/26",
     title: "Pink Pony Club",
     location: "Akbar, Silver Lake",
     role: "Shop pickup — Santa Kyle's Workshop",
+  },
+  {
+    sortDate: "2026-11-28",
+    date: "11/28/26, 5–9 PM",
+    title: "Precinct Leather Contest 2027",
+    location: "Precinct DTLA, 357 S Broadway",
+    role: "Judge — Kyle Holiday (Mx. Cruise LA Leather 2026) — 21+, doors 5 PM",
+    links: [
+      {
+        label: "Tickets",
+        href: "https://www.eventbrite.com/e/precinct-leather-2027-contest-tickets-2003867932930",
+      },
+    ],
+    flyer: "/images/events/precinct-leather-contest-2027.jpg",
+    flyerAlt: "Precinct Leather 2027 Contest flyer at Precinct DTLA, November 28, 2026",
   },
   {
     sortDate: "2026-11-21",
